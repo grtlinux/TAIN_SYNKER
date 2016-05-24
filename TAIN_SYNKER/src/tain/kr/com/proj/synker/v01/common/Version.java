@@ -69,6 +69,10 @@ public class Version {
 		return this.desc;
 	}
 	
+	public String getDate() throws Exception {
+		return this.date;
+	}
+	
 	public String getVersion() throws Exception {
 		return this.version;
 	}

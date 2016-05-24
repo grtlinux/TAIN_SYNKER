@@ -21,6 +21,8 @@ package tain.kr.com.proj.synker.v01.tools;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v01.common.Version;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -48,7 +50,13 @@ public class VersionToolMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			
+			Version.getInstance().print();
+		}
+		
+		if (flag) {
+			log.debug("* desc = " + Version.getInstance().getDesc());
+			log.debug("* date = " + Version.getInstance().getDate());
+			log.debug("* version = " + Version.getInstance().getVersion());
 		}
 	}
 	
