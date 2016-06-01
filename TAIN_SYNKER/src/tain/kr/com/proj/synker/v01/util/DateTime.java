@@ -47,30 +47,40 @@ public class DateTime {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/**
+	 * 
+	 * Code Templates > Comments > Constructors
+	 *
+	 * <PRE>
+	 *   -. ClassName  : DateTime
+	 *   -. MethodName : DateTime
+	 *   -. Comment    :
+	 *   -. Author     : taincokr
+	 *   -. First Date : 2016. 6. 2. {time}
+	 * </PRE>
+	 *
+	 * @throws Exception
+	 */
 	private DateTime() throws Exception {
 		if (flag) {}
 	}
 	
-	public String getYYYYMMDD() throws Exception {
-		String ret = null;
-		
-		if (flag) {
-			ret = new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date());
-		}
-		
-		return ret;
-	}
-	
-	public String getYYYYMMDDHHMMSS() throws Exception {
-		String ret = null;
-		
-		if (flag) {
-			ret = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(new Date());
-		}
-		
-		return ret;
-	}
-	
+	/**
+	 * 
+	 * Code Templates > Comments > Methods
+	 *
+	 * <PRE>
+	 *   -. ClassName  : DateTime
+	 *   -. MethodName : get
+	 *   -. Comment    :
+	 *   -. Author     : taincokr
+	 *   -. First Date : 2016. 6. 2. {time}
+	 * </PRE>
+	 *
+	 * @param format
+	 * @return
+	 * @throws Exception
+	 */
 	public String get(String format) throws Exception {
 		String ret = null;
 		
@@ -81,6 +91,31 @@ public class DateTime {
 		return ret;
 	}
 
+	public String getYYYYMMDD() throws Exception {
+		return get("yyyyMMdd");
+	}
+	
+	public String getYYYYMMDDHHMMSS() throws Exception {
+		return get("yyyyMMddHHmmss");
+	}
+	
+	/**
+	 * 
+	 * Code Templates > Comments > Methods
+	 *
+	 * <PRE>
+	 *   -. ClassName  : DateTime
+	 *   -. MethodName : get
+	 *   -. Comment    :
+	 *   -. Author     : taincokr
+	 *   -. First Date : 2016. 6. 2. {time}
+	 * </PRE>
+	 *
+	 * @param format
+	 * @param ldate
+	 * @return
+	 * @throws Exception
+	 */
 	public String get(String format, long ldate) throws Exception {
 		String ret = null;
 		
@@ -89,6 +124,14 @@ public class DateTime {
 		}
 		
 		return ret;
+	}
+	
+	public String getYYYYMMDD(long ldate) throws Exception {
+		return get("yyyyMMdd", ldate);
+	}
+	
+	public String getYYYYMMDDHHMMSS(long ldate) throws Exception {
+		return get("yyyyMMddHHmmss", ldate);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,11 +154,17 @@ public class DateTime {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			log.debug("[" + new Date().getTime() + "]");      // 1462785187521
+			long ldate = 1462785187521L;  // <- 2016/05/09 18:13:07
+			
+			log.debug("[" + new Date().getTime() + "] <- today");
+			
 			log.debug("[" + DateTime.getInstance().getYYYYMMDD() + "]");
 			log.debug("[" + DateTime.getInstance().getYYYYMMDDHHMMSS() + "]");
 			log.debug("[" + DateTime.getInstance().get("yyyy/MM/dd HH:mm:ss") + "]");
-			log.debug("[" + DateTime.getInstance().get("yyyy/MM/dd HH:mm:ss", 1462785187521L) + "]");
+			
+			log.debug("[" + DateTime.getInstance().getYYYYMMDD(ldate) + "]");
+			log.debug("[" + DateTime.getInstance().getYYYYMMDDHHMMSS(ldate) + "]");
+			log.debug("[" + DateTime.getInstance().get("yyyy/MM/dd HH:mm:ss", ldate) + "]");
 		}
 	}
 	

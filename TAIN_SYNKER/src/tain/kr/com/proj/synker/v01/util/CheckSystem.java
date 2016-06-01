@@ -80,6 +80,8 @@ public class CheckSystem {
 		return val;
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	public String printOsName() throws Exception {
 		return get("os.name");
 	}
@@ -144,6 +146,8 @@ public class CheckSystem {
 		if (flag) {
 			log.debug(">>>>> printOsName() = " + CheckSystem.getInstance().printOsName());
 			log.debug(">>>>> isWindows()   = " + CheckSystem.getInstance().isWindows());
+			log.debug(">>>>> isUnix()      = " + CheckSystem.getInstance().isUnix());
+			log.debug(">>>>> isLinux()     = " + CheckSystem.getInstance().isLinux());
 		}
 	}
 	
