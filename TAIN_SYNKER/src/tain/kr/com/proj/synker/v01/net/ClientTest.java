@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.synker.v01.net;
 
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -42,7 +44,58 @@ public class ClientTest {
 	private static final Logger log = Logger.getLogger(ClientTest.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static final String KEY_DESC = "tain.kr.net.clienttest.desc";
+	
+	private String desc = null;
+
+	private ClientTest() throws Exception {
+		if (flag) {
+			String clsName = this.getClass().getName();
+			
+			ResourceBundle rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
+			
+			this.desc = rb.getString(KEY_DESC);
+		}
+	}
+	
+	public String getDesc() throws Exception {
+		return this.desc;
+	}
+	
+	public void print() throws Exception {
+		if (flag) {
+			log.info("desc    > " + this.desc);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static ClientTest instance = null;
+	
+	public static synchronized ClientTest getInstance() throws Exception {
+		
+		if (instance == null) {
+			instance = new ClientTest();
+		}
+		
+		return instance;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			ClientTest.getInstance().print();
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }
