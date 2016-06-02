@@ -19,6 +19,9 @@
  */
 package tain.kr.com.proj.synker.v01.tools;
 
+import java.lang.reflect.Method;
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v01.common.Version;
@@ -44,6 +47,53 @@ public class VersionToolMain {
 	private static final Logger log = Logger.getLogger(VersionToolMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static final String KEY_DESC = "tain.kr.tools.desc";
+	private static final String KEY_TOOL_MAIN = "tain.kr.tools.version.tool.main";
+	
+	private String desc = null;
+	private String toolMain = null;
+
+	private VersionToolMain() throws Exception {
+		if (flag) {
+			String clsName = this.getClass().getName();
+			
+			ResourceBundle rb = ResourceBundle.getBundle(clsName.replace('.', '/').replaceAll("VersionToolMain", "tools"));
+			
+			this.desc = rb.getString(KEY_DESC);
+			this.toolMain = rb.getString(KEY_TOOL_MAIN);
+		}
+	}
+	
+	public String getDesc() throws Exception {
+		return this.desc;
+	}
+	
+	public String getToolMain() throws Exception {
+		return this.toolMain;
+	}
+	
+	public void print() throws Exception {
+		if (flag) {
+			log.info("desc     > " + this.desc);
+			log.info("toolMain > " + this.toolMain);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static VersionToolMain instance = null;
+	
+	public static synchronized VersionToolMain getInstance() throws Exception {
+		
+		if (instance == null) {
+			instance = new VersionToolMain();
+		}
+		
+		return instance;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -58,8 +108,22 @@ public class VersionToolMain {
 			log.debug("* date = " + Version.getInstance().getDate());
 			log.debug("* version = " + Version.getInstance().getVersion());
 		}
+		
+		if (flag) {
+			/*
+			 * TODO : 2016.06.02 : to change for satisfaction
+			 */
+			Class<?> cls = Class.forName("tain.kr.com.test.clazz.v01.UseMethod");
+			Method method = cls.getDeclaredMethod("strAdd", new Class[] { String[].class });
+			
+			String[] arg = { "One", "Two", "Three", "Four", "Five" };
+			String ret = (String) method.invoke(cls.newInstance(), new Object[] { arg });
+
+			if (flag) log.debug(">" + ret);
+			if (flag) log.debug("\n-----------------------------------------------\n");
+		}
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
