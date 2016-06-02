@@ -7,5 +7,6 @@ Class-Path: .
 Main-Class: tain.kr.runjar.v03.JarRsrcLoader
 Rsrc-Class-Path: ./
      libs/commons-net-3.3.jar
+     libs/gson-2.6.2.jar
      libs/log4j-1.2.17.jar
-Rsrc-Main-Class: tain.kr.com.proj.cosmarter.v01.main.server.CoSmarterServer
+Rsrc-Main-Class: tain.kr.com.proj.synker.v01.main.Main

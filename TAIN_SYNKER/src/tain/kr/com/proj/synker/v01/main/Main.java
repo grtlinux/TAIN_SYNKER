@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.synker.v01.main;
 
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -42,13 +44,51 @@ public class Main {
 	private static final Logger log = Logger.getLogger(Main.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static final String KEY_DESC = "tain.kr.main.desc";
+	
+	private String desc = null;
+
+	private Main() throws Exception {
+		if (flag) {
+			String clsName = this.getClass().getName();
+			
+			ResourceBundle rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
+			
+			this.desc = rb.getString(KEY_DESC);
+		}
+	}
+	
+	public String getDesc() throws Exception {
+		return this.desc;
+	}
+	
+	public void print() throws Exception {
+		if (flag) {
+			log.info("desc    > " + this.desc);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static Main instance = null;
+	
+	public static synchronized Main getInstance() throws Exception {
+		
+		if (instance == null) {
+			instance = new Main();
+		}
+		
+		return instance;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			
+			Main.getInstance().print();
 		}
 	}
 	
