@@ -75,6 +75,9 @@ public class VersionToolMain {
 	
 	public void print() throws Exception {
 		if (flag) {
+			log.info("name     > " + this.getClass().getName());
+			log.info("canonical name     > " + this.getClass().getCanonicalName());
+			log.info("simple    name     > " + this.getClass().getSimpleName());
 			log.info("desc     > " + this.desc);
 			log.info("toolMain > " + this.toolMain);
 		}
@@ -110,6 +113,10 @@ public class VersionToolMain {
 		}
 		
 		if (flag) {
+			VersionToolMain.getInstance().print();
+		}
+		
+		if (!flag) {
 			/*
 			 * TODO : 2016.06.02 : to change for satisfaction
 			 */
