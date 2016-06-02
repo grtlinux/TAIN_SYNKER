@@ -2,12 +2,17 @@
 
 setlocal
 
+:: --------------------------------------------------------------
 set JAVA_HOME=M:\PROG\jdk1.7.0_79
-
 set PATH=%JAVA_HOME%\bin;%PATH%
 
-java -jar ../libs/tain-synker-1.0.jar
+:: --------------------------------------------------------------
+set TAIN_HOME=N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER
 
+:: --------------------------------------------------------------
+java -jar %TAIN_HOME%/synker/libs/tain-synker-1.0.jar
+
+:: --------------------------------------------------------------
 pause
 
 endlocal

@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v01.common.Version;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -89,6 +91,7 @@ public class Main {
 		
 		if (flag) {
 			Main.getInstance().print();
+			Version.getInstance().print();
 		}
 	}
 	
