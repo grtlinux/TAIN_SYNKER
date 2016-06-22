@@ -88,6 +88,60 @@ public class SynkerProp {
 		return this.prop.getProperty(key, defValue);
 	}
 	
+	private static final String KEY_SYSTEM_RANGE = "tain.kr.synker.system.range";
+	private static final String KEY_FOLDER_RANGE = "tain.kr.synker.folder.range";
+	
+	public void getSystemEntries() throws Exception {
+		
+		int sysBegin = 0;
+		int sysEnd = 0;
+		int fldBegin = 0;
+		int fldEnd = 0;
+		
+		if (flag) {
+			String val = this.prop.getProperty(KEY_SYSTEM_RANGE);
+			String[] items = val.split("~");
+			
+			sysBegin = Integer.parseInt(items[0]);
+			sysEnd = Integer.parseInt(items[1]);
+		}
+		
+		if (flag) {
+			String val = this.prop.getProperty(KEY_FOLDER_RANGE);
+			String[] items = val.split("~");
+			
+			fldBegin = Integer.parseInt(items[0]);
+			fldEnd = Integer.parseInt(items[1]);
+		}
+		
+		if (!flag) log.debug("SYSTEM_RANGE [" + sysBegin + "~" + sysEnd + "], FOLDER_RANGE = [" + fldBegin + "~" + fldEnd + "]");
+		
+		for (int sysIdx=sysBegin; sysIdx <= sysEnd; sysIdx ++) {
+			String key = null;
+			String val = null;
+
+			key = String.format("tain.kr.synker.system.%d", sysIdx);
+			val = this.prop.getProperty(key);
+			if (val == null)
+				continue;
+			
+			String sysName = val;
+
+			for (int fldIdx=fldBegin; fldIdx <= fldEnd; fldIdx ++) {
+				key = String.format("tain.kr.synker.system.%d.folder.%d", sysIdx, fldIdx);
+				val = this.prop.getProperty(key);
+				if (val == null)
+					continue;
+				
+				String fldName = val;
+				
+				String mapKey = String.format("%s_%s", sysName, fldName);
+				
+				if (flag) log.debug(String.format("SYSTEM[%s] FOLDER[%s] -> [%s]", sysName, fldName, mapKey));
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static SynkerProp instance = null;
@@ -119,11 +173,18 @@ public class SynkerProp {
 
 	private static void test01(String[] args) throws Exception {
 		
+		if (!flag) {
+			String fileName = "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/Synker.properties";  // Synker.properties file
+			SynkerProp.getInstance(fileName);
+			
+			if (flag) log.debug(">>>>> " + SynkerProp.getInstance().get("tain.kr.synker.system.1.folder.1"));
+		}
+		
 		if (flag) {
 			String fileName = "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/Synker.properties";  // Synker.properties file
 			SynkerProp.getInstance(fileName);
 			
-			if (flag) log.debug(">>>>> " + SynkerProp.getInstance().get("tain.kr.synker.system.01.folder.01"));
+			SynkerProp.getInstance().getSystemEntries();
 		}
 	}
 	
