@@ -21,6 +21,7 @@ package tain.kr.com.proj.synker.v02.test;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -135,6 +136,23 @@ public class EntryTest02Main {
 		
 		if (flag) {
 			String mapKeyName = String.format("%s_%s_%s", sysName, file.getParent(), file.getName());
+			long crc = 0;
+
+			if (flag) {
+				// CRC value of file - 2
+				FileInputStream fis = new FileInputStream(file.getPath());
+				
+				byte[] bytBuffer = new byte[1024];
+				int n;
+				
+				while ((n = fis.read(bytBuffer)) >= 0) {
+					for (int i=0; i < n; i++) {
+						crc += (int) (0xFF & bytBuffer[i]);
+					}
+				}
+				
+				fis.close();
+			}
 
 			EntryBean bean = new EntryBean();
 			
@@ -144,7 +162,7 @@ public class EntryTest02Main {
 			bean.setMapKeyName(mapKeyName);
 			bean.setSize(file.length());
 			bean.setDate(file.lastModified());
-			bean.setCrc(0);
+			bean.setCrc(crc);
 			bean.setStep(1);
 			
 			if (flag) mapEntryBean.put(mapKeyName, bean);
