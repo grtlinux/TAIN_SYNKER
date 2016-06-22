@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v01.main.ClientMain;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -87,8 +89,15 @@ public class ClientTestMain {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (flag) {
+		if (!flag) {
+			/*
+			 * old version before 2016.06.22
+			 */
 			ClientTestMain.getInstance().print();
+		}
+		
+		if (flag) {
+			new ClientMain().execute(new String[] { "FileSynker Client Test" });
 		}
 	}
 	
