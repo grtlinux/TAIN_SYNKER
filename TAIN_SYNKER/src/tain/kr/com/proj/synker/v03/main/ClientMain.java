@@ -19,11 +19,14 @@
  */
 package tain.kr.com.proj.synker.v03.main;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v01.common.Version;
+import tain.kr.com.proj.synker.v02.bean.InfoBean;
+import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 
 /**
  * Code Templates > Comments > Types
@@ -82,6 +85,20 @@ public class ClientMain {
 			}
 		}
 		
+		if (flag) {
+			List<InfoBean> lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
+			
+			if (flag) {
+				/*
+				 * print list of InfoBean
+				 */
+				
+				for (InfoBean bean : lstInfoBean) {
+					bean.print();
+				}
+			}
+		}
+
 		return 0;
 	}
 	

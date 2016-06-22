@@ -20,12 +20,12 @@
 package tain.kr.com.proj.synker.v03.main;
 
 import java.lang.reflect.Method;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v01.common.Version;
+import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 
 /**
  * Code Templates > Comments > Types
@@ -54,8 +54,6 @@ public class Main {
 	
 	private String desc = null;
 	private String main = null;
-	
-	private Properties prop = null;
 
 	private Main() throws Exception {
 		
@@ -68,10 +66,7 @@ public class Main {
 		}
 		
 		if (flag) {
-			
-			this.prop = System.getProperties();
-			
-			this.main = prop.getProperty(KEY_MAIN);
+			this.main = SynkerProperties.getInstance().getSystem(KEY_MAIN);
 			if (this.main == null) {
 				String errMsg = "ERROR : there is no main entry value ????? : ex) java -Dtain.kr.main=tain.kr.XXXX.main.XXXMain -jar XXX.jar";
 				if (flag) log.error(errMsg);
