@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v02.client;
+package tain.kr.com.proj.synker.v03.tr;
 
 import org.apache.log4j.Logger;
 
@@ -25,8 +25,8 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : SynkerClient.java
- *   -. Package    : tain.kr.com.proj.synker.v02.client
+ *   -. FileName   : TR0000Req.java
+ *   -. Package    : tain.kr.com.proj.synker.v02.tr
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 6. 23. {time}
@@ -35,11 +35,11 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class SynkerClient {
+public class TR0000Req {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(SynkerClient.class);
+	private static final Logger log = Logger.getLogger(TR0000Req.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
