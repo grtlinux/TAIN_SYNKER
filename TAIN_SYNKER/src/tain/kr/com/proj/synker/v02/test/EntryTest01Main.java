@@ -43,11 +43,11 @@ import tain.kr.com.proj.synker.v01.util.DateTime;
  * @author taincokr
  *
  */
-public class EntryTestMain {
+public class EntryTest01Main {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(EntryTestMain.class);
+	private static final Logger log = Logger.getLogger(EntryTest01Main.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,7 +59,7 @@ public class EntryTestMain {
 	private String desc = null;
 	private String sysFdr = null;
 
-	private EntryTestMain() throws Exception {
+	private EntryTest01Main() throws Exception {
 		if (flag) {
 			String clsName = this.getClass().getName();
 			
@@ -140,12 +140,12 @@ public class EntryTestMain {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static EntryTestMain instance = null;
+	private static EntryTest01Main instance = null;
 	
-	public static synchronized EntryTestMain getInstance() throws Exception {
+	public static synchronized EntryTest01Main getInstance() throws Exception {
 		
 		if (instance == null) {
-			instance = new EntryTestMain();
+			instance = new EntryTest01Main();
 		}
 		
 		return instance;
@@ -373,8 +373,98 @@ public class EntryTestMain {
 	private static void test04(String[] args) throws Exception {
 		
 		if (flag) {
-			EntryTestMain.getInstance().print();
-			EntryTestMain.getInstance().getSystemEntry();
+			EntryTest01Main.getInstance().print();
+			EntryTest01Main.getInstance().getSystemEntry();
+		}
+	}
+	
+	private static void test05(String[] args) throws Exception {
+		
+		String strSystemFolder = "N:/PROG/javadocs_1.6";
+		strSystemFolder = "N:/PROG/libs";
+
+		if (flag) {
+			/* ----------------------------------------------------------------
+			 * 3. File[] File.listFiles(FileFilter)
+			 */
+			if (flag) log.info("3. File[] File.listFiles(FileFilter) -> " + strSystemFolder);
+
+			File file = null;
+			File[] files = null;
+			
+			try {
+				// System Folder
+				file = new File(strSystemFolder);
+				
+				// List of files
+				files = file.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File file) {
+						
+						if (flag) return true;
+						
+						if (flag) {
+							String tmCal = null;
+							
+							if (flag) {
+								long lm = file.lastModified();
+								long ms = lm % 1000;
+								long sec = (lm / 1000) % 60;
+								long min = (lm / 1000 / 60) % 60;
+								long hour = (lm / 1000 / 60 / 60 + 9) % 24;
+								tmCal = String.format("[%02d:%02d:%02d.%03d]", hour, min, sec, ms);
+							}
+							
+							try {
+								StringBuffer sb = new StringBuffer();
+								sb.append(String.format("\t3-1 > "));
+								sb.append(String.valueOf(file.getName())).append(" - ");
+								sb.append(String.valueOf(file.getAbsolutePath())).append(" - ");
+								sb.append(String.valueOf(file.getCanonicalPath())).append(" - ");
+								sb.append(String.valueOf(file.lastModified())).append(" - ").append(String.valueOf(new Date(file.lastModified()))).append(" - ").append(tmCal).append(" - ");
+								sb.append(String.valueOf(file.length())).append(" - ");
+								
+								log.debug(sb.toString());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						
+						// get name of file
+						String name = file.getName();
+						
+						// get last index of '.' char.
+						int lastIndex = name.lastIndexOf('.');
+						
+						if (lastIndex > 0) {
+							// get extension
+							String ext = name.substring(lastIndex);
+							
+							// match each name extension
+							if (".iso".equals(ext)) {
+								return true;
+							}
+						}
+						
+						return false;
+					}
+				});
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+			}
+
+			if (!flag) {
+				// for loop of files
+				for (File f : files) {
+					
+					// print file entry
+					log.debug("\t3-2 > " + f);
+				}
+			}
+			
+			if (flag) log.debug("size = " + files.length);
 		}
 	}
 	
@@ -382,9 +472,10 @@ public class EntryTestMain {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (flag) test01(args);
+		if (!flag) test01(args);
 		if (!flag) test02(args);
 		if (!flag) test03(args);
 		if (!flag) test04(args);
+		if (flag) test05(args);
 	}
 }
