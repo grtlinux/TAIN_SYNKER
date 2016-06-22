@@ -17,13 +17,13 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v02.test;
+package tain.kr.com.proj.synker.v03.test;
 
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v02.main.ClientMain;
+import tain.kr.com.proj.synker.v03.main.ClientMain;
 
 /**
  * Code Templates > Comments > Types

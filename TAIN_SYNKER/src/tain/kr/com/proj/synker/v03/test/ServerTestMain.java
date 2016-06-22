@@ -17,19 +17,19 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v02.test;
+package tain.kr.com.proj.synker.v03.test;
 
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v02.main.ClientMain;
+import tain.kr.com.proj.synker.v03.main.ServerMain;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : ClientTestMain.java
+ *   -. FileName   : ServerTest.java
  *   -. Package    : tain.kr.com.proj.synker.v01.net
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -39,19 +39,19 @@ import tain.kr.com.proj.synker.v02.main.ClientMain;
  * @author taincokr
  *
  */
-public class ClientTestMain {
+public class ServerTestMain {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(ClientTestMain.class);
+	private static final Logger log = Logger.getLogger(ServerTestMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private static final String KEY_DESC = "tain.kr.test.clienttestmain.desc";
+	private static final String KEY_DESC = "tain.kr.test.servertestmain.desc";
 	
 	private String desc = null;
 
-	private ClientTestMain() throws Exception {
+	private ServerTestMain() throws Exception {
 		if (flag) {
 			String clsName = this.getClass().getName();
 			
@@ -73,12 +73,12 @@ public class ClientTestMain {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static ClientTestMain instance = null;
+	private static ServerTestMain instance = null;
 	
-	public static synchronized ClientTestMain getInstance() throws Exception {
+	public static synchronized ServerTestMain getInstance() throws Exception {
 		
 		if (instance == null) {
-			instance = new ClientTestMain();
+			instance = new ServerTestMain();
 		}
 		
 		return instance;
@@ -93,11 +93,11 @@ public class ClientTestMain {
 			/*
 			 * old version before 2016.06.22
 			 */
-			ClientTestMain.getInstance().print();
+			ServerTestMain.getInstance().print();
 		}
 		
 		if (flag) {
-			new ClientMain().execute(new String[] { "FileSynker Client Test" });
+			new ServerMain().execute(new String[] { "FileSynker Server Test" });
 		}
 	}
 	
