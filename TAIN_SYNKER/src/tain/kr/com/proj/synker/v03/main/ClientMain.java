@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v01.common.Version;
-import tain.kr.com.proj.synker.v02.bean.InfoBean;
+import tain.kr.com.proj.synker.v03.bean.InfoBean;
+import tain.kr.com.proj.synker.v03.common.Version;
 import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 
 /**
