@@ -94,12 +94,19 @@ public class Main {
 			}
 			
 			Method method = cls.getDeclaredMethod("execute", new Class[] { String[].class });
+			if (method == null) {
+				String errMsg = "ERROR : there is no method.. Not found [execute]";
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
+				
+				System.exit(-1);
+			}
 			
 			String[] arg = { "FileSynker" };
-			String ret = (String) method.invoke(cls.newInstance(), new Object[] { arg });                                      // CORRECT 
+			Integer ret = (Integer) method.invoke(cls.newInstance(), new Object[] { arg });                                      // CORRECT 
 
-			if (flag) log.debug(">" + ret);
-			if (flag) log.debug("\n-----------------------------------------------\n");
+			if (flag) log.debug("STATUS : return value of execute = " + ret);
+			if (!flag) log.debug("\n-----------------------------------------------\n");
 		}
 	}
 	

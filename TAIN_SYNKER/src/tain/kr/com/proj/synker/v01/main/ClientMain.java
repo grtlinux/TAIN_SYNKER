@@ -72,7 +72,7 @@ public class ClientMain {
 		}
 	}
 	
-	public void execute(String[] args) throws Exception {
+	public int execute(String[] args) throws Exception {
 		
 		if (flag) {
 			log.debug("execute function...");
@@ -81,6 +81,8 @@ public class ClientMain {
 				log.debug("    [" + arg + "]");
 			}
 		}
+		
+		return 0;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
