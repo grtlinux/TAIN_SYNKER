@@ -19,6 +19,7 @@
  */
 package tain.kr.com.proj.synker.v01.main;
 
+import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -73,8 +74,8 @@ public class Main {
 			this.main = prop.getProperty(KEY_MAIN);
 			if (this.main == null) {
 				String errMsg = "ERROR : there is no main entry value ????? : ex) java -Dtain.kr.main=tain.kr.XXXX.main.XXXMain -jar XXX.jar";
-				if (flag) log.debug(errMsg);
-				if (flag) System.out.println(errMsg);
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
 				
 				System.exit(-1);
 			}
@@ -83,7 +84,22 @@ public class Main {
 		}
 		
 		if (flag) {
+			Class<?> cls = Class.forName(main);
+			if (cls == null) {
+				String errMsg = "ERROR : there is no class.. Not found [" + this.main + "]";
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
+				
+				System.exit(-1);
+			}
 			
+			Method method = cls.getDeclaredMethod("main", new Class[] { String[].class });
+			
+			String[] arg = { "FileSynker" };
+			String ret = (String) method.invoke(cls.newInstance(), new Object[] { arg });                                      // CORRECT 
+
+			if (flag) log.debug(">" + ret);
+			if (flag) log.debug("\n-----------------------------------------------\n");
 		}
 	}
 	
