@@ -78,14 +78,25 @@ public class ClientMain {
 	public int execute(String[] args) throws Exception {
 		
 		if (flag) {
-			log.debug("execute function...");
-			
+			/*
+			 * print version
+			 */
+			Version.getInstance().print();
+		}
+
+		if (flag) {
+			/*
+			 * print arguments
+			 */
 			for (String arg : args) {
-				log.debug("    [" + arg + "]");
+				log.debug("ARGS [" + arg + "]");
 			}
 		}
 		
 		if (flag) {
+			/*
+			 * print Synker.properties
+			 */
 			List<InfoBean> lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
 			
 			if (flag) {

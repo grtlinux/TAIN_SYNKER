@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v03.bean.InfoBean;
 import tain.kr.com.proj.synker.v03.common.Version;
+import tain.kr.com.proj.synker.v03.server.SynkerServer;
 import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 
 /**
@@ -78,14 +79,25 @@ public class ServerMain {
 	public int execute(String[] args) throws Exception {
 		
 		if (flag) {
-			log.debug("execute function...");
-			
+			/*
+			 * print version
+			 */
+			Version.getInstance().print();
+		}
+
+		if (flag) {
+			/*
+			 * print arguments
+			 */
 			for (String arg : args) {
-				log.debug("    [" + arg + "]");
+				log.debug("ARGS [" + arg + "]");
 			}
 		}
 		
 		if (flag) {
+			/*
+			 * print Synker.properties
+			 */
 			List<InfoBean> lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
 			
 			if (flag) {
@@ -99,6 +111,13 @@ public class ServerMain {
 			}
 		}
 
+		if (flag) {
+			/*
+			 * execute Synker Server
+			 */
+			SynkerServer.getInstance().execute();
+		}
+		
 		return 0;
 	}
 	
