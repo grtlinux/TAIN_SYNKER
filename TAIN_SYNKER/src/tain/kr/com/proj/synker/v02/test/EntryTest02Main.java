@@ -19,7 +19,17 @@
  */
 package tain.kr.com.proj.synker.v02.test;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+
+import tain.kr.com.proj.synker.v02.bean.InfoBean;
+import tain.kr.com.proj.synker.v02.util.SynkerProp;
 
 /**
  * Code Templates > Comments > Types
@@ -43,8 +53,77 @@ public class EntryTest02Main {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private List<InfoBean> lstInfoBean = null;
+
+	private List<String> lstMapKey = new ArrayList<String>();
+	private Map<String, String> mapEntryBean = new HashMap<String, String>();
+	
 	private EntryTest02Main() throws Exception {
 		
+	}
+	
+	public void execute() throws Exception {
+		
+		if (flag) {
+			this.lstInfoBean = SynkerProp.getInstance().getListInfoBean();
+
+			if (!flag) {
+				for (InfoBean bean : this.lstInfoBean) {
+					bean.print();
+				}
+			}
+		}
+		
+		if (flag) {
+			for (InfoBean bean : this.lstInfoBean) {
+				if (!flag) bean.print();
+				
+				getEntries(bean.getSystemName(), bean.getFolderName());
+			}
+			
+			if (flag) log.debug("lstMapKey.size() = " + lstMapKey.size() + ", mapEntryBean.size() = " + mapEntryBean.size());
+		}
+	}
+
+	private void getEntries(String sysName, String fldName) throws Exception {
+		
+		if (!flag) log.debug(String.format("(SYS, FLD) = (%s, %s)", sysName, fldName));
+		
+		if (flag) {
+			File file = new File(fldName);
+			File[] files = null;
+			
+			try {
+				files = file.listFiles(new FileFilter() {
+					@Override
+					public boolean accept(File file) {
+						return true;
+					}
+				});
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+			}
+			
+			for (File f : files) {
+				if (f.isDirectory()) {
+					/*
+					 * folder
+					 */
+					getEntries(sysName, f.getPath());
+				} else {
+					/*
+					 * file
+					 */
+					String mapKeyName = String.format("%s_%s_%s", sysName, f.getParent(), f.getName());
+					if (!flag) log.debug("mapKeyName = " + mapKeyName);
+					
+					if (!flag) lstMapKey.add(mapKeyName);
+					
+					if (flag) mapEntryBean.put(mapKeyName, mapKeyName);
+				}
+			}
+		}
 	}
 	
 	public void print() throws Exception {
@@ -75,7 +154,16 @@ public class EntryTest02Main {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			EntryTest02Main.getInstance().print();
+			String fileName = "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/Synker.properties";  // Synker.properties file
+			SynkerProp.getInstance(fileName);
+		}
+		
+		if (flag) {
+			for (int i=0; i < 1000; i++) {
+				EntryTest02Main.getInstance().execute();
+				
+				try { Thread.sleep(5000); } catch (InterruptedException e) {}
+			}
 		}
 	}
 	

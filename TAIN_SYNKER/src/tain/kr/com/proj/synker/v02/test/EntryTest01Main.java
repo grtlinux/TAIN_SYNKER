@@ -472,10 +472,10 @@ public class EntryTest01Main {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (!flag) test01(args);
+		if (flag) test01(args);
 		if (!flag) test02(args);
 		if (!flag) test03(args);
 		if (!flag) test04(args);
-		if (flag) test05(args);
+		if (!flag) test05(args);
 	}
 }
