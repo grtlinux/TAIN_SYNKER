@@ -72,11 +72,14 @@ public class ServerMain {
 		}
 	}
 	
-	
-	public void execute() throws Exception {
+	public void execute(String[] args) throws Exception {
 		
 		if (flag) {
 			log.debug("execute function...");
+			
+			for (String arg : args) {
+				log.debug("    [" + arg + "]");
+			}
 		}
 	}
 	
@@ -85,9 +88,16 @@ public class ServerMain {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (flag) {
+		if (!flag) {
+			/*
+			 * old version before 2016.06.22
+			 */
 			new ServerMain().print();
 			Version.getInstance().print();
+		}
+		
+		if (flag) {
+			new ServerMain().execute(new String[] { "FileSynker" });
 		}
 	}
 	
