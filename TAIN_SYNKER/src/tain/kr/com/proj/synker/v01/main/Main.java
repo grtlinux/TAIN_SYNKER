@@ -72,7 +72,7 @@ public class Main {
 			
 			this.main = prop.getProperty(KEY_MAIN);
 			if (this.main == null) {
-				String errMsg = "ERROR : there is no main entry value ????? : ex) java -jar XXX.jar -Dtain.kr.main=tain.kr.XXXX.main.XXXMain";
+				String errMsg = "ERROR : there is no main entry value ????? : ex) java -Dtain.kr.main=tain.kr.XXXX.main.XXXMain -jar XXX.jar";
 				if (flag) log.debug(errMsg);
 				if (flag) System.out.println(errMsg);
 				
