@@ -51,7 +51,7 @@ public class ClientMain {
 	
 	private String desc = null;
 	
-	private ClientMain() throws Exception {
+	public ClientMain() throws Exception {
 		
 		if (flag) {
 			String clsName = this.getClass().getName();
@@ -72,17 +72,11 @@ public class ClientMain {
 		}
 	}
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private static ClientMain instance = null;
-	
-	public static synchronized ClientMain getInstance() throws Exception {
+	public void execute() throws Exception {
 		
-		if (instance == null) {
-			instance = new ClientMain();
+		if (flag) {
+			log.debug("execute function...");
 		}
-		
-		return instance;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +85,7 @@ public class ClientMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			ClientMain.getInstance().print();
+			new ClientMain().print();
 			Version.getInstance().print();
 		}
 	}

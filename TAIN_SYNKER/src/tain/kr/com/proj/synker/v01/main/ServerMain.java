@@ -51,7 +51,7 @@ public class ServerMain {
 	
 	private String desc = null;
 	
-	private ServerMain() throws Exception {
+	public ServerMain() throws Exception {
 		
 		if (flag) {
 			String clsName = this.getClass().getName();
@@ -72,17 +72,12 @@ public class ServerMain {
 		}
 	}
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static ServerMain instance = null;
-	
-	public static synchronized ServerMain getInstance() throws Exception {
+	public void execute() throws Exception {
 		
-		if (instance == null) {
-			instance = new ServerMain();
+		if (flag) {
+			log.debug("execute function...");
 		}
-		
-		return instance;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +86,7 @@ public class ServerMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			ServerMain.getInstance().print();
+			new ServerMain().print();
 			Version.getInstance().print();
 		}
 	}

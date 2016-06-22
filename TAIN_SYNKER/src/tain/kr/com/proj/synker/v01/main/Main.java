@@ -93,7 +93,7 @@ public class Main {
 				System.exit(-1);
 			}
 			
-			Method method = cls.getDeclaredMethod("main", new Class[] { String[].class });
+			Method method = cls.getDeclaredMethod("execute", new Class[] { String[].class });
 			
 			String[] arg = { "FileSynker" };
 			String ret = (String) method.invoke(cls.newInstance(), new Object[] { arg });                                      // CORRECT 
