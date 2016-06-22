@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v02.bean.EntryBean;
 import tain.kr.com.proj.synker.v02.bean.InfoBean;
 import tain.kr.com.proj.synker.v02.util.SynkerProp;
 
@@ -56,11 +57,9 @@ public class EntryTest02Main {
 	private List<InfoBean> lstInfoBean = null;
 
 	private List<String> lstMapKey = new ArrayList<String>();
-	private Map<String, String> mapEntryBean = new HashMap<String, String>();
+	private Map<String, EntryBean> mapEntryBean = new HashMap<String, EntryBean>();
 	
-	private EntryTest02Main() throws Exception {
-		
-	}
+	private EntryTest02Main() throws Exception {}
 	
 	public void execute() throws Exception {
 		
@@ -87,7 +86,7 @@ public class EntryTest02Main {
 
 	private void getEntries(String sysName, String fldName) throws Exception {
 		
-		if (!flag) log.debug(String.format("(SYS, FLD) = (%s, %s)", sysName, fldName));
+		if (!flag) log.debug(String.format("FOLDER (SYS, FLD) = (%s, %s)", sysName, fldName));
 		
 		if (flag) {
 			File file = new File(fldName);
@@ -115,14 +114,40 @@ public class EntryTest02Main {
 					/*
 					 * file
 					 */
-					String mapKeyName = String.format("%s_%s_%s", sysName, f.getParent(), f.getName());
-					if (!flag) log.debug("mapKeyName = " + mapKeyName);
-					
-					if (!flag) lstMapKey.add(mapKeyName);
-					
-					if (flag) mapEntryBean.put(mapKeyName, mapKeyName);
+					getEntry(sysName, f);
 				}
 			}
+		}
+	}
+	
+	private void getEntry(String sysName, File file) throws Exception {
+		
+		if (!flag) log.debug(String.format("FILE (SYS, FILE) = (%s, %s)", sysName, file.getPath()));
+
+		if (!flag) {
+			String mapKeyName = String.format("%s_%s_%s", sysName, file.getParent(), file.getName());
+			if (!flag) log.debug("mapKeyName = " + mapKeyName);
+			
+			if (!flag) lstMapKey.add(mapKeyName);
+			
+			if (flag) mapEntryBean.put(mapKeyName, null);
+		}
+		
+		if (flag) {
+			String mapKeyName = String.format("%s_%s_%s", sysName, file.getParent(), file.getName());
+
+			EntryBean bean = new EntryBean();
+			
+			bean.setSystemName(sysName);
+			bean.setFolderName(file.getParent());
+			bean.setFileName(file.getName());
+			bean.setMapKeyName(mapKeyName);
+			bean.setSize(file.length());
+			bean.setDate(file.lastModified());
+			bean.setCrc(0);
+			bean.setStep(1);
+			
+			if (flag) mapEntryBean.put(mapKeyName, bean);
 		}
 	}
 	

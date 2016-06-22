@@ -19,11 +19,7 @@
  */
 package tain.kr.com.proj.synker.v02.bean;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
-
-import tain.kr.com.proj.synker.v02.util.GsonTool;
 
 /**
  * Code Templates > Comments > Types
@@ -47,8 +43,11 @@ public class EntryBean {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private String name = null;   // file name
-	private String path = null;   // file path
+	private String systemName = null;   // system name
+	private String folderName = null;   // folder name
+	private String fileName = null;     // file name
+	
+	private String mapKeyName = null;   // map key name
 
 	private long size = 0;        // file size
 	private long date = 0;        // file mdate
@@ -60,49 +59,80 @@ public class EntryBean {
 	
 	public EntryBean() {}
 
-	public String getName() {
-		return name;
+	public String getSystemName() {
+		return systemName;
 	}
 
-	public String getPath() {
-		return path;
+
+	public String getFolderName() {
+		return folderName;
 	}
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public String getMapKeyName() {
+		return mapKeyName;
+	}
+
 
 	public long getSize() {
 		return size;
 	}
 
+
 	public long getDate() {
 		return date;
 	}
+
 
 	public long getCrc() {
 		return crc;
 	}
 
+
 	public int getStep() {
 		return step;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+
+	public void setFolderName(String folderName) {
+		this.folderName = folderName;
 	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
+	public void setMapKeyName(String mapKeyName) {
+		this.mapKeyName = mapKeyName;
+	}
+
 
 	public void setSize(long size) {
 		this.size = size;
 	}
 
+
 	public void setDate(long date) {
 		this.date = date;
 	}
 
+
 	public void setCrc(long crc) {
 		this.crc = crc;
 	}
+
 
 	public void setStep(int step) {
 		this.step = step;
@@ -110,19 +140,15 @@ public class EntryBean {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	public String toString() {
+		return String.format("[SYS, FLD, FILE, KEY, SIZE, DT, CRC, STP] = [%s, %s, %s, %s, %d, %d, %d, %d]"
+				, this.systemName, this.folderName, this.fileName, this.mapKeyName
+				, this.size, this.date, this.crc, this.step);
+	}
+	
 	public void print() {
-		
 		if (flag) {
-			String strPrint = String.format("[%s] [%s] [%d] [%d] [%d] [%d]"
-					, name
-					, path
-					, size
-					, date
-					, crc
-					, step
-					);
-			
-			log.debug(">>>>>>>>>>> FileEntry : " + strPrint);
+			log.info(toString());
 		}
 	}
 	
@@ -130,33 +156,8 @@ public class EntryBean {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private static void test01(String[] args) throws Exception {
-		
-		if (flag) {
-			String strJson = "{ 'name':'tain-cosmarter-1.0.jar', 'path':'N:/TEMP/FILES', 'size':'1517398', 'date':'1462787084096', crc:'329886128', step:'1' }";
-			
-			EntryBean entry = GsonTool.getInstance().instance().fromJson(strJson, EntryBean.class);
-			entry.print();
-			String str = GsonTool.getInstance().instance().toJson(entry);
-			log.debug(">>>>> " + str);
-			
-			System.out.println("\n\n\n");
-		}
 
-		if (flag) {
-			EntryBean entry = new EntryBean();
-			
-			entry.setName("sample.file");
-			entry.setPath("/home/test/FILE");
-			entry.setSize(10241024);
-			entry.setDate(new Date().getTime());
-			entry.setCrc(1234567890L);
-			entry.setStep(1);
-			
-			String str = GsonTool.getInstance().instance().toJson(entry);
-			
-			log.debug(">>>>>" + str + "<<<<<");
-		}
+	private static void test01(String[] args) throws Exception {
 	}
 	
 	public static void main(String[] args) throws Exception {
