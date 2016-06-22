@@ -42,7 +42,84 @@ public class InfoBean {
 	private static final Logger log = Logger.getLogger(InfoBean.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private String systemName = null;
+	private String folderName = null;
+	
+	private String mapKeyName = null;
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public InfoBean() {}
+	
+	public InfoBean(String systemName, String folderName, String mapKeyName) {
+		if (flag) {
+			this.systemName = systemName;
+			this.folderName = folderName;
+			this.mapKeyName = mapKeyName;
+		}
+	}
+	
+	public InfoBean(String systemName, String folderName) {
+		if (flag) {
+			this.systemName = systemName;
+			this.folderName = folderName;
+			this.mapKeyName = this.systemName + "_" + this.folderName;
+		}
+	}
+	
+	public String getSystemName() {
+		return systemName;
+	}
+
+	public String getFolderName() {
+		return folderName;
+	}
+
+	public String getMapKeyName() {
+		return mapKeyName;
+	}
+
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
+	}
+
+	public void setFolderName(String folderName) {
+		this.folderName = folderName;
+	}
+
+	public void setMapKeyName(String mapKeyName) {
+		this.mapKeyName = mapKeyName;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public String toString() {
+		return String.format("[SYS, FLD, KEY] = [%s, %s, %s]", this.systemName, this.folderName, this.mapKeyName);
+	}
+	
+	public void print() {
+		if (flag) {
+			log.info(toString());
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			InfoBean ib = new InfoBean("hello", "world");
+			
+			ib.print();
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }

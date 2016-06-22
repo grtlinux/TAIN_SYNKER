@@ -21,9 +21,13 @@ package tain.kr.com.proj.synker.v02.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
+import tain.kr.com.proj.synker.v02.bean.InfoBean;
 
 /**
  * Code Templates > Comments > Types
@@ -88,10 +92,14 @@ public class SynkerProp {
 		return this.prop.getProperty(key, defValue);
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	private static final String KEY_SYSTEM_RANGE = "tain.kr.synker.system.range";
 	private static final String KEY_FOLDER_RANGE = "tain.kr.synker.folder.range";
 	
-	public void getSystemEntries() throws Exception {
+	public List<InfoBean> getListInfoBean() throws Exception {
+		
+		List<InfoBean> lstInfoBean = new ArrayList<InfoBean>();
 		
 		int sysBegin = 0;
 		int sysEnd = 0;
@@ -115,7 +123,7 @@ public class SynkerProp {
 		}
 		
 		if (!flag) log.debug("SYSTEM_RANGE [" + sysBegin + "~" + sysEnd + "], FOLDER_RANGE = [" + fldBegin + "~" + fldEnd + "]");
-		
+
 		for (int sysIdx=sysBegin; sysIdx <= sysEnd; sysIdx ++) {
 			String key = null;
 			String val = null;
@@ -135,11 +143,23 @@ public class SynkerProp {
 				
 				String fldName = val;
 				
-				String mapKey = String.format("%s_%s", sysName, fldName);
+				if (!flag) log.debug(String.format("[SYS, FLD] = [%s, %s]", sysName, fldName));
 				
-				if (flag) log.debug(String.format("SYSTEM[%s] FOLDER[%s] -> [%s]", sysName, fldName, mapKey));
+				lstInfoBean.add(new InfoBean(sysName, fldName));
 			}
 		}
+		
+		if (!flag) {
+			/*
+			 * print list of InfoBean
+			 */
+			
+			for (InfoBean bean : lstInfoBean) {
+				bean.print();
+			}
+		}
+		
+		return lstInfoBean;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +204,17 @@ public class SynkerProp {
 			String fileName = "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/Synker.properties";  // Synker.properties file
 			SynkerProp.getInstance(fileName);
 			
-			SynkerProp.getInstance().getSystemEntries();
+			List<InfoBean> lstInfoBean = SynkerProp.getInstance().getListInfoBean();
+			
+			if (flag) {
+				/*
+				 * print list of InfoBean
+				 */
+				
+				for (InfoBean bean : lstInfoBean) {
+					bean.print();
+				}
+			}
 		}
 	}
 	
