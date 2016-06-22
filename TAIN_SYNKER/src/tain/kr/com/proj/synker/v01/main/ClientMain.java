@@ -19,7 +19,6 @@
  */
 package tain.kr.com.proj.synker.v01.main;
 
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
@@ -30,33 +29,29 @@ import tain.kr.com.proj.synker.v01.common.Version;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Main.java
- *   -. Package    : tain.kr.com.test.filesync.v02.main
+ *   -. FileName   : ClientMain.java
+ *   -. Package    : tain.kr.com.proj.synker.v01.main
  *   -. Comment    :
  *   -. Author     : taincokr
- *   -. First Date : 2016. 5. 16. {time}
+ *   -. First Date : 2016. 6. 22. {time}
  * </PRE>
  *
  * @author taincokr
  *
  */
-public class Main {
+public class ClientMain {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(Main.class);
+	private static final Logger log = Logger.getLogger(ClientMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static final String KEY_DESC = "tain.kr.main.desc";
-	private static final String KEY_MAIN = "tain.kr.main";
 	
 	private String desc = null;
-	private String main = null;
 	
-	private Properties prop = null;
-
-	private Main() throws Exception {
+	private ClientMain() throws Exception {
 		
 		if (flag) {
 			String clsName = this.getClass().getName();
@@ -64,26 +59,6 @@ public class Main {
 			ResourceBundle rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
 			
 			this.desc = rb.getString(KEY_DESC);
-		}
-		
-		if (flag) {
-			
-			this.prop = System.getProperties();
-			
-			this.main = prop.getProperty(KEY_MAIN);
-			if (this.main == null) {
-				String errMsg = "ERROR : there is no main entry value ????? : ex) java -Dtain.kr.main=tain.kr.XXXX.main.XXXMain -jar XXX.jar";
-				if (flag) log.debug(errMsg);
-				if (flag) System.out.println(errMsg);
-				
-				System.exit(-1);
-			}
-			
-			if (flag) log.debug("main entry -> " + this.main);
-		}
-		
-		if (flag) {
-			
 		}
 	}
 	
@@ -99,12 +74,12 @@ public class Main {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static Main instance = null;
+	private static ClientMain instance = null;
 	
-	public static synchronized Main getInstance() throws Exception {
+	public static synchronized ClientMain getInstance() throws Exception {
 		
 		if (instance == null) {
-			instance = new Main();
+			instance = new ClientMain();
 		}
 		
 		return instance;
@@ -115,16 +90,9 @@ public class Main {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (!flag) {
-			/*
-			 * old version before 2016.06.22
-			 */
-			Main.getInstance().print();
-			Version.getInstance().print();
-		}
-		
 		if (flag) {
-			Main.getInstance();
+			ClientMain.getInstance().print();
+			Version.getInstance().print();
 		}
 	}
 	
