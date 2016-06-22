@@ -10,7 +10,7 @@ set PATH=%JAVA_HOME%\bin;%PATH%
 set TAIN_HOME=N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER
 
 :: --------------------------------------------------------------
-java -Dtain.kr.main=tain.kr.com.proj.synker.v02.main.ServerMain -jar %TAIN_HOME%/synker/libs/tain-synker-1.0.jar
+java -Dtain.kr.main=tain.kr.com.proj.synker.v03.main.ServerMain -jar %TAIN_HOME%/synker/libs/tain-synker-1.0.jar
 
 :: --------------------------------------------------------------
 pause
