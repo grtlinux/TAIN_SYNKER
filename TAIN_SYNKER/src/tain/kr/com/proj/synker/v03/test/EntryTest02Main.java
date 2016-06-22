@@ -29,9 +29,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v02.bean.EntryBean;
-import tain.kr.com.proj.synker.v02.bean.InfoBean;
 import tain.kr.com.proj.synker.v02.util.SynkerProp;
+import tain.kr.com.proj.synker.v03.bean.EntryBean;
+import tain.kr.com.proj.synker.v03.bean.InfoBean;
+import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 
 /**
  * Code Templates > Comments > Types
@@ -65,7 +66,7 @@ public class EntryTest02Main {
 	public void execute() throws Exception {
 		
 		if (flag) {
-			this.lstInfoBean = SynkerProp.getInstance().getListInfoBean();
+			this.lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
 
 			if (!flag) {
 				for (InfoBean bean : this.lstInfoBean) {
