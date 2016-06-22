@@ -19,6 +19,7 @@
  */
 package tain.kr.com.proj.synker.v01.main;
 
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
@@ -48,10 +49,15 @@ public class Main {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static final String KEY_DESC = "tain.kr.main.desc";
+	private static final String KEY_MAIN = "tain.kr.main";
 	
 	private String desc = null;
+	private String main = null;
+	
+	private Properties prop = null;
 
 	private Main() throws Exception {
+		
 		if (flag) {
 			String clsName = this.getClass().getName();
 			
@@ -59,6 +65,22 @@ public class Main {
 			
 			this.desc = rb.getString(KEY_DESC);
 		}
+		
+		if (flag) {
+			
+			this.prop = System.getProperties();
+			
+			this.main = prop.getProperty(KEY_MAIN);
+			if (this.main == null) {
+				String errMsg = "ERROR : there is no main entry value ????? : ex) java -jar XXX.jar -Dtain.kr.main=tain.kr.XXXX.main.XXXMain";
+				if (flag) log.debug(errMsg);
+				if (flag) System.out.println(errMsg);
+				
+				System.exit(-1);
+			}
+			
+			if (flag) log.debug("main entry -> " + this.main);
+		}		
 	}
 	
 	public String getDesc() throws Exception {
