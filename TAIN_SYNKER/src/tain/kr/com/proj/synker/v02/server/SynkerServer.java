@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v02.Server;
+package tain.kr.com.proj.synker.v02.server;
 
 import org.apache.log4j.Logger;
 
