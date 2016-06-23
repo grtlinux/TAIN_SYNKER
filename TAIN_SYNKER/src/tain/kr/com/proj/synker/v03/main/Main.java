@@ -66,19 +66,25 @@ public class Main {
 		}
 		
 		if (flag) {
+			/*
+			 * to get the value of a main key
+			 */
 			this.main = SynkerProperties.getInstance().getSystem(KEY_MAIN);
 			if (this.main == null) {
-				String errMsg = "ERROR : there is no main entry value ????? : ex) java -Dtain.kr.main=tain.kr.XXXX.main.XXXMain -jar XXX.jar";
+				String errMsg = "ERROR : there is no main entry value of a key [" + KEY_MAIN + "] : ex) java -Dtain.kr.main=..... -jar tain-synker-1.0.jar";
 				if (flag) log.error(errMsg);
 				if (flag) System.err.println(errMsg);
 				
 				System.exit(-1);
 			}
 			
-			if (flag) log.debug("main entry -> " + this.main);
+			if (flag) log.debug("main entry value -> " + this.main);
 		}
 		
 		if (flag) {
+			/*
+			 * to execute the main program from the value of a main key
+			 */
 			Class<?> cls = Class.forName(main);
 			if (cls == null) {
 				String errMsg = "ERROR : there is no class.. Not found [" + this.main + "]";
@@ -97,11 +103,13 @@ public class Main {
 				System.exit(-1);
 			}
 			
+			/*
+			 * to execute
+			 */
 			String[] arg = { "FileSynker" };
-			Integer ret = (Integer) method.invoke(cls.newInstance(), new Object[] { arg });                                      // CORRECT 
+			Integer ret = (Integer) method.invoke(cls.newInstance(), new Object[] { arg });    // RUN 
 
 			if (flag) log.debug("STATUS : return value of execute = " + ret);
-			if (!flag) log.debug("\n-----------------------------------------------\n");
 		}
 	}
 	

@@ -81,7 +81,7 @@ public class SynkerServerThread extends Thread {
 				
 				byte[] header = null;
 
-				if (flag) {
+				if (!flag) {
 					/*
 					 * 1. recv header
 					 */

@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v03.bean.InfoBean;
+import tain.kr.com.proj.synker.v03.client.SynkerClient;
 import tain.kr.com.proj.synker.v03.common.Version;
 import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 
@@ -75,6 +76,8 @@ public class ClientMain {
 		}
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	public int execute(String[] args) throws Exception {
 		
 		if (flag) {
@@ -110,6 +113,13 @@ public class ClientMain {
 			}
 		}
 
+		if (flag) {
+			/*
+			 * execute Synker Server
+			 */
+			SynkerClient.getInstance().execute01();
+		}
+		
 		return 0;
 	}
 	
