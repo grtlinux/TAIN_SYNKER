@@ -105,6 +105,8 @@ public class SynkerClient {
 				if (this.socket != null) try { this.socket.close(); } catch (Exception e) {}
 			}
 		}
+		
+		if (flag) log.debug("end of connection...");
 	}
 	
 	private byte[] recv(final int size) throws Exception {

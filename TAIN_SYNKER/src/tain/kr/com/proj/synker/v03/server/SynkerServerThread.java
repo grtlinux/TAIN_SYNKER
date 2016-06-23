@@ -90,7 +90,7 @@ public class SynkerServerThread extends Thread {
 					if (flag) log.debug(String.format("<- 1. REQ RECV HEADER [%s]", new String(header)));
 				}
 				
-				if (flag) {
+				if (!flag) {
 					/*
 					 * process for the request and then make a result for response
 					 */

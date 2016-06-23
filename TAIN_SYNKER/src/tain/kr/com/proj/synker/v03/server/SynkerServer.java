@@ -72,7 +72,7 @@ public class SynkerServer {
 			@SuppressWarnings("resource")
 			ServerSocket serverSocket = new ServerSocket(Integer.parseInt(this.strListenPort));
 
-			if (flag) log.debug(String.format("SERVER : listening by port %s [%s]", this.strListenPort, serverSocket.toString()));
+			if (flag) log.debug(String.format("SERVER : listening by port %s [%s]\n\n", this.strListenPort, serverSocket.toString()));
 			
 			for (int idxThr = 0; ; idxThr ++) {
 				if (idxThr > 100000000)
