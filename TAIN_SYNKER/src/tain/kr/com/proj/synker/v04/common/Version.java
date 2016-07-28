@@ -86,6 +86,29 @@ public class Version {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public int execute(String[] args) throws Exception {
+		
+		if (flag) {
+			/*
+			 * print version
+			 */
+			print();
+		}
+
+		if (flag) {
+			/*
+			 * print arguments
+			 */
+			for (String arg : args) {
+				log.debug("ARGS [" + arg + "]");
+			}
+		}
+
+		return 0;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static Version instance = null;
 	
