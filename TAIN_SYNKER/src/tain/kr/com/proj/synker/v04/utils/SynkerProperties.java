@@ -34,7 +34,7 @@ import tain.kr.com.proj.synker.v04.bean.InfoBean;
  *
  * <PRE>
  *   -. FileName   : SynkerProperties.java
- *   -. Package    : tain.kr.com.proj.synker.v03.util
+ *   -. Package    : tain.kr.com.proj.synker.v04.utils
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 6. 23. {time}
