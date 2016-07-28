@@ -53,7 +53,7 @@ public class Version {
 	private String date = null;
 	private String version = null;
 	
-	private Version() throws Exception {
+	public Version() throws Exception {
 		if (flag) {
 			String clsName = this.getClass().getName();
 			
@@ -101,7 +101,7 @@ public class Version {
 			 * print arguments
 			 */
 			for (String arg : args) {
-				log.debug("ARGS [" + arg + "]");
+				log.debug("execute ARGS [" + arg + "]");
 			}
 		}
 
@@ -127,8 +127,12 @@ public class Version {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (flag) {
+		if (!flag) {
 			Version.getInstance().print();
+		}
+		
+		if (flag) {
+			new Version().execute(new String[] { "FileSynker", "Version", "TEST" });
 		}
 	}
 	

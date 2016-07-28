@@ -91,7 +91,7 @@ public class ClientMain {
 			 * print arguments
 			 */
 			for (String arg : args) {
-				log.debug("ARGS [" + arg + "]");
+				log.debug("execute ARGS [" + arg + "]");
 			}
 		}
 		
@@ -114,6 +114,7 @@ public class ClientMain {
 
 		if (flag) {
 			/*
+			 * TODO 2016.07.28 : Client Main module
 			 * execute Synker Server
 			 */
 			// SynkerClient.getInstance().execute01();
@@ -136,7 +137,7 @@ public class ClientMain {
 		}
 
 		if (flag) {
-			new ClientMain().execute(new String[] { "FileSynker" });
+			new ClientMain().execute(new String[] { "FileSynker", "Client", "TEST" });
 		}
 	}
 	

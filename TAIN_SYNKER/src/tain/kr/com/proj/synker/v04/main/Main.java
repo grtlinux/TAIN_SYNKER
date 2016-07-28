@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v03.util.SynkerProperties;
 import tain.kr.com.proj.synker.v04.common.Version;
+import tain.kr.com.proj.synker.v04.utils.SynkerProperties;
 
 /**
  * Code Templates > Comments > Types
@@ -67,6 +67,9 @@ public class Main {
 			this.desc = rb.getString(KEY_DESC);
 		}
 		
+		String arg1 = null;
+		String arg2 = null;
+		
 		if (flag) {
 			/*
 			 * to get the value of a main key
@@ -81,6 +84,26 @@ public class Main {
 			}
 			
 			if (flag) log.debug("main entry value -> " + this.main);
+			
+			arg1 = this.main;
+			arg2 = "REAL";
+			
+		} else {
+			/*
+			 * TODO 2016.07.28 : for testing to check of version, client and server
+			 */
+			
+			// Version
+			this.main = "tain.kr.com.proj.synker.v04.common.Version";
+			
+			// ClientMain
+			this.main = "tain.kr.com.proj.synker.v04.main.client.ClientMain";
+			
+			// ServerMain
+			this.main = "tain.kr.com.proj.synker.v04.main.server.ServerMain";
+			
+			arg1 = this.main;
+			arg2 = "TEST";
 		}
 		
 		if (flag) {
@@ -108,7 +131,7 @@ public class Main {
 			/*
 			 * to execute
 			 */
-			String[] arg = { "FileSynker" };
+			String[] arg = { "FileSynker", arg1, arg2 };
 			Integer ret = (Integer) method.invoke(cls.newInstance(), new Object[] { arg });    // RUN 
 
 			if (flag) log.debug("STATUS : return value of execute = " + ret);
