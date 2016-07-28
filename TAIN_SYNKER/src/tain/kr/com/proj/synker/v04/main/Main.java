@@ -70,7 +70,7 @@ public class Main {
 		String arg1 = null;
 		String arg2 = null;
 		
-		if (flag) {
+		if (!flag) {
 			/*
 			 * to get the value of a main key
 			 */
