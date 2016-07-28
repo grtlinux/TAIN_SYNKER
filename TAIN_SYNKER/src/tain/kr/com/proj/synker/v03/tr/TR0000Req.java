@@ -35,6 +35,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
+@SuppressWarnings("unused")
 public class TR0000Req {
 
 	private static boolean flag = true;

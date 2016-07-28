@@ -109,6 +109,7 @@ public class SynkerClient {
 		if (flag) log.debug("end of connection...");
 	}
 	
+	@SuppressWarnings("unused")
 	private byte[] recv(final int size) throws Exception {
 		
 		int ret = 0;
