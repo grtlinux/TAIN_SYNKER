@@ -11,7 +11,7 @@ set TAIN_HOME=N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER
 
 :: --------------------------------------------------------------
 set DEBUG=
-set DEBUG=%DEBUG% -Dtain.kr.main=tain.kr.com.proj.synker.v04.common.Version
+set DEBUG=%DEBUG% -Dtain.kr.main=tain.kr.com.proj.synker.v04.version.Version
 set DEBUG=%DEBUG% -Dtain.kr.synker.properties.file=N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/Synker.properties
 
 :: --------------------------------------------------------------

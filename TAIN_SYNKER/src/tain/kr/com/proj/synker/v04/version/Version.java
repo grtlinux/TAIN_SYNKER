@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v04.common;
+package tain.kr.com.proj.synker.v04.version;
 
 import java.util.ResourceBundle;
 

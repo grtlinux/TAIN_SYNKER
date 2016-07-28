@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v04.common.Version;
 import tain.kr.com.proj.synker.v04.utils.SynkerProperties;
+import tain.kr.com.proj.synker.v04.version.Version;
 
 /**
  * Code Templates > Comments > Types
