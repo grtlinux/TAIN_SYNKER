@@ -72,6 +72,7 @@ public class Main {
 		
 		if (!flag) {
 			/*
+			 * TODO 2016.07.31 : real logic
 			 * to get the value of a main key
 			 */
 			this.main = SynkerProperties.getInstance().getSystem(KEY_MAIN);
