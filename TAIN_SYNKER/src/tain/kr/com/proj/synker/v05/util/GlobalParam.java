@@ -43,6 +43,10 @@ public class GlobalParam {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/*
+	 * Global Parameters
+	 */
+	
 	private String serviceType = null;  // TEST-1, TEST-2, REAL
 	private String serviceName = null;  // version, client, server etc
 	
@@ -69,10 +73,12 @@ public class GlobalParam {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String toString() {
-		return String.format("[%s,%s]"
-				, this.serviceType
-				, this.serviceName
-				);
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("[serviceType=" + this.serviceType + "],");
+		sb.append("[serviceName=" + this.serviceName + "],");
+		
+		return sb.toString();
 	}
 	
 	public void print() {
