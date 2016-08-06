@@ -1,0 +1,11 @@
+
+
+	String LOGFILENAME = "error.log";
+	System.setErr(new PrintStream(new FileOutputStream(LOGFILENAME));
+	System.out.println("please lock for errors in " + LOGFILENAME)
+	int a[] = new int[5];
+	a[10] = 0;
+	
+	System.setErr(System.out);   // stdErr -> stdOut
+	
+	
