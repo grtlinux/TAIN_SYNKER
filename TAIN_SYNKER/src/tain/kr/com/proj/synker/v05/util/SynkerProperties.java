@@ -21,13 +21,9 @@ package tain.kr.com.proj.synker.v05.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-
-import tain.kr.com.proj.synker.v05.bean.InfoBean;
 
 
 /**
@@ -124,6 +120,15 @@ public class SynkerProperties {
 		return this.propSystem.getProperty(key, defValue);
 	}
 	
+	public void printSystem() throws Exception {
+		
+		if (flag) {
+			System.out.println("\n\n");
+			System.out.println("--------------------------------------- SYSTEM PROPERTIES --------------------------------------------------------");
+			this.propSystem.list(System.out);
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public String get(String key) throws Exception {
@@ -134,76 +139,16 @@ public class SynkerProperties {
 		return this.prop.getProperty(key, defValue);
 	}
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	private static final String KEY_SYSTEM_RANGE = "tain.kr.synker.system.range";
-	private static final String KEY_FOLDER_RANGE = "tain.kr.synker.folder.range";
-	
-	public List<InfoBean> getListInfoBean() throws Exception {
-		
-		List<InfoBean> lstInfoBean = new ArrayList<InfoBean>();
-		
-		int sysBegin = 0;
-		int sysEnd = 0;
-		int fldBegin = 0;
-		int fldEnd = 0;
+	public void print() throws Exception {
 		
 		if (flag) {
-			String val = this.prop.getProperty(KEY_SYSTEM_RANGE);
-			String[] items = val.split("~");
-			
-			sysBegin = Integer.parseInt(items[0]);
-			sysEnd = Integer.parseInt(items[1]);
+			System.out.println("\n\n");
+			System.out.println("--------------------------------------- PROPERTIES --------------------------------------------------------");
+			this.prop.list(System.out);
 		}
-		
-		if (flag) {
-			String val = this.prop.getProperty(KEY_FOLDER_RANGE);
-			String[] items = val.split("~");
-			
-			fldBegin = Integer.parseInt(items[0]);
-			fldEnd = Integer.parseInt(items[1]);
-		}
-		
-		if (!flag) log.debug("SYSTEM_RANGE [" + sysBegin + "~" + sysEnd + "], FOLDER_RANGE = [" + fldBegin + "~" + fldEnd + "]");
-
-		for (int sysIdx=sysBegin; sysIdx <= sysEnd; sysIdx ++) {
-			String key = null;
-			String val = null;
-
-			key = String.format("tain.kr.synker.system.%d", sysIdx);
-			val = this.prop.getProperty(key);
-			if (val == null)
-				continue;
-			
-			String sysName = val;
-
-			for (int fldIdx=fldBegin; fldIdx <= fldEnd; fldIdx ++) {
-				key = String.format("tain.kr.synker.system.%d.folder.%d", sysIdx, fldIdx);
-				val = this.prop.getProperty(key);
-				if (val == null)
-					continue;
-				
-				String fldName = val;
-				
-				if (!flag) log.debug(String.format("[SYS, FLD] = [%s, %s]", sysName, fldName));
-				
-				lstInfoBean.add(new InfoBean(sysName, fldName));
-			}
-		}
-		
-		if (!flag) {
-			/*
-			 * print list of InfoBean
-			 */
-			
-			for (InfoBean bean : lstInfoBean) {
-				bean.print();
-			}
-		}
-		
-		return lstInfoBean;
 	}
-
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static SynkerProperties instance = null;
@@ -221,19 +166,21 @@ public class SynkerProperties {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
+
+		if (flag) {
+			/*
+			 * to print the system properties
+			 */
+			
+			SynkerProperties.getInstance().printSystem();
+		}
 		
 		if (flag) {
-			List<InfoBean> lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
-			
-			if (flag) {
-				/*
-				 * print list of InfoBean
-				 */
-				
-				for (InfoBean bean : lstInfoBean) {
-					bean.print();
-				}
-			}
+			/*
+			 * to print the private properties
+			 */
+
+			SynkerProperties.getInstance().print();
 		}
 	}
 	

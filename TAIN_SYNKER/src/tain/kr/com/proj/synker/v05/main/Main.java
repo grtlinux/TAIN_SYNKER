@@ -21,13 +21,12 @@ package tain.kr.com.proj.synker.v05.main;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v05.bean.InfoBean;
 import tain.kr.com.proj.synker.v05.bean.ServiceBean;
 import tain.kr.com.proj.synker.v05.util.ServiceMap;
 import tain.kr.com.proj.synker.v05.util.SynkerProperties;
@@ -86,17 +85,8 @@ public class Main {
 				/*
 				 * print for checking
 				 */
-				List<InfoBean> lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
-				
-				if (flag) {
-					/*
-					 * print list of InfoBean
-					 */
-					
-					for (InfoBean bean : lstInfoBean) {
-						bean.print();
-					}
-				}
+				SynkerProperties.getInstance().printSystem();
+				SynkerProperties.getInstance().print();
 			}
 		}
 
@@ -129,6 +119,8 @@ public class Main {
 	
 	public void execute(String[] args) throws Exception {
 		
+		List<String> lstArgs = new ArrayList<String>();
+		
 		if (!flag) {
 			/*
 			 * print for checking arguments
@@ -148,6 +140,12 @@ public class Main {
 				this.service = "server";
 				this.service = "client";
 				this.service = "version";
+				
+				lstArgs.add("TEST");
+				lstArgs.add(this.service);
+			} else {
+				lstArgs.add("REAL");
+				lstArgs.add(this.service);
 			}
 		}
 		
@@ -165,7 +163,9 @@ public class Main {
 				Class[] argTypes = new Class[] { String[].class };
 				
 				Method main = c.getDeclaredMethod("main", argTypes);
-				String[] mainArgs = Arrays.copyOfRange(args, 0, args.length);
+				//String[] mainArgs = Arrays.copyOfRange(args, 1, args.length);
+				//String[] mainArgs = Arrays.copyOfRange(args, 0, args.length);
+				String[] mainArgs = lstArgs.toArray(new String[lstArgs.size()]);
 				
 				main.invoke(null, (Object) mainArgs);
 				

@@ -50,6 +50,15 @@ public class VersionMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
+			/*
+			 * print for checking arguments
+			 */
+			for (String arg : args) {
+				log.debug("ARG [" + arg + "]");
+			}
+		}
+		
+		if (flag) {
 			Version.getInstance().print();
 		}
 	}
