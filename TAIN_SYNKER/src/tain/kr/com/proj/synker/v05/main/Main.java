@@ -141,8 +141,8 @@ public class Main {
 				lstArgs.add(this.service);
 			} else {
 				this.service = "server";
-				this.service = "client";
-				this.service = "version";
+				//this.service = "client";
+				//this.service = "version";
 				
 				lstArgs.add("TEST-1");
 				lstArgs.add(this.service);
