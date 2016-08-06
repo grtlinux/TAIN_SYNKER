@@ -27,7 +27,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v04.bean.InfoBean;
+import tain.kr.com.proj.synker.v05.bean.InfoBean;
+
 
 /**
  * Code Templates > Comments > Types

@@ -19,10 +19,17 @@
  */
 package tain.kr.com.proj.synker.v05.main;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v05.bean.InfoBean;
+import tain.kr.com.proj.synker.v05.bean.ServiceBean;
+import tain.kr.com.proj.synker.v05.util.ServiceMap;
 import tain.kr.com.proj.synker.v05.util.SynkerProperties;
 
 /**
@@ -48,20 +55,64 @@ public class Main {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static final String KEY_DESC = "tain.kr.main.desc";
-	private static final String KEY_MAIN = "tain.kr.main";
+	private static final String KEY_MAIN_SERVICE = "tain.kr.main.service";
 
 	private String clsName = null;
 	private String desc = null;
-	private String main = null;
+	private String service = null;
 	
 	private Main() throws Exception {
 		
 		if (flag) {
+			/*
+			 * Main.properties
+			 */
+			
 			this.clsName = this.getClass().getName();
 			
 			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.', '/'));
 			
 			this.desc = rb.getString(KEY_DESC);
+		}
+
+		if (flag) {
+			/*
+			 * SynkerProperties
+			 */
+			
+			SynkerProperties.getInstance();
+			
+			if (!flag) {
+				/*
+				 * print for checking
+				 */
+				List<InfoBean> lstInfoBean = SynkerProperties.getInstance().getListInfoBean();
+				
+				if (flag) {
+					/*
+					 * print list of InfoBean
+					 */
+					
+					for (InfoBean bean : lstInfoBean) {
+						bean.print();
+					}
+				}
+			}
+		}
+
+		if (flag) {
+			/*
+			 * ServiceMap
+			 */
+		
+			ServiceMap.getInstance();
+
+			if (!flag) {
+				/*
+				 * print for checking
+				 */
+				ServiceMap.getInstance().print();
+			}
 		}
 	}
 	
@@ -86,13 +137,47 @@ public class Main {
 		
 		if (flag) {
 			/*
-			 * SynkerProperties
+			 * to get the service bean
 			 */
-			
-			SynkerProperties.getInstance();
+
+			this.service = SynkerProperties.getInstance().get(KEY_MAIN_SERVICE);
+			if (this.service == null) {
+				this.service = "server";
+				this.service = "client";
+				this.service = "version";
+			}
 		}
 		
-		
+		if (flag) {
+			/*
+			 * to execute the service
+			 */
+			
+			ServiceBean bean = ServiceMap.getInstance().getBean(this.service);
+			
+			try {
+				Class<?> c = Class.forName(bean.getServiceClass());
+				
+				@SuppressWarnings("rawtypes")
+				Class[] argTypes = new Class[] { String[].class };
+				
+				Method main = c.getDeclaredMethod("main", argTypes);
+				String[] mainArgs = Arrays.copyOfRange(args, 1, args.length);
+				
+				main.invoke(null, (Object) mainArgs);
+				
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
