@@ -135,7 +135,7 @@ public class Main {
 			 * to get the service bean
 			 */
 
-			this.service = SynkerProperties.getInstance().get(KEY_MAIN_SERVICE);
+			this.service = SynkerProperties.getInstance().getSystem(KEY_MAIN_SERVICE);
 			if (this.service == null) {
 				this.service = "server";
 				this.service = "client";
