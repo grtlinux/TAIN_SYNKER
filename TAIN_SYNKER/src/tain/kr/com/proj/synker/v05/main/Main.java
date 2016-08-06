@@ -141,7 +141,7 @@ public class Main {
 				this.service = "client";
 				this.service = "version";
 				
-				lstArgs.add("TEST");
+				lstArgs.add("TEST-1");
 				lstArgs.add(this.service);
 			} else {
 				lstArgs.add("REAL");

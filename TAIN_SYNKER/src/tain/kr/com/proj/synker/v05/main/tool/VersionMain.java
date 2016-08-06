@@ -21,6 +21,9 @@ package tain.kr.com.proj.synker.v05.main.tool;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v05.bean.ServiceBean;
+import tain.kr.com.proj.synker.v05.util.ServiceMap;
+import tain.kr.com.proj.synker.v05.util.ServiceProperties;
 import tain.kr.com.proj.synker.v05.version.Version;
 
 /**
@@ -59,7 +62,26 @@ public class VersionMain {
 		}
 		
 		if (flag) {
+			/*
+			 * to print the version info
+			 */
 			Version.getInstance().print();
+		}
+		
+		if (flag) {
+			/*
+			 * to print the info of version service
+			 */
+			ServiceBean bean = ServiceMap.getInstance().getBean(args[1]);
+			bean.print();
+		}
+		
+		if (flag) {
+			/*
+			 * to check the service properties
+			 */
+			
+			ServiceProperties.getInstance(args[1]).print();
 		}
 	}
 	
@@ -67,6 +89,10 @@ public class VersionMain {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
+		if (args.length < 2) {
+			args = new String[] { "TEST-2", "version" };
+		}
+
 		if (flag) test01(args);
 	}
 }
