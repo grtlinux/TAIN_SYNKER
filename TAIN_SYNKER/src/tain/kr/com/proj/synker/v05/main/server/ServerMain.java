@@ -19,9 +19,11 @@
  */
 package tain.kr.com.proj.synker.v05.main.server;
 
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v05.bean.ServiceBean;
 import tain.kr.com.proj.synker.v05.util.GlobalParam;
 import tain.kr.com.proj.synker.v05.util.ServiceMap;
 import tain.kr.com.proj.synker.v05.util.ServiceProperties;
@@ -48,6 +50,11 @@ public class ServerMain {
 	private static final Logger log = Logger.getLogger(ServerMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static final String KEY_LISTEN_PORT = "tain.kr.server.listen.port";
+
+	private static String port = null;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,8 +88,7 @@ public class ServerMain {
 			/*
 			 * to print the info of version service
 			 */
-			ServiceBean bean = ServiceMap.getInstance().getBean(GlobalParam.getInstance().getServiceName());
-			bean.print();
+			ServiceMap.getInstance().getBean(GlobalParam.getInstance().getServiceName()).print();
 		}
 		
 		if (flag) {
@@ -91,6 +97,37 @@ public class ServerMain {
 			 */
 			
 			ServiceProperties.getInstance().print();
+		}
+		
+		if (flag) {
+			/*
+			 * to get a listen port
+			 */
+			
+			ServerMain.port = ServiceProperties.getInstance().get(KEY_LISTEN_PORT);
+			if (flag) log.info(" SERVER : listen port is [" + ServerMain.port);
+		}
+		
+		if (flag) {
+			/*
+			 * to create server socket
+			 */
+			
+			@SuppressWarnings("resource")
+			ServerSocket serverSocket = new ServerSocket(Integer.parseInt(ServerMain.port));
+			if (flag) log.info(String.format(" SERVER : listening by port %s [%s]", ServerMain.port, serverSocket.toString()));
+			
+			for (int idxThr=0; ; idxThr++) {
+				if (idxThr > 100000000)
+					idxThr = 0;
+				
+				Socket socket = serverSocket.accept();
+				if (flag) log.info(String.format(" SERVER : accept the connection (%d)", idxThr));
+				
+				Thread thr = new ServerThread(idxThr, socket);
+				thr.start();
+				thr.join();
+			}
 		}
 	}
 	
