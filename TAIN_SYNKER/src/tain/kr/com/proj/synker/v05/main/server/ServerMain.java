@@ -22,6 +22,7 @@ package tain.kr.com.proj.synker.v05.main.server;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v05.bean.ServiceBean;
+import tain.kr.com.proj.synker.v05.util.GlobalParam;
 import tain.kr.com.proj.synker.v05.util.ServiceMap;
 import tain.kr.com.proj.synker.v05.util.ServiceProperties;
 import tain.kr.com.proj.synker.v05.version.Version;
@@ -63,6 +64,14 @@ public class ServerMain {
 		
 		if (flag) {
 			/*
+			 * to set the name of service
+			 */
+			GlobalParam.getInstance().setServiceType(args[0]);
+			GlobalParam.getInstance().setServiceName(args[1]);
+		}
+		
+		if (flag) {
+			/*
 			 * to print the version info
 			 */
 			Version.getInstance().print();
@@ -72,7 +81,7 @@ public class ServerMain {
 			/*
 			 * to print the info of version service
 			 */
-			ServiceBean bean = ServiceMap.getInstance().getBean(args[1]);
+			ServiceBean bean = ServiceMap.getInstance().getBean(GlobalParam.getInstance().getServiceName());
 			bean.print();
 		}
 		
@@ -81,7 +90,7 @@ public class ServerMain {
 			 * to check the service properties
 			 */
 			
-			ServiceProperties.getInstance(args[1]).print();
+			ServiceProperties.getInstance().print();
 		}
 	}
 	

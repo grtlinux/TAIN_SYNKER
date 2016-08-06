@@ -52,17 +52,29 @@ public class ServiceProperties {
 	private Properties prop = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-		
+	
+	private String serviceName = null;
 	private String strSynkerPropertiesFile = null;
 	
-	private ServiceProperties(String serviceName) throws Exception {
+	private ServiceProperties() throws Exception {
+		
+		if (flag) {
+			this.serviceName = GlobalParam.getInstance().getServiceName();
+			if (this.serviceName == null) {
+				String errMsg = "ERROR : there is no service name.";
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
+				
+				System.exit(-1);
+			}
+		}
 		
 		if (flag) {
 			/*
 			 * to get the bean of ServiceBean of the serviceName
 			 */
 			
-			ServiceBean serviceBean = ServiceMap.getInstance().getBean(serviceName);
+			ServiceBean serviceBean = ServiceMap.getInstance().getBean(this.serviceName);
 			this.strSynkerPropertiesFile = serviceBean.getPropFile();
 		}
 		
@@ -155,10 +167,10 @@ public class ServiceProperties {
 	
 	private static ServiceProperties instance = null;
 	
-	public static synchronized ServiceProperties getInstance(String serviceName) throws Exception {
+	public static synchronized ServiceProperties getInstance() throws Exception {
 		
 		if (instance == null) {
-			instance = new ServiceProperties(serviceName);
+			instance = new ServiceProperties();
 		}
 		
 		return instance;
@@ -176,10 +188,18 @@ public class ServiceProperties {
 		
 		if (flag) {
 			/*
+			 * set the value of service name in the global parameters
+			 */
+			
+			GlobalParam.getInstance().setServiceName(serviceName);
+		}
+		
+		if (flag) {
+			/*
 			 * to print the system properties
 			 */
 			
-			ServiceProperties.getInstance(serviceName).printSystem();
+			ServiceProperties.getInstance().printSystem();
 		}
 		
 		if (flag) {
@@ -187,7 +207,7 @@ public class ServiceProperties {
 			 * to print the private properties
 			 */
 
-			ServiceProperties.getInstance(serviceName).print();
+			ServiceProperties.getInstance().print();
 		}
 	}
 	

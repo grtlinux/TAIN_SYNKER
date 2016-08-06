@@ -136,15 +136,15 @@ public class Main {
 			 */
 
 			this.service = SynkerProperties.getInstance().getSystem(KEY_MAIN_SERVICE);
-			if (this.service == null) {
+			if (this.service != null) {
+				lstArgs.add("REAL");
+				lstArgs.add(this.service);
+			} else {
 				this.service = "server";
 				this.service = "client";
 				this.service = "version";
 				
 				lstArgs.add("TEST-1");
-				lstArgs.add(this.service);
-			} else {
-				lstArgs.add("REAL");
 				lstArgs.add(this.service);
 			}
 		}
