@@ -73,7 +73,7 @@ public class GetTimeMain {
 			System.out.format("%s | %d | %s%n", line, lVal, strVal);
 		}
 		
-		if (flag) {
+		if (!flag) {
 			throw new Exception("ERROR : error information...");
 		}
 	}

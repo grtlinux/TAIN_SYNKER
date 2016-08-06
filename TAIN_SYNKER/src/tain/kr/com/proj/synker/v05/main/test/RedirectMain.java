@@ -20,6 +20,7 @@
 package tain.kr.com.proj.synker.v05.main.test;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 
@@ -55,8 +56,17 @@ public class RedirectMain {
 			/*
 			 * redirect definition
 			 */
-			System.setIn(new ByteArrayInputStream("DATETIME KANG SEOK   \n    123".getBytes()));
-			PrintStream ps = new PrintStream("N:/123");
+			InputStream is = null;
+			is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
+			is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n        123".getBytes());
+			
+			System.setIn(is);
+			
+			PrintStream ps = null;
+			//ps = new PrintStream("N:/123");
+			ps = new PrintStream(System.out);
+			
 			System.setOut(ps);
 			System.setErr(ps);
 		}
