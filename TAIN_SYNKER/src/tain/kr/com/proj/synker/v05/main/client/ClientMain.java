@@ -21,7 +21,6 @@ package tain.kr.com.proj.synker.v05.main.client;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v05.bean.ServiceBean;
 import tain.kr.com.proj.synker.v05.util.GlobalParam;
 import tain.kr.com.proj.synker.v05.util.ServiceMap;
 import tain.kr.com.proj.synker.v05.util.ServiceProperties;
@@ -48,7 +47,20 @@ public class ClientMain {
 	private static final Logger log = Logger.getLogger(ClientMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static final String KEY_CONNECT_HOST = "tain.kr.client.connect.host";
+	private static final String KEY_CONNECT_PORT = "tain.kr.client.connect.port";
+
+	private static String host = null;
+	private static String port = null;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static void clientModule() throws Exception {
+		
+		
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
@@ -81,8 +93,7 @@ public class ClientMain {
 			/*
 			 * to print the info of version service
 			 */
-			ServiceBean bean = ServiceMap.getInstance().getBean(GlobalParam.getInstance().getServiceName());
-			bean.print();
+			ServiceMap.getInstance().getBean(GlobalParam.getInstance().getServiceName()).print();
 		}
 		
 		if (flag) {
@@ -92,6 +103,19 @@ public class ClientMain {
 			
 			ServiceProperties.getInstance().print();
 		}
+		
+		if (flag) {
+			/*
+			 * to get the information of connection
+			 */
+			ClientMain.host = ServiceProperties.getInstance().get(KEY_CONNECT_HOST);
+			if (flag) log.info(" CLIENT : connect host is '" + ClientMain.host + "'");
+
+			ClientMain.port = ServiceProperties.getInstance().get(KEY_CONNECT_PORT);
+			if (flag) log.info(" CLIENT : connect port is '" + ClientMain.port + "'");
+		}
+		
+		if (flag) clientModule();
 	}
 	
 	public static void main(String[] args) throws Exception {

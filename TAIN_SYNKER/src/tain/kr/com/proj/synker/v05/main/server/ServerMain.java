@@ -56,6 +56,33 @@ public class ServerMain {
 	private static String port = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static void serverModule() throws Exception {
+		
+		if (flag) {
+			/*
+			 * Server Module
+			 * to create server socket
+			 */
+			
+			@SuppressWarnings("resource")
+			ServerSocket serverSocket = new ServerSocket(Integer.parseInt(ServerMain.port));
+			if (flag) log.info(String.format(" SERVER : listening by port '%s' [%s]", ServerMain.port, serverSocket.toString()));
+			
+			for (int idxThr=0; ; idxThr++) {
+				if (idxThr > 100000000)
+					idxThr = 0;
+				
+				Socket socket = serverSocket.accept();
+				if (flag) log.info(String.format(" SERVER : accept the connection (%d)", idxThr));
+				
+				Thread thr = new ServerThread(idxThr, socket);
+				thr.start();
+				thr.join();
+			}
+		}
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
@@ -105,30 +132,10 @@ public class ServerMain {
 			 */
 			
 			ServerMain.port = ServiceProperties.getInstance().get(KEY_LISTEN_PORT);
-			if (flag) log.info(" SERVER : listen port is [" + ServerMain.port);
+			if (flag) log.info(" SERVER : listen port is '" + ServerMain.port + "'");
 		}
 		
-		if (flag) {
-			/*
-			 * to create server socket
-			 */
-			
-			@SuppressWarnings("resource")
-			ServerSocket serverSocket = new ServerSocket(Integer.parseInt(ServerMain.port));
-			if (flag) log.info(String.format(" SERVER : listening by port %s [%s]", ServerMain.port, serverSocket.toString()));
-			
-			for (int idxThr=0; ; idxThr++) {
-				if (idxThr > 100000000)
-					idxThr = 0;
-				
-				Socket socket = serverSocket.accept();
-				if (flag) log.info(String.format(" SERVER : accept the connection (%d)", idxThr));
-				
-				Thread thr = new ServerThread(idxThr, socket);
-				thr.start();
-				thr.join();
-			}
-		}
+		if (flag) serverModule();
 	}
 	
 	public static void main(String[] args) throws Exception {
