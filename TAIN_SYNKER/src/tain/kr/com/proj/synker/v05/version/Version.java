@@ -45,9 +45,9 @@ public class Version {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String KEY_DESC = "tain.kr.common.version.desc";
-	private static final String KEY_DATE = "tain.kr.common.version.date";
-	private static final String KEY_VERSION = "tain.kr.common.version";
+	private static final String KEY_DESC = "tain.kr.version.desc";
+	private static final String KEY_DATE = "tain.kr.version.date";
+	private static final String KEY_VERSION = "tain.kr.version";
 	
 	private String desc = null;
 	private String date = null;
@@ -86,29 +86,6 @@ public class Version {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public int execute(String[] args) throws Exception {
-		
-		if (flag) {
-			/*
-			 * print version
-			 */
-			print();
-		}
-
-		if (flag) {
-			/*
-			 * print arguments
-			 */
-			for (String arg : args) {
-				log.debug("execute ARGS [" + arg + "]");
-			}
-		}
-
-		return 0;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static Version instance = null;
 	
@@ -127,12 +104,8 @@ public class Version {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (!flag) {
-			Version.getInstance().print();
-		}
-		
 		if (flag) {
-			new Version().execute(new String[] { "FileSynker", "Version", "TEST" });
+			Version.getInstance().print();
 		}
 	}
 	

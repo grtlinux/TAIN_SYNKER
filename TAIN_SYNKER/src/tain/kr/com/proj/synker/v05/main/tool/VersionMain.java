@@ -21,6 +21,8 @@ package tain.kr.com.proj.synker.v05.main.tool;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v05.version.Version;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -45,4 +47,17 @@ public class VersionMain {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			Version.getInstance().print();
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }

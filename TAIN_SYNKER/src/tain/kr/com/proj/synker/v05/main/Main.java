@@ -129,7 +129,10 @@ public class Main {
 	
 	public void execute(String[] args) throws Exception {
 		
-		if (flag) {
+		if (!flag) {
+			/*
+			 * print for checking arguments
+			 */
 			for (String arg : args) {
 				log.debug("ARG [" + arg + "]");
 			}
@@ -162,7 +165,7 @@ public class Main {
 				Class[] argTypes = new Class[] { String[].class };
 				
 				Method main = c.getDeclaredMethod("main", argTypes);
-				String[] mainArgs = Arrays.copyOfRange(args, 1, args.length);
+				String[] mainArgs = Arrays.copyOfRange(args, 0, args.length);
 				
 				main.invoke(null, (Object) mainArgs);
 				
