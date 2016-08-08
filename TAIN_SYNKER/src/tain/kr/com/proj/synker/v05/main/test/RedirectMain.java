@@ -75,7 +75,7 @@ public class RedirectMain {
 			/*
 			 * execute class code after redirection
 			 */
-			String clsName = "tain.kr.com.proj.synker.v05.main.tool.GetTimeMain";
+			String clsName = "tain.kr.com.proj.synker.v05.main.test.GetTimeMain";
 			
 			Class<?> cls = Class.forName(clsName);
 			
