@@ -215,6 +215,63 @@ public class ClientMain {
 		if (flag) clientModule();
 	}
 	
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+			/*
+			 * print for checking arguments
+			 */
+			for (String arg : args) {
+				log.debug("ARG [" + arg + "]");
+			}
+		}
+		
+		if (flag) {
+			Socket socket = null;
+			DataInputStream dis = null;
+			DataOutputStream dos = null;
+			
+			try {
+				
+				socket = new Socket("127.0.0.1", 12345);
+				dis = new DataInputStream(socket.getInputStream());
+				dos = new DataOutputStream(socket.getOutputStream());
+
+				if (flag) {
+					/*
+					 * write
+					 */
+					
+					byte[] buf = "CLIENT REQUEST".getBytes();
+					
+					dos.write(buf, 0, buf.length);
+					if (flag) log.debug("WRITE : [" + new String(buf) + "]");
+				}
+
+				if (flag) {
+					/*
+					 * read
+					 */
+					byte[] buf = new byte[50];
+					
+					int cntRead = dis.read(buf);
+					if (cntRead <= 0) {
+						throw new Exception("ERROR : reading error");
+					}
+					
+					if (flag) log.debug("READ  : [" + new String(buf) + "]");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (dis != null) try { dis.close(); } catch (Exception e) {}
+				if (dos != null) try { dos.close(); } catch (Exception e) {}
+				if (socket != null) try { socket.close(); } catch (Exception e) {}
+			}
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
@@ -223,6 +280,7 @@ public class ClientMain {
 			args = new String[] { "TEST-2", "client" };
 		}
 
-		if (flag) test01(args);
+		if (!flag) test01(args);
+		if (flag) test02(args);
 	}
 }

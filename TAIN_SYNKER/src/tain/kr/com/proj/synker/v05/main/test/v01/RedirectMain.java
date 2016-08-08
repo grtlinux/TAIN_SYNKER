@@ -88,20 +88,35 @@ public class RedirectMain {
 	
 	private static void test02(String[] args) throws Exception {
 		
+		InputStream saveIn = System.in;
+		PrintStream saveOut = System.out;
+		PrintStream saveErr = System.err;
+		
 		if (flag) {
-			//System.setIn(in);
-			//System.setOut(out);
-			//System.setErr(err);
+			
+			PrintStream ps = null;
+			ps = new PrintStream("N:/PrintStream.txt");
+			System.setOut(ps);
+			
+			System.out.print("Hello");
+			
+			ps.close();
 		}
 		
-		
+		if (flag) {
+			System.setIn(saveIn);
+			System.setOut(saveOut);
+			System.setErr(saveErr);
+
+			System.out.println("FINISH");
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (flag) test01(args);
+		if (!flag) test01(args);
 		if (flag) test02(args);
 	}
 }

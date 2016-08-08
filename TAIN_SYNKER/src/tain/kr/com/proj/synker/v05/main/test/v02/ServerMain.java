@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v02;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -49,7 +51,7 @@ public class ServerMain {
 	@SuppressWarnings("unused")
 	private static final String KEY_LISTEN_PORT = "tain.kr.server.listen.port";
 
-	private static String port = "12345";
+	private static String port = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -95,6 +97,75 @@ public class ServerMain {
 		if (flag) serverModule();
 	}
 	
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+			/*
+			 * print for checking arguments
+			 */
+			for (String arg : args) {
+				log.debug("ARG [" + arg + "]");
+			}
+		}
+
+		if (flag) {
+			
+			@SuppressWarnings("resource")
+			ServerSocket serverSocket = new ServerSocket(12345);
+			if (flag) log.info(String.format(" SERVER : listening by port '12345' [%s]", serverSocket.toString()));
+			
+			for (int idxThr=0; ; idxThr++) {
+				if (idxThr > 100000000)
+					idxThr = 0;
+				
+				Socket socket = null;
+				DataInputStream dis = null;
+				DataOutputStream dos = null;
+				
+				try {
+					
+					socket = serverSocket.accept();
+					if (flag) log.info(String.format(" SERVER : accept the connection (%d)", idxThr));
+
+					dis = new DataInputStream(socket.getInputStream());
+					dos = new DataOutputStream(socket.getOutputStream());
+
+					if (flag) {
+						/*
+						 * read
+						 */
+						byte[] buf = new byte[50];
+						
+						int cntRead = dis.read(buf);
+						if (cntRead <= 0) {
+							throw new Exception("ERROR : reading error");
+						}
+						
+						if (flag) log.debug("READ  : [" + new String(buf) + "]");
+					}
+					
+					if (flag) {
+						/*
+						 * write
+						 */
+						
+						byte[] buf = "SERVER RESULT".getBytes();
+						
+						dos.write(buf, 0, buf.length);
+						if (flag) log.debug("WRITE : [" + new String(buf) + "]");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					if (dis != null) try { dis.close(); } catch (Exception e) {}
+					if (dos != null) try { dos.close(); } catch (Exception e) {}
+					if (socket != null) try { socket.close(); } catch (Exception e) {}
+				}
+			}
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
@@ -103,6 +174,7 @@ public class ServerMain {
 			args = new String[] { "TEST-2", "server" };
 		}
 
-		if (flag) test01(args);
+		if (!flag) test01(args);
+		if (flag) test02(args);
 	}
 }
