@@ -86,10 +86,22 @@ public class RedirectMain {
 		}
 	}
 	
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+			//System.setIn(in);
+			//System.setOut(out);
+			//System.setErr(err);
+		}
+		
+		
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
 		if (flag) test01(args);
+		if (flag) test02(args);
 	}
 }
