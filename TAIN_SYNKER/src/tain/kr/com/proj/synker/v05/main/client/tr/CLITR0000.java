@@ -57,9 +57,10 @@ public class CLITR0000 {
 			 * redirect definition
 			 */
 			InputStream is = null;
-			is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
-			is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
 			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n        123".getBytes());
+			is = new ByteArrayInputStream("GET_DATE_TIME".getBytes());
 			
 			System.setIn(is);
 			
@@ -75,13 +76,13 @@ public class CLITR0000 {
 			/*
 			 * execute class code after redirection
 			 */
-			String clsName = "tain.kr.com.proj.synker.v05.main.tool.GetTimeMain";
+			String clsName = "tain.kr.com.proj.synker.v05.main.server.tr.SVRTR0000";
 			
 			Class<?> cls = Class.forName(clsName);
 			
 			Method main = cls.getDeclaredMethod("main", new Class[] { String[].class });
 			
-			main.invoke(null, (Object) new String[] { "Hello", "World!!!" });
+			main.invoke(null, (Object) new String[] { "TR0000", "GET_DATE_TIME" });
 		}
 	}
 	
