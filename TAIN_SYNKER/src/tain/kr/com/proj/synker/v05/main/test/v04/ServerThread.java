@@ -19,6 +19,10 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v04;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -84,6 +88,41 @@ public class ServerThread extends Thread {
 					}
 				}
 				
+				if (!flag) {
+					/*
+					 * to set redirection and to run the class of server module
+					 */
+					
+					if (flag) {
+						/*
+						 * redirect definition
+						 */
+						InputStream is = null;
+						is = new ByteArrayInputStream("GET_DATE_TIME".getBytes());
+						
+						PrintStream ps = null;
+						//ps = new PrintStream("N:/123");
+						ps = new PrintStream(System.out);
+						
+						System.setIn(is);
+						System.setOut(ps);
+						System.setErr(ps);
+					}
+					
+					if (flag) {
+						/*
+						 * execute the class of server module after redirection
+						 */
+						String clsName = GlobalVars.getInstance().getClsServer();
+						
+						Class<?> cls = Class.forName(clsName);
+						
+						Method main = cls.getDeclaredMethod("main", new Class[] { String[].class });
+						
+						main.invoke(null, (Object) new String[] { "Hello", "World!!!" });
+					}
+				}
+				
 				if (flag) {
 					/*
 					 * write
@@ -104,6 +143,17 @@ public class ServerThread extends Thread {
 		
 		if (flag) {
 			if (flag) log.debug(String.format("########## FINISH <%s> ##########\n\n", this.getName()));
+		}
+		
+		if (flag) {
+			/*
+			 * TODO 2016.08.09 : for testing
+			 * clear STD_IO for testing.
+			 */
+			System.out.println("before clearation of STD_IO");
+			System.setIn(null);
+			System.setOut(null);
+			System.out.println("after clearation of STD_IO");
 		}
 	}
 }

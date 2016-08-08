@@ -19,6 +19,7 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v04;
 
+import java.lang.reflect.Method;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -108,6 +109,37 @@ public class ClientMain {
 		if (flag) clientModule();
 	}
 
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+			/*
+			 * print for checking arguments
+			 */
+			for (String arg : args) {
+				log.debug("ARG [" + arg + "]");
+			}
+		}
+
+		if (flag) {
+			/*
+			 * change STD_IO
+			 */
+		}
+		
+		if (flag) {
+			/*
+			 * execute the class of server module after redirection
+			 */
+			String clsName = GlobalVars.getInstance().getClsClient();
+			
+			Class<?> cls = Class.forName(clsName);
+			
+			Method main = cls.getDeclaredMethod("main", new Class[] { String[].class });
+			
+			main.invoke(null, (Object) new String[] { "Hello", "World!!!" });
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
@@ -117,5 +149,6 @@ public class ClientMain {
 		}
 
 		if (flag) test01(args);
+		if (!flag) test02(args);
 	}
 }
