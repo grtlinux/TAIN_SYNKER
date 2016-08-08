@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-@SuppressWarnings("unused")
 public class CLITR0000 {
 
 	private static boolean flag = true;
@@ -46,4 +45,17 @@ public class CLITR0000 {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }
