@@ -119,29 +119,25 @@ public class ServerMain {
 					idxThr = 0;
 				
 				Socket socket = null;
-				DataInputStream dis = null;
-				DataOutputStream dos = null;
+				SocketModule sm = null;
 				
 				try {
 					
 					socket = serverSocket.accept();
-					if (flag) log.info(String.format(" SERVER : accept the connection (%d)", idxThr));
+					if (flag) log.info(String.format(" SERVER : accept the connection (%s)", socket));
 
-					dis = new DataInputStream(socket.getInputStream());
-					dos = new DataOutputStream(socket.getOutputStream());
-
+					sm = new SocketModule(socket);
+					
 					if (flag) {
 						/*
 						 * read
 						 */
 						byte[] buf = new byte[50];
 						
-						int cntRead = dis.read(buf);
+						int cntRead = sm.read(buf);
 						if (cntRead <= 0) {
 							throw new Exception("ERROR : reading error");
 						}
-						
-						if (flag) log.debug("READ  : [" + new String(buf) + "]");
 					}
 					
 					if (flag) {
@@ -151,16 +147,13 @@ public class ServerMain {
 						
 						byte[] buf = "SERVER RESULT".getBytes();
 						
-						dos.write(buf, 0, buf.length);
-						if (flag) log.debug("WRITE : [" + new String(buf) + "]");
+						sm.write(buf);
 					}
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					if (dis != null) try { dis.close(); } catch (Exception e) {}
-					if (dos != null) try { dos.close(); } catch (Exception e) {}
-					if (socket != null) try { socket.close(); } catch (Exception e) {}
+					sm.close();
 				}
 			}
 		}

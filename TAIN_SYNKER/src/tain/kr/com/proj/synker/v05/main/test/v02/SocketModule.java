@@ -19,6 +19,10 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v02;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -42,7 +46,68 @@ public class SocketModule {
 	private static final Logger log = Logger.getLogger(SocketModule.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@SuppressWarnings("unused")
+	private static final int BUF_SIZ = 1024;
+	
+	private Socket socket = null;
+	
+	private DataInputStream dis = null;
+	private DataOutputStream dos = null;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public SocketModule(Socket socket) throws Exception {
+		
+		if (flag) {
+			this.socket = socket;
+			
+			if (this.socket == null) {
+				throw new Exception("ERROR : socket value is null...");
+			}
+			
+			this.dis = new DataInputStream(this.socket.getInputStream());
+			this.dos = new DataOutputStream(this.socket.getOutputStream());
+		}
+	}
+	
+	public int write(byte[] buffer) throws Exception {
+		
+		int ret = -1;
+		
+		if (flag) {
+			this.dos.write(buffer, 0, buffer.length);
+			
+			ret = buffer.length;
+		}
+		
+		if (flag) log.debug("WRITE (" + ret + ") [" + new String(buffer) + "]");
+		
+		return ret;
+	}
+	
+	public int read(byte[] buffer) throws Exception {
+		
+		int ret = -1;
+		
+		if (flag) {
+			ret = this.dis.read(buffer);
+		}
+		
+		if (flag) log.debug("READ  (" + ret + ") [" + new String(buffer) + "]");
+
+		return ret;
+	}
+	
+	public void close() throws Exception {
+		
+		if (flag) {
+			if (dis != null) try { dis.close(); } catch (Exception e) {}
+			if (dos != null) try { dos.close(); } catch (Exception e) {}
+			if (socket != null) try { socket.close(); } catch (Exception e) {}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 }
