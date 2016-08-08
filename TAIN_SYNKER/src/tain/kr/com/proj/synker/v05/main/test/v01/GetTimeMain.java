@@ -70,7 +70,7 @@ public class GetTimeMain {
 			long lVal = date.getTime();
 			String strVal = date.toString();
 			
-			System.out.format("%s | %d | %s%n", line, lVal, strVal);
+			System.out.format("%s|%d|%s\n", line, lVal, strVal);
 		}
 		
 		if (!flag) {

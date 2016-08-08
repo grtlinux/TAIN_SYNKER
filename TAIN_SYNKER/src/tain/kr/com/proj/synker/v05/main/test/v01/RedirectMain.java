@@ -57,9 +57,10 @@ public class RedirectMain {
 			 * redirect definition
 			 */
 			InputStream is = null;
-			is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
-			is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
 			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n        123".getBytes());
+			is = new ByteArrayInputStream("GET_DATE_TIME".getBytes());
 			
 			System.setIn(is);
 			
