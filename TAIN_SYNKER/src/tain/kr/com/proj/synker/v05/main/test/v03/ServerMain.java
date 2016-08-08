@@ -17,8 +17,10 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v05.main.test.v02;
+package tain.kr.com.proj.synker.v05.main.test.v03;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -45,7 +47,40 @@ public class ServerMain {
 	private static final Logger log = Logger.getLogger(ServerMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@SuppressWarnings("unused")
+	private static final String KEY_LISTEN_PORT = "tain.kr.server.listen.port";
+
+	private static String port = null;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static void serverModule() throws Exception {
+		
+		if (flag) {
+			/*
+			 * Server Module
+			 * to create server socket
+			 */
+			
+			@SuppressWarnings("resource")
+			ServerSocket serverSocket = new ServerSocket(Integer.parseInt(ServerMain.port));
+			if (flag) log.info(String.format(" SERVER : listening by port '%s' [%s]", ServerMain.port, serverSocket.toString()));
+			
+			for (int idxThr=0; ; idxThr++) {
+				if (idxThr > 100000000)
+					idxThr = 0;
+				
+				Socket socket = serverSocket.accept();
+				if (flag) log.info(String.format(" SERVER : accept the connection (%d)", idxThr));
+				
+				Thread thr = new ServerThread(idxThr, socket);
+				thr.start();
+				thr.join();
+			}
+		}
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
@@ -58,6 +93,8 @@ public class ServerMain {
 				log.debug("ARG [" + arg + "]");
 			}
 		}
+		
+		if (flag) serverModule();
 	}
 	
 	private static void test02(String[] args) throws Exception {
