@@ -103,7 +103,7 @@ public class ServerThread extends Thread {
 				
 				if (flag) {
 					/*
-					 * finish
+					 * waiting
 					 */
 					long msec = 1000;
 					if (flag) log.debug("sleeping msec = " + msec);
