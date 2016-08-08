@@ -19,6 +19,9 @@
  */
 package tain.kr.com.proj.synker.v05.main.server.tr;
 
+import java.util.Date;
+import java.util.Scanner;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -48,7 +51,30 @@ public class SVRTR0000 {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
+			/*
+			 * to print the list of arguments
+			 */
 			
+			for (String arg : args) {
+				log.debug("ARG [" + arg + "]");
+			}
+		}
+		
+		if (flag) {
+			Scanner scanner = new Scanner(System.in);
+			String line = scanner.nextLine();
+			scanner.close();
+			
+			Date date = new Date();
+			
+			long lVal = date.getTime();
+			String strVal = date.toString();
+			
+			System.out.format("%s|%d|%s%n", line, lVal, strVal);
+		}
+		
+		if (!flag) {
+			throw new Exception("ERROR : error information...");
 		}
 	}
 	
