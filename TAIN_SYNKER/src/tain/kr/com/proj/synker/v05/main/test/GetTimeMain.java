@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v05.main.tool;
+package tain.kr.com.proj.synker.v05.main.test;
 
 import java.util.Date;
 import java.util.Scanner;

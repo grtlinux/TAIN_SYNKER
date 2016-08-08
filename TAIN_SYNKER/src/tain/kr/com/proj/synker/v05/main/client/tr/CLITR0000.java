@@ -19,6 +19,11 @@
  */
 package tain.kr.com.proj.synker.v05.main.client.tr;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -48,7 +53,35 @@ public class CLITR0000 {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
+			/*
+			 * redirect definition
+			 */
+			InputStream is = null;
+			is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
+			is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n        123".getBytes());
 			
+			System.setIn(is);
+			
+			PrintStream ps = null;
+			//ps = new PrintStream("N:/123");
+			ps = new PrintStream(System.out);
+			
+			System.setOut(ps);
+			System.setErr(ps);
+		}
+		
+		if (flag) {
+			/*
+			 * execute class code after redirection
+			 */
+			String clsName = "tain.kr.com.proj.synker.v05.main.tool.GetTimeMain";
+			
+			Class<?> cls = Class.forName(clsName);
+			
+			Method main = cls.getDeclaredMethod("main", new Class[] { String[].class });
+			
+			main.invoke(null, (Object) new String[] { "Hello", "World!!!" });
 		}
 	}
 	
