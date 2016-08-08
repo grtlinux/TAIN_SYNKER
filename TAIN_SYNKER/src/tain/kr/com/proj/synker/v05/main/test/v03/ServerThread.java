@@ -19,13 +19,9 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v03;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
-
-import tain.kr.com.proj.synker.v05.common.PacketHeader;
 
 /**
  * Code Templates > Comments > Types
@@ -54,8 +50,7 @@ public class ServerThread extends Thread {
 	private int idxThr = -1;
 	private Socket socket = null;
 	
-	private DataInputStream dis = null;
-	private DataOutputStream dos = null;
+	private SocketModule sm = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,8 +61,7 @@ public class ServerThread extends Thread {
 		if (flag) {
 			this.idxThr = idxThr;
 			this.socket = socket;
-			this.dis = new DataInputStream(this.socket.getInputStream());
-			this.dos = new DataOutputStream(this.socket.getOutputStream());
+			this.sm = new SocketModule(this.socket);
 			
 			if (flag) log.debug(String.format("########## START <%s> ########## socket=%s ", this.getName(), this.socket.toString()));
 		}
@@ -76,75 +70,41 @@ public class ServerThread extends Thread {
 	public void run() {
 		
 		if (flag) {
-			/*
-			 * 2nd transaction logic
-			 */
+			
 			try {
+				this.sm = new SocketModule(this.socket);
 				
-				byte[] header = null;
-
 				if (flag) {
 					/*
-					 * 1. recv header
+					 * read
+					 */
+					byte[] buf = new byte[50];
+					
+					int cntRead = this.sm.read(buf);
+					if (cntRead <= 0) {
+						throw new Exception("ERROR : reading error");
+					}
+				}
+				
+				if (flag) {
+					/*
+					 * write
 					 */
 					
-					header = recv(PacketHeader.getLength());
-					if (flag) log.debug(String.format("<- 1. REQ RECV HEADER [%s]", new String(header)));
+					byte[] buf = "SERVER RESULT".getBytes();
+					
+					this.sm.write(buf);
 				}
 				
-				if (flag) {
-					/*
-					 * process for the request and then make a result for response
-					 */
-					String trCode = PacketHeader.TR_CODE.getString(header);
-					if (flag) log.debug("> TR_CODE = " + trCode);
-
-				}
-				
-				if (flag) {
-					/*
-					 * finish
-					 */
-					long msec = 1000;
-					if (flag) log.debug("sleeping msec = " + msec);
-					try { Thread.sleep(msec); } catch (InterruptedException e) {}
-				}
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				if (this.dis != null) try { this.dis.close(); } catch (Exception e) {}
-				if (this.dos != null) try { this.dos.close(); } catch (Exception e) {}
-				if (this.socket != null) try { this.socket.close(); } catch (Exception e) {}
+				try { this.sm.close(); } catch (Exception e) {}
 			}
 		}
 		
 		if (flag) {
 			if (flag) log.debug(String.format("########## FINISH <%s> ##########\n\n", this.getName()));
 		}
-	}
-
-	private byte[] recv(final int size) throws Exception {
-		
-		int ret = 0;
-		int readed = 0;
-		byte[] buf = new byte[size];
-		
-		this.socket.setSoTimeout(0);
-		while (readed < size) {
-			ret = this.dis.read(buf, readed, size - readed);
-			if (!flag) log.debug("    size:" + size + "    readed:" + readed + "     ret:" + ret);
-			
-			if (ret <= 0) {
-				try { Thread.sleep(1000); } catch (Exception e) {}
-				continue;
-			} else {
-				if (flag) this.socket.setSoTimeout(1000);
-			}
-			
-			readed += ret;
-		}
-		
-		return buf;
 	}
 }
