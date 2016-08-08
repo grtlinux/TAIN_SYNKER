@@ -17,10 +17,12 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.synker.v05.main.test;
+package tain.kr.com.proj.synker.v05.main.test.v01;
 
-import java.util.Date;
-import java.util.Scanner;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
@@ -28,7 +30,7 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : GetTimeMain.java
+ *   -. FileName   : RedirectMain.java
  *   -. Package    : tain.kr.com.proj.synker.v05.main.test
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -38,11 +40,11 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class GetTimeMain {
+public class RedirectMain {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(GetTimeMain.class);
+	private static final Logger log = Logger.getLogger(RedirectMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,35 +54,40 @@ public class GetTimeMain {
 		
 		if (flag) {
 			/*
-			 * to print the list of arguments
+			 * redirect definition
 			 */
+			InputStream is = null;
+			is = new ByteArrayInputStream("DATETIME KANG SEOK".getBytes());
+			is = new ByteArrayInputStream("DATETIME KANG SEOK         \n".getBytes());
+			//is = new ByteArrayInputStream("DATETIME KANG SEOK         \n        123".getBytes());
 			
-			for (String arg : args) {
-				log.debug("ARG [" + arg + "]");
-			}
+			System.setIn(is);
+			
+			PrintStream ps = null;
+			//ps = new PrintStream("N:/123");
+			ps = new PrintStream(System.out);
+			
+			System.setOut(ps);
+			System.setErr(ps);
 		}
 		
 		if (flag) {
-			Scanner scanner = new Scanner(System.in);
-			String line = scanner.nextLine();
-			scanner.close();
+			/*
+			 * execute class code after redirection
+			 */
+			String clsName = "tain.kr.com.proj.synker.v05.main.test.v01.GetTimeMain";
 			
-			Date date = new Date();
+			Class<?> cls = Class.forName(clsName);
 			
-			long lVal = date.getTime();
-			String strVal = date.toString();
+			Method main = cls.getDeclaredMethod("main", new Class[] { String[].class });
 			
-			System.out.format("%s | %d | %s%n", line, lVal, strVal);
-		}
-		
-		if (!flag) {
-			throw new Exception("ERROR : error information...");
+			main.invoke(null, (Object) new String[] { "Hello", "World!!!" });
 		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 		
-		if (!flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
 		if (flag) test01(args);
 	}
