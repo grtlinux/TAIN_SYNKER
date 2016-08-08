@@ -86,10 +86,19 @@ public class CLITR0000 {
 		}
 	}
 	
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (flag) test01(args);
+		if (!flag) test01(args);
+		
+		if (flag) test02(args);
 	}
 }
