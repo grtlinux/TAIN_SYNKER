@@ -45,35 +45,28 @@ public class ClientMain {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	private static void test01(String[] args) throws Exception {
+	
+	private static void clientModule() throws Exception {
 		
 		if (flag) {
-			/*
-			 * print for checking arguments
-			 */
-			for (String arg : args) {
-				log.debug("ARG [" + arg + "]");
-			}
-		}
-		
-		if (flag) {
+			
 			Socket socket = null;
-			SocketModule sm = null;
+			SocketStream sm = null;
 			
 			try {
 				
 				socket = new Socket("127.0.0.1", 12345);
 				if (flag) log.info(String.format(" CLIENT : connection by port '12345' [%s]", socket.toString()));
 				
-				sm = new SocketModule(socket);
+				sm = new SocketStream(socket);
 
 				if (flag) {
 					/*
 					 * write
 					 */
 					
+					sm.setHeader("PACKET_CLIENT_HEADER");
+
 					byte[] buf = "CLIENT REQUEST".getBytes();
 					
 					sm.write(buf);
@@ -97,6 +90,22 @@ public class ClientMain {
 				sm.close();
 			}
 		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			/*
+			 * print for checking arguments
+			 */
+			for (String arg : args) {
+				log.debug("ARG [" + arg + "]");
+			}
+		}
+
+		if (flag) clientModule();
 	}
 
 	public static void main(String[] args) throws Exception {

@@ -45,12 +45,6 @@ public class ServerMain {
 	private static final Logger log = Logger.getLogger(ServerMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	@SuppressWarnings("unused")
-	private static final String KEY_LISTEN_PORT = "tain.kr.server.listen.port";
-
-	private static String port = null;
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static void serverModule() throws Exception {
@@ -62,8 +56,8 @@ public class ServerMain {
 			 */
 			
 			@SuppressWarnings("resource")
-			ServerSocket serverSocket = new ServerSocket(Integer.parseInt(ServerMain.port));
-			if (flag) log.info(String.format(" SERVER : listening by port '%s' [%s]", ServerMain.port, serverSocket.toString()));
+			ServerSocket serverSocket = new ServerSocket(12345);
+			if (flag) log.info(String.format(" SERVER : listening by port '12345' [%s]", serverSocket.toString()));
 			
 			for (int idxThr=0; ; idxThr++) {
 				if (idxThr > 100000000)

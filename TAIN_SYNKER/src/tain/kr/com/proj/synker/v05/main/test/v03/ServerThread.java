@@ -50,7 +50,7 @@ public class ServerThread extends Thread {
 	private int idxThr = -1;
 	private Socket socket = null;
 	
-	private SocketModule sm = null;
+	private SocketStream sm = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,7 +61,7 @@ public class ServerThread extends Thread {
 		if (flag) {
 			this.idxThr = idxThr;
 			this.socket = socket;
-			this.sm = new SocketModule(this.socket);
+			this.sm = new SocketStream(this.socket);
 			
 			if (flag) log.debug(String.format("########## START <%s> ########## socket=%s ", this.getName(), this.socket.toString()));
 		}
@@ -72,8 +72,6 @@ public class ServerThread extends Thread {
 		if (flag) {
 			
 			try {
-				this.sm = new SocketModule(this.socket);
-				
 				if (flag) {
 					/*
 					 * read
@@ -90,6 +88,7 @@ public class ServerThread extends Thread {
 					/*
 					 * write
 					 */
+					this.sm.setHeader("PACKET_SERVER_HEADER");
 					
 					byte[] buf = "SERVER RESULT".getBytes();
 					

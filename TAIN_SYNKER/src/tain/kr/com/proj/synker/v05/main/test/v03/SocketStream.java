@@ -29,8 +29,8 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : SocketModule.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v02
+ *   -. FileName   : SocketStream.java
+ *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v03
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -39,11 +39,11 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class SocketModule {
+public class SocketStream {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(SocketModule.class);
+	private static final Logger log = Logger.getLogger(SocketStream.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -55,9 +55,12 @@ public class SocketModule {
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
 	
+	private String strHeader = null;
+	private byte[] bytHeader = null;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public SocketModule(Socket socket) throws Exception {
+	public SocketStream(Socket socket) throws Exception {
 		
 		if (flag) {
 			this.socket = socket;
@@ -71,17 +74,54 @@ public class SocketModule {
 		}
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public int setHeader(String header) throws Exception {
+		
+		int ret = -1;
+		
+		if (flag) {
+			this.strHeader = header;
+			this.bytHeader = this.strHeader.getBytes();
+			
+			ret = this.bytHeader.length;
+		}
+		
+		return ret ;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	public int write(byte[] buffer) throws Exception {
 		
 		int ret = -1;
 		
 		if (flag) {
+			/*
+			 * write header
+			 */
+			if (this.strHeader == null) {
+				throw new Exception("ERROR : there is no value of header...");
+			}
+			
+			ret = this.bytHeader.length;
+
+			this.dos.write(this.bytHeader, 0, ret);
+
+			
+			if (flag) log.debug("WRITE HEADER (" + ret + ") [" + this.strHeader + "]");
+		}
+		
+		if (flag) {
+			/*
+			 * write data
+			 */
 			this.dos.write(buffer, 0, buffer.length);
 			
 			ret = buffer.length;
+			
+			if (flag) log.debug("WRITE (" + ret + ") [" + new String(buffer) + "]");
 		}
-		
-		if (flag) log.debug("WRITE (" + ret + ") [" + new String(buffer) + "]");
 		
 		return ret;
 	}
@@ -91,10 +131,24 @@ public class SocketModule {
 		int ret = -1;
 		
 		if (flag) {
-			ret = this.dis.read(buffer);
+			/*
+			 * read header
+			 */
+			byte[] header = new byte[20];
+			
+			ret = this.dis.read(header);
+
+			if (flag) log.debug("READ HEADER  (" + ret + ") [" + new String(header) + "]");
 		}
 		
-		if (flag) log.debug("READ  (" + ret + ") [" + new String(buffer) + "]");
+		if (flag) {
+			/*
+			 * read data
+			 */
+			ret = this.dis.read(buffer);
+
+			if (flag) log.debug("READ  (" + ret + ") [" + new String(buffer) + "]");
+		}
 
 		return ret;
 	}
