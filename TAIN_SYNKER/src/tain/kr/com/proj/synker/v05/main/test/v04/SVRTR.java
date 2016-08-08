@@ -76,11 +76,20 @@ public class SVRTR {
 			System.out.format("%s|%d|%s\n", line, lVal, strVal);
 		}
 		
-		if (!flag) {
+		if (flag) {
+			/*
+			 * waiting
+			 */
+			long msec = 1000;
+			if (flag) log.debug("sleeping msec = " + msec);
+			try { Thread.sleep(msec); } catch (InterruptedException e) {}
+		}
+
+		if (flag) {
 			/*
 			 * occur a exception event
 			 */
-			throw new Exception("ERROR : error information...");
+			throw new Exception("ERROR : error information... by KIEA");
 		}
 	}
 	
