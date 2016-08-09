@@ -117,6 +117,8 @@ public class ClientMain {
 			}
 			
 			thr.join();
+			
+			if (ps != null) ps.close();
 		}
 	}
 	
