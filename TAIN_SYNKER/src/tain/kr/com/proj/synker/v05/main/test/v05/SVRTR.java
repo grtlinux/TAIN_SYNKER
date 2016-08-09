@@ -110,9 +110,9 @@ public class SVRTR extends Thread {
 					outBuf = String.format("%s|%d|%s", inStr, lVal, strVal).getBytes();
 				}
 				
-				if (flag) {
+				if (!flag) {
 					/*
-					 * waiting
+					 * jog process waiting
 					 */
 					long msec = 1000;
 					if (flag) log.debug("sleeping msec = " + msec);
@@ -190,13 +190,23 @@ public class SVRTR extends Thread {
 	
 	private static void test02(String[] args) throws Exception {
 		
-		// IN : (P)posIn -> (C) pisIn
-		PipedInputStream pisIn = new PipedInputStream();
-		PipedOutputStream posIn = new PipedOutputStream(pisIn);    // posIn -> pisIn
+		/*
+		 * Pipe flow logic
+		 * 
+		 *     1. (P) inPos:dos
+		 *                           2. (C) inPis:dis
+		 *                                                  3. Job Process
+		 *                           4. (C) outPos:dos
+		 *     5. (P) outPis:dis 
+		 * 
+		 */
+		// IN : (P)inPos:dos -> (C) inPis:dis
+		PipedInputStream inPis = new PipedInputStream();
+		PipedOutputStream inPos = new PipedOutputStream(inPis);
 		
-		// OUT : (C)posOut -> (P)pisOut
-		PipedInputStream pisOut = new PipedInputStream();
-		PipedOutputStream posOut = new PipedOutputStream(pisOut);    // posOut -> pisOut
+		// OUT : (C)outPos:dos -> (P)outPis:dis
+		PipedInputStream outPis = new PipedInputStream();
+		PipedOutputStream outPos = new PipedOutputStream(outPis);
 
 		if (flag) {
 			/*
@@ -209,7 +219,7 @@ public class SVRTR extends Thread {
 			
 			// constructor argument types
 			Class<?>[] types = new Class[] { InputStream.class, OutputStream.class };
-			Object[] constructorArgs = new Object[] { pisIn, posOut };
+			Object[] constructorArgs = new Object[] { inPis, outPos };
 
 			// constructor argument types
 			Constructor<?> constructor = cls.getConstructor(types);
@@ -228,8 +238,8 @@ public class SVRTR extends Thread {
 			 * main thread
 			 */
 			
-			DataOutputStream dos = new DataOutputStream(posIn);
-			DataInputStream dis = new DataInputStream(pisOut);
+			DataOutputStream dos = new DataOutputStream(inPos);
+			DataInputStream dis = new DataInputStream(outPis);
 			
 			try {
 				
