@@ -164,14 +164,14 @@ public class PipedStream {
 		
 		if (flag) {
 			
-			if (!flag) log.debug("(1) Before Req Write : data = [" + str + "]");
+			if (!flag) log.debug("PIPE (1) Before Req Write : data = [" + str + "]");
 			
 			byte[] buf = str.getBytes();
 			wcnt = buf.length;
 			
 			this.inDos.write(buf, 0, wcnt);
 
-			if (flag) log.debug("(1) After  Req Write : wcnt = " + wcnt);
+			if (flag) log.debug("PIPE (1) After  Req Write : wcnt = " + wcnt);
 		}
 		
 		return wcnt;
@@ -183,7 +183,7 @@ public class PipedStream {
 		
 		if (flag) {
 
-			if (!flag) log.debug("(2) Before Req Read :");
+			if (!flag) log.debug("PIPE (2) Before Req Read :");
 
 			byte[] buf = new byte[BUF_SIZ];
 			
@@ -193,7 +193,7 @@ public class PipedStream {
 			
 			str = new String(buf, 0, rcnt);
 
-			if (flag) log.debug("(2) After  Req Read : rcnt = " + rcnt + " data = [" + str + "]");
+			if (flag) log.debug("PIPE (2) After  Req Read : rcnt = " + rcnt + " data = [" + str + "]");
 		}
 		
 		return str;
@@ -205,14 +205,14 @@ public class PipedStream {
 		
 		if (flag) {
 
-			if (!flag) log.debug("(3) Before Res Write : data = [" + str + "]");
+			if (!flag) log.debug("PIPE (3) Before Res Write : data = [" + str + "]");
 			
 			byte[] buf = str.getBytes();
 			wcnt = buf.length;
 			
 			this.outDos.write(buf, 0, wcnt);
 
-			if (flag) log.debug("(3) After  Res Write : wcnt = " + wcnt);
+			if (flag) log.debug("PIPE (3) After  Res Write : wcnt = " + wcnt);
 		}
 		
 		return wcnt;
@@ -224,7 +224,7 @@ public class PipedStream {
 		
 		if (flag) {
 			
-			if (!flag) log.debug("(4) Before Res Read :");
+			if (!flag) log.debug("PIPE (4) Before Res Read :");
 
 			byte[] buf = new byte[BUF_SIZ];
 			
@@ -234,7 +234,7 @@ public class PipedStream {
 			
 			str = new String(buf, 0, rcnt);
 
-			if (flag) log.debug("(4) After  Res Read : rcnt = " + rcnt + " data = [" + str + "]");
+			if (flag) log.debug("PIPE (4) After  Res Read : rcnt = " + rcnt + " data = [" + str + "]");
 		}
 		
 		return str;

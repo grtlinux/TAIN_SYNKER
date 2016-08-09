@@ -19,8 +19,6 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v06;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -47,8 +45,6 @@ public class ServerThread extends Thread {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private static final int BUF_SIZ = 1024;
 	
 	@SuppressWarnings("unused")
 	private int idxThr = -1;
@@ -94,14 +90,7 @@ public class ServerThread extends Thread {
 					/*
 					 * read req from socket
 					 */
-					byte[] buf = new byte[BUF_SIZ];
-					
-					int cntRead = this.ss.read(buf);
-					if (cntRead <= 0) {
-						throw new Exception("ERROR : reading error");
-					}
-					
-					req = new String(buf, 0, cntRead);
+					req = this.ss.read();
 				}
 				
 				if (flag) {
@@ -134,11 +123,9 @@ public class ServerThread extends Thread {
 					/*
 					 * write res to socket
 					 */
-					this.ss.setHeader("PACKET_SERVER_HEADER");
+					this.ss.setHeader("PACKET_RES_HEADER");
 					
-					byte[] buf = res.getBytes();
-					
-					this.ss.write(buf);
+					this.ss.write(res);
 				}
 				
 			} catch (Exception e) {

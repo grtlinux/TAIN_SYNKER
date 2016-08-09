@@ -47,6 +47,7 @@ public class SocketStream {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private static final int HDR_SIZ = 50;
 	private static final int BUF_SIZ = 1024;
 	
 	private Socket socket = null;
@@ -108,7 +109,7 @@ public class SocketStream {
 			this.dos.write(this.bytHeader, 0, ret);
 
 			
-			if (flag) log.debug("WRITE HEADER (" + ret + ") [" + this.strHeader + "]");
+			if (flag) log.debug("SOCKET HEADER (" + ret + ") [" + this.strHeader + "]");
 		}
 		
 		if (flag) {
@@ -119,7 +120,7 @@ public class SocketStream {
 			
 			ret = buffer.length;
 			
-			if (flag) log.debug("WRITE (" + ret + ") [" + new String(buffer) + "]");
+			if (flag) log.debug("SOCKET DATA   (" + ret + ") [" + new String(buffer) + "]");
 		}
 		
 		return ret;
@@ -145,11 +146,11 @@ public class SocketStream {
 			/*
 			 * read header from socket
 			 */
-			byte[] header = new byte[20];
+			byte[] header = new byte[HDR_SIZ];
 			
 			ret = this.dis.read(header);
 
-			if (flag) log.debug("READ HEADER  (" + ret + ") [" + new String(header) + "]");
+			if (flag) log.debug("SOCKET HEADER  (" + ret + ") [" + new String(header, 0, ret) + "]");
 		}
 		
 		if (flag) {
@@ -158,7 +159,7 @@ public class SocketStream {
 			 */
 			ret = this.dis.read(buffer);
 
-			if (flag) log.debug("READ  (" + ret + ") [" + new String(buffer, 0, ret) + "]");
+			if (flag) log.debug("SOCKET DATA    (" + ret + ") [" + new String(buffer, 0, ret) + "]");
 		}
 
 		return ret;

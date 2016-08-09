@@ -43,8 +43,8 @@ public class GlobalVars {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String CLS_CLIENT = "tain.kr.com.proj.synker.v05.main.test.v04.CLITR";
-	private static final String CLS_SERVER = "tain.kr.com.proj.synker.v05.main.test.v04.SVRTR";
+	private static final String CLS_CLIENT = "tain.kr.com.proj.synker.v05.main.test.v06.CLITR";
+	private static final String CLS_SERVER = "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR";
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

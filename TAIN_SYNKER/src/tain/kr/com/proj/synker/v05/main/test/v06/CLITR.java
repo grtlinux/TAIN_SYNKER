@@ -19,9 +19,6 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v06;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -125,6 +122,8 @@ public class CLITR extends Thread {
 			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
 		}
 
+		///////////////////////////////////////////////////
+		
 		if (flag) {
 			/*
 			 * parent thread, main thread
@@ -133,34 +132,38 @@ public class CLITR extends Thread {
 			String req = "GET_DATE_TIME(" + (int) (Math.random() * 200) + ")";
 			String res = null;
 			
-			if (flag) log.debug(">>>>> REQ = [" + req + "]");
+			try {
+				
+				if (flag) log.debug(">>>>> REQ = [" + req + "]");
 
-			if (flag) {
-				/*
-				 * ReqWrite
-				 */
+				if (flag) {
+					/*
+					 * ReqWrite
+					 */
+					
+					ps.reqWrite(req);
+				}
 				
-				ps.reqWrite(req);
-			}
-			
-			if (flag) {
-				/*
-				 * ResRead
-				 */
+				if (flag) {
+					/*
+					 * ResRead
+					 */
+					
+					res = ps.resRead();
+				}
 				
-				res = ps.resRead();
+				if (flag) log.debug(">>>>> RES = [" + res + "]");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			if (flag) log.debug(">>>>> RES = [" + res + "]");
 		}
 		
 		if (flag) {
 			/*
-			 * close piped stream object
+			 * close ps
 			 */
-			// thr.join();
-			// instance.join();
-			ps.close();
+			try { ps.close(); } catch (Exception e) {}
 		}
 	}
 

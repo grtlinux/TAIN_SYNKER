@@ -19,8 +19,6 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v06;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -58,41 +56,47 @@ public class SVRTR extends Thread {
 	}
 	
 	public void run() {
-		
-		String req = null;
-		String res = null;
-		
-		try {
+
+		if (flag) {
+			/*
+			 * thread, job thread
+			 */
 			
-			if (flag) {
-				/*
-				 * ReqRead
-				 */
+			String req = null;
+			String res = null;
+			
+			try {
 				
-				req = ps.reqRead();
-			}
-			
-			if (flag) {
-				/*
-				 * JobProcess
-				 */
-				Date date = new Date();
-		
-				long lVal = date.getTime();
-				String strVal = date.toString();
+				if (flag) {
+					/*
+					 * ReqRead
+					 */
+					
+					req = ps.reqRead();
+				}
 				
-				res = String.format("%s|%d|%s", req, lVal, strVal);
-			}
+				if (flag) {
+					/*
+					 * JobProcess
+					 */
+					Date date = new Date();
 			
-			if (flag) {
-				/*
-				 * ResWrite
-				 */
-				ps.resWrite(res);
+					long lVal = date.getTime();
+					String strVal = date.toString();
+					
+					res = String.format("%s|%d|%s", req, lVal, strVal);
+				}
+				
+				if (flag) {
+					/*
+					 * ResWrite
+					 */
+					ps.resWrite(res);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -122,6 +126,8 @@ public class SVRTR extends Thread {
 			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
 		}
 
+		/////////////////////////////////////////////////
+		
 		if (flag) {
 			/*
 			 * parent thread, main thread
@@ -130,25 +136,31 @@ public class SVRTR extends Thread {
 			String req = "GET_DATE_TIME(" + (int) (Math.random() * 200) + ")";
 			String res = null;
 			
-			if (flag) log.debug(">>>>> REQ = [" + req + "]");
+			try {
+				
+				if (flag) log.debug(">>>>> REQ = [" + req + "]");
 
-			if (flag) {
-				/*
-				 * ReqWrite
-				 */
+				if (flag) {
+					/*
+					 * ReqWrite
+					 */
+					
+					ps.reqWrite(req);
+				}
 				
-				ps.reqWrite(req);
-			}
-			
-			if (flag) {
-				/*
-				 * ResRead
-				 */
+				if (flag) {
+					/*
+					 * ResRead
+					 */
+					
+					res = ps.resRead();
+				}
 				
-				res = ps.resRead();
+				if (flag) log.debug(">>>>> RES = [" + res + "]");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			if (flag) log.debug(">>>>> RES = [" + res + "]");
 		}
 		
 		if (flag) {
