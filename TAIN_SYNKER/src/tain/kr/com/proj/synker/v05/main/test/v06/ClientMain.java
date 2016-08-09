@@ -110,9 +110,10 @@ public class ClientMain {
 				}
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				// e.printStackTrace();
+				throw e;
 			} finally {
-				ss.close();
+				if (ss != null) ss.close();
 			}
 			
 			thr.join();
@@ -135,7 +136,7 @@ public class ClientMain {
 		if (!flag) clientModule();
 		
 		if (flag) {
-			for (int i=0; i<1000; i++) {
+			for (int i=0; i < 10000; i++) {
 				
 				if (!flag && i % 10 == 9) {
 					/*
