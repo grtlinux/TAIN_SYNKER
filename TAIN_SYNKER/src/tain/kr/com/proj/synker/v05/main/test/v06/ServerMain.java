@@ -65,15 +65,28 @@ public class ServerMain {
 				
 				Socket socket = serverSocket.accept();
 				if (flag) log.info(String.format(" SERVER : accept the connection (%s)", socket));
-				
-				Thread thr = new ServerThread(idxThr, socket);
-				thr.start();
-				
+
 				if (flag) {
 					/*
-					 * wait for ending of thread
+					 * execute thread
+					 * close socket after finishing
 					 */
-					thr.join();
+					try {
+						Thread thr = new ServerThread(idxThr, socket);
+						thr.start();
+						
+						if (flag) {
+							/*
+							 * wait for ending of thread
+							 */
+							thr.join();
+						}
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally {
+						if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
+					}
 				}
 			}
 		}
