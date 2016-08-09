@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class SVRTR {
+public class SVRTR extends Thread {
 
 	private static boolean flag = true;
 
