@@ -100,10 +100,12 @@ public class SVRTR extends Thread {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/*
+	 * 1. Test
+	 */
 	private static void test01(String[] args) throws Exception {
 		
 		PipedStream ps = null;
-		Thread thr = null;
 		
 		if (flag) {
 			/*
@@ -112,15 +114,6 @@ public class SVRTR extends Thread {
 			ps = new PipedStream();
 		}
 		
-		if (!flag) {
-			/*
-			 * child thread, job thread
-			 */
-			thr = new JobThread(ps);
-			
-			thr.start();
-		}
-
 		if (flag) {
 			/*
 			 * use class
@@ -177,8 +170,6 @@ public class SVRTR extends Thread {
 			/*
 			 * close piped stream object
 			 */
-			// thr.join();
-			// instance.join();
 			ps.close();
 		}
 	}

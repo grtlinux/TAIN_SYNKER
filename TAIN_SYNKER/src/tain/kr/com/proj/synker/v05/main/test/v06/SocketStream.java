@@ -47,7 +47,6 @@ public class SocketStream {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	@SuppressWarnings("unused")
 	private static final int BUF_SIZ = 1024;
 	
 	private Socket socket = null;
@@ -98,7 +97,7 @@ public class SocketStream {
 		
 		if (flag) {
 			/*
-			 * write header
+			 * write header to socket
 			 */
 			if (this.strHeader == null) {
 				throw new Exception("ERROR : there is no value of header...");
@@ -114,7 +113,7 @@ public class SocketStream {
 		
 		if (flag) {
 			/*
-			 * write data
+			 * write data to socket
 			 */
 			this.dos.write(buffer, 0, buffer.length);
 			
@@ -126,13 +125,25 @@ public class SocketStream {
 		return ret;
 	}
 	
+	public void write(String str) throws Exception {
+		
+		if (flag) {
+			/*
+			 * write to ss
+			 */
+			byte[] buffer = str.getBytes();
+			
+			write(buffer);
+		}
+	}
+	
 	public int read(byte[] buffer) throws Exception {
 		
 		int ret = -1;
 		
 		if (flag) {
 			/*
-			 * read header
+			 * read header from socket
 			 */
 			byte[] header = new byte[20];
 			
@@ -143,7 +154,7 @@ public class SocketStream {
 		
 		if (flag) {
 			/*
-			 * read data
+			 * read data from socket
 			 */
 			ret = this.dis.read(buffer);
 
@@ -151,6 +162,27 @@ public class SocketStream {
 		}
 
 		return ret;
+	}
+	
+	public String read() throws Exception {
+		
+		String str = null;
+		
+		if (flag) {
+			/*
+			 * read from ss
+			 */
+			byte[] buffer = new byte[BUF_SIZ];
+			
+			int rcnt = read(buffer);
+			if (rcnt <= 0) {
+				throw new Exception("ERROR : reading error");
+			}
+			
+			str = new String(buffer, 0, rcnt);
+		}
+		
+		return str;
 	}
 	
 	public void close() throws Exception {

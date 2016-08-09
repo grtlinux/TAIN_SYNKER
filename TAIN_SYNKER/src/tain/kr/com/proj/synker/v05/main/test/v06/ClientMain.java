@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v06;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -46,16 +48,15 @@ public class ClientMain {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final int BUF_SIZ = 1024;
-
 	private static void clientModule() throws Exception {
 		
 		if (flag) {
 			
 			Socket socket = null;
-			SocketStream sm = null;
+			SocketStream ss = null;
+			PipedStream ps = null;
 			
-			String req = "GET_DATE_TIME(" + (int) (Math.random() * 200) + ")";
+			String req = null;
 			String res = null;
 			
 			try {
@@ -63,40 +64,70 @@ public class ClientMain {
 				socket = new Socket("127.0.0.1", 12345);
 				if (flag) log.info(String.format(" CLIENT : connection by port '12345' [%s]", socket.toString()));
 				
-				sm = new SocketStream(socket);
-
+				ss = new SocketStream(socket);
+				ps = new PipedStream();
+				
 				if (flag) {
 					/*
-					 * write
+					 * use class
+					 * elements class, constructor, run method
 					 */
 					
-					sm.setHeader("PACKET_CLIENT_HEADER");
-
-					byte[] buf = req.getBytes();
+					// class
+					Class<?> cls = Class.forName("tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
 					
-					sm.write(buf);
+					// constructor argument types
+					Class<?>[] types = new Class[] { PipedStream.class };
+					Object[] constructorArgs = new Object[] { ps };
+
+					// execute constructor
+					Constructor<?> constructor = cls.getConstructor(types);
+					Object instance = constructor.newInstance(constructorArgs);
+					
+					// execute run method of thread
+					//Method method = cls.getMethod("run");
+					Method method = cls.getMethod("start");
+					method.invoke(instance);
+				}
+				
+				if (flag) {
+					/*
+					 * read req
+					 */
+					
+					req = ps.reqRead();
+				}
+				
+				if (flag) {
+					/*
+					 * write req to socket
+					 */
+					
+					ss.setHeader("PACKET_CLIENT_HEADER");
+
+					ss.write(req);
 				}
 
 				if (flag) {
 					/*
-					 * read
+					 * read res from socket
 					 */
-					byte[] buf = new byte[BUF_SIZ];
 					
-					int cntRead = sm.read(buf);
-					if (cntRead <= 0) {
-						throw new Exception("ERROR : reading error");
-					}
+					res = ss.read();
+				}
+				
+				if (flag) {
+					/*
+					 * write res
+					 */
 					
-					res = new String(buf, 0, cntRead);
-					
-					if (flag) log.debug(">>>>> RES : rcnt = " + cntRead + " [" + res + "]");
+					ps.resWrite(res);
 				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				sm.close();
+				ss.close();
 			}
 		}
 	}

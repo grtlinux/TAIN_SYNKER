@@ -47,20 +47,68 @@ public class CLITR extends Thread {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private PipedStream ps = null;
+	
 	public CLITR(PipedStream ps) {
-		
+	
+		if (flag) {
+			this.ps = ps;
+		}
 	}
 	
 	public void run() {
 		
+		if (flag) {
+			/*
+			 * parent thread, main thread
+			 */
+			
+			String req = "GET_DATE_TIME(" + (int) (Math.random() * 200) + ")";
+			String res = null;
+			
+			try {
+				
+				if (flag) log.debug(">>>>> REQ = [" + req + "]");
+
+				if (flag) {
+					/*
+					 * ReqWrite
+					 */
+					
+					ps.reqWrite(req);
+				}
+				
+				if (flag) {
+					/*
+					 * ResRead
+					 */
+					
+					res = ps.resRead();
+				}
+				
+				if (flag) log.debug(">>>>> RES = [" + res + "]");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * close ps
+			 */
+			try { ps.close(); } catch (Exception e) {}
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/*
+	 * 2. Test
+	 */
 	private static void test01(String[] args) throws Exception {
 		
 		PipedStream ps = null;
-		Thread thr = null;
 		
 		if (flag) {
 			/*
@@ -69,15 +117,6 @@ public class CLITR extends Thread {
 			ps = new PipedStream();
 		}
 		
-		if (!flag) {
-			/*
-			 * child thread, job thread
-			 */
-			thr = new JobThread(ps);
-			
-			thr.start();
-		}
-
 		if (flag) {
 			/*
 			 * use class
