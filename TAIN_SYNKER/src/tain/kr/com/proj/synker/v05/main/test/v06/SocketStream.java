@@ -79,6 +79,12 @@ public class SocketStream {
 			 */
 			this.socket.setSoLinger(false, 1);
 			//this.socket.setSoLinger(true, 1);
+			
+			/*
+			 * SO_REUSEADDR true
+			 */
+			//this.socket.setReuseAddress(false);  // default
+			this.socket.setReuseAddress(true);
 		}
 	}
 	
