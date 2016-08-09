@@ -81,11 +81,20 @@ public class SocketStream {
 			 * remove TIME_WAIT
 			 */
 			// SO_LINGER true 0
-			// this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
+			//this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
 			this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
 			
 			// SO_REUSEADDR true
-			this.socket.setReuseAddress(true);
+			//this.socket.setReuseAddress(true);
+		}
+	}
+	
+	public void close() throws Exception {
+		
+		if (flag) {
+			if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
+			if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
+			if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
 		}
 	}
 	
@@ -107,6 +116,9 @@ public class SocketStream {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/*
+	 * write
+	 */
 	public int write(byte[] buffer) throws Exception {
 		
 		int ret = -1;
@@ -159,6 +171,11 @@ public class SocketStream {
 		}
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	/*
+	 * read
+	 */
 	public int read(byte[] buffer) throws Exception {
 		
 		int ret = -1;
@@ -175,6 +192,7 @@ public class SocketStream {
 		if (flag) {
 			/*
 			 * read data from socket
+			 * TODO 2016.08.09 : read -> recv
 			 */
 			ret = this.dis.read(buffer);
 			if (ret < 0) {
@@ -203,15 +221,6 @@ public class SocketStream {
 		}
 		
 		return str;
-	}
-	
-	public void close() throws Exception {
-		
-		if (flag) {
-			if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
-			if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
-			if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
-		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
