@@ -43,40 +43,50 @@ public class GlobalVars {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String CLS_CLIENT = "tain.kr.com.proj.synker.v05.main.test.v06.CLITR";
-	private static final String CLS_SERVER = "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR";
+	private static final String CLI_TR_CLASS = "tain.kr.com.proj.synker.v05.main.test.v06.CLITR";
+	private static final String SVR_TR_CLASS = "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR";
 	
+	private String trCode = "TR0000";
+	private String cliTrClass = CLI_TR_CLASS;
+	private String svrTrClass = SVR_TR_CLASS;
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private GlobalVars() {}
 	
-	private String clsClient = CLS_CLIENT;
-	private String clsServer = CLS_SERVER;
-	
+	public String getTrCode() {
+		return trCode;
+	}
+
+	public String getCliTrClass() {
+		return cliTrClass;
+	}
+
+	public String getSvrTrClass() {
+		return svrTrClass;
+	}
+
+	public void setTrCode(String trCode) {
+		this.trCode = trCode;
+	}
+
+	public void setCliTrClass(String cliTrClass) {
+		this.cliTrClass = cliTrClass;
+	}
+
+	public void setSvrTrClass(String svrTrClass) {
+		this.svrTrClass = svrTrClass;
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public String getClsClient() {
-		return clsClient;
-	}
-
-	public String getClsServer() {
-		return clsServer;
-	}
-
-	public void setClsClient(String clsClient) {
-		this.clsClient = clsClient;
-	}
-
-	public void setClsServer(String clsServer) {
-		this.clsServer = clsServer;
-	}
-
 	public String toString() {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n");
-		sb.append(String.format("\t[clsClient=%s]\n", clsClient));
-		sb.append(String.format("\t[clsServer=%s]\n", clsServer));
+		sb.append(String.format("\t[trCode    =%s]\n", trCode));
+		sb.append(String.format("\t[cliTrClass=%s]\n", cliTrClass));
+		sb.append(String.format("\t[svrTrClass=%s]\n", svrTrClass));
 		
 		return sb.toString();
 	}
