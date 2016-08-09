@@ -75,15 +75,13 @@ public class SocketStream {
 		
 		if (flag) {
 			/*
-			 * SO_LINGER false 0
+			 * remove TIME_WAIT
 			 */
-			this.socket.setSoLinger(false, 1);
-			//this.socket.setSoLinger(true, 1);
+			// SO_LINGER true 0
+			// this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
+			this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
 			
-			/*
-			 * SO_REUSEADDR true
-			 */
-			//this.socket.setReuseAddress(false);  // default
+			// SO_REUSEADDR true
 			this.socket.setReuseAddress(true);
 		}
 	}
@@ -115,13 +113,12 @@ public class SocketStream {
 			 * write header to socket
 			 */
 			if (this.strHeader == null) {
-				throw new Exception("ERROR : there is no value of header...");
+				throw new Exception("ERROR : there is no value of header...[KIEA]");
 			}
 			
 			ret = this.bytHeader.length;
 
 			this.dos.write(this.bytHeader, 0, ret);
-
 			
 			if (flag) log.debug("SOCKET HEADER (" + ret + ") [" + this.strHeader + "]");
 		}
@@ -135,6 +132,13 @@ public class SocketStream {
 			ret = buffer.length;
 			
 			if (flag) log.debug("SOCKET DATA   (" + ret + ") [" + new String(buffer) + "]");
+		}
+
+		if (flag) {
+			/*
+			 * flush
+			 */
+			this.dos.flush();
 		}
 		
 		return ret;
@@ -163,6 +167,9 @@ public class SocketStream {
 			byte[] header = new byte[HDR_SIZ];
 			
 			ret = this.dis.read(header);
+			if (ret < 0) {
+				throw new Exception("ERROR : there is error event on read action....[KIEA]");
+			}
 
 			if (flag) log.debug("SOCKET HEADER  (" + ret + ") [" + new String(header, 0, ret) + "]");
 		}
@@ -172,6 +179,9 @@ public class SocketStream {
 			 * read data from socket
 			 */
 			ret = this.dis.read(buffer);
+			if (ret < 0) {
+				throw new Exception("ERROR : there is error event on read action....[KIEA]");
+			}
 
 			if (flag) log.debug("SOCKET DATA    (" + ret + ") [" + new String(buffer, 0, ret) + "]");
 		}
@@ -190,9 +200,6 @@ public class SocketStream {
 			byte[] buffer = new byte[BUF_SIZ];
 			
 			int rcnt = read(buffer);
-			if (rcnt <= 0) {
-				throw new Exception("ERROR : reading error");
-			}
 			
 			str = new String(buffer, 0, rcnt);
 		}
