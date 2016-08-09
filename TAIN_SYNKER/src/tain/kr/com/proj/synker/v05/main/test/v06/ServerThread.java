@@ -137,7 +137,7 @@ public class ServerThread extends Thread {
 		}
 		
 		if (flag) {
-			if (flag) log.debug(String.format("########## FINISH <%s> ##########\n\n", this.getName()));
+			if (flag) log.debug(String.format("########## FINISH <%s> ##########\n", this.getName()));
 		}
 		
 		if (!flag) {

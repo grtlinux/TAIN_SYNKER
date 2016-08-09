@@ -68,7 +68,13 @@ public class ServerMain {
 				
 				Thread thr = new ServerThread(idxThr, socket);
 				thr.start();
-				thr.join();
+				
+				if (flag) {
+					/*
+					 * wait for ending of thread
+					 */
+					thr.join();
+				}
 			}
 		}
 	}

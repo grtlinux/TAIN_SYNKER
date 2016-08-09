@@ -54,6 +54,8 @@ public class ClientMain {
 			SocketStream ss = null;
 			PipedStream ps = null;
 			
+			Thread thr = null;
+			
 			String req = null;
 			String res = null;
 			
@@ -70,7 +72,7 @@ public class ClientMain {
 					 * use class
 					 * elements class, constructor, run method
 					 */
-					ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
+					thr = ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
 				}
 				
 				if (flag) {
@@ -112,6 +114,8 @@ public class ClientMain {
 			} finally {
 				ss.close();
 			}
+			
+			thr.join();
 		}
 	}
 	
@@ -128,7 +132,13 @@ public class ClientMain {
 			}
 		}
 
-		if (flag) clientModule();
+		if (!flag) clientModule();
+		
+		if (flag) {
+			for (int i=0; i<100; i++) {
+				clientModule();
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

@@ -47,7 +47,9 @@ public class ThreadInvoke {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void execute(PipedStream ps, String clsName) throws Exception {
+	public static Thread execute(PipedStream ps, String clsName) throws Exception {
+		
+		Thread thr = null;
 		
 		if (flag) {
 			/*
@@ -70,7 +72,12 @@ public class ThreadInvoke {
 			//Method method = cls.getMethod("run");
 			Method method = cls.getMethod("start");
 			method.invoke(instance);
+			
+			// thread object
+			thr = (Thread) instance;
 		}
+		
+		return thr;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

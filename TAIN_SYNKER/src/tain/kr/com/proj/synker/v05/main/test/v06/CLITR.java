@@ -83,7 +83,7 @@ public class CLITR extends Thread {
 					res = ps.resRead();
 				}
 				
-				if (flag) log.debug(">>>>> RES = [" + res + "]");
+				if (flag) log.debug(">>>>> RES = [" + res + "]\n");
 				
 			} catch (Exception e) {
 				e.printStackTrace();
