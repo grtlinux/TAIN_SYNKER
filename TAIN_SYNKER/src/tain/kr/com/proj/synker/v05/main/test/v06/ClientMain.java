@@ -135,7 +135,17 @@ public class ClientMain {
 		if (!flag) clientModule();
 		
 		if (flag) {
-			for (int i=0; i<100; i++) {
+			for (int i=0; i<1000; i++) {
+				
+				if (!flag && i % 10 == 9) {
+					/*
+					 * garbage collection
+					 */
+					System.gc();
+					
+					if (flag) log.debug("#################################  garbage collection  ###################################\n");
+				}
+				
 				clientModule();
 			}
 		}
