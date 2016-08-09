@@ -47,7 +47,10 @@ public class SocketStream {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final int HDR_SIZ = 50;
+	public static final String REQ_HDR = "PACKET_REQ_HEADER";
+	public static final String RES_HDR = "PACKET_RES_HEADER";
+	
+	private static final int HDR_SIZ = REQ_HDR.length();
 	private static final int BUF_SIZ = 1024;
 	
 	private Socket socket = null;
@@ -164,14 +167,9 @@ public class SocketStream {
 			/*
 			 * read header from socket
 			 */
-			byte[] header = new byte[HDR_SIZ];
+			byte[] header = recv(HDR_SIZ);
 			
-			ret = this.dis.read(header);
-			if (ret < 0) {
-				throw new Exception("ERROR : there is error event on read action....[KIEA]");
-			}
-
-			if (flag) log.debug("SOCKET HEADER  (" + ret + ") [" + new String(header, 0, ret) + "]");
+			if (flag) log.debug("SOCKET HEADER  (" + HDR_SIZ + ") [" + new String(header) + "]");
 		}
 		
 		if (flag) {
@@ -218,4 +216,27 @@ public class SocketStream {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private byte[] recv(final int size) throws Exception {
+		
+		int ret = 0;
+		int readed = 0;
+		byte[] buf = new byte[size];
+		
+		this.socket.setSoTimeout(0);
+		while (readed < size) {
+			ret = this.dis.read(buf, readed, size - readed);
+			if (!flag) log.debug(String.format("\t[SIZ:%d][R:%d][RET:%d]", size, readed, ret));
+			
+			if (ret <= 0) {
+				try { Thread.sleep(1000); } catch (Exception e) {}
+				continue;
+			} else {
+				if (flag) this.socket.setSoTimeout(1000);
+			}
+			
+			readed += ret;
+		}
+		
+		return buf;
+	}
 }

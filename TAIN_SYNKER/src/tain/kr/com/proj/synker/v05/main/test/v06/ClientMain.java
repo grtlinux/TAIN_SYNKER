@@ -89,7 +89,7 @@ public class ClientMain {
 					 * write req to socket
 					 */
 					
-					ss.setHeader("PACKET_REQ_HEADER");
+					ss.setHeader(SocketStream.REQ_HDR);
 
 					ss.write(req);
 				}

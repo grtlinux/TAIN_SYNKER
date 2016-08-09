@@ -106,7 +106,7 @@ public class ServerThread extends Thread {
 						 * ReqWrite to piped stream IN
 						 */
 						
-						ps.reqWrite(req);
+						this.ps.reqWrite(req);
 					}
 					
 					if (flag) {
@@ -114,7 +114,7 @@ public class ServerThread extends Thread {
 						 * ResRead from piped stream OUT
 						 */
 						
-						res = ps.resRead();
+						res = this.ps.resRead();
 					}
 					
 					if (flag) log.debug(">>>>> RES = [" + res + "]");
@@ -124,7 +124,7 @@ public class ServerThread extends Thread {
 					/*
 					 * write res to socket
 					 */
-					this.ss.setHeader("PACKET_RES_HEADER");
+					this.ss.setHeader(SocketStream.RES_HDR);
 					
 					this.ss.write(res);
 				}
@@ -134,22 +134,9 @@ public class ServerThread extends Thread {
 			} finally {
 				try { this.ps.close(); } catch (Exception e) {}
 				try { this.ss.close(); } catch (Exception e) {}
+
+				if (flag) log.debug(String.format("########## FINISH <%s> ##########\n", this.getName()));
 			}
-		}
-		
-		if (flag) {
-			if (flag) log.debug(String.format("########## FINISH <%s> ##########\n", this.getName()));
-		}
-		
-		if (!flag) {
-			/*
-			 * TODO 2016.08.09 : for testing
-			 * clear STD_IO for testing.
-			 */
-			System.out.println("before clearation of STD_IO");
-			System.setIn(null);
-			System.setOut(null);
-			System.out.println("after clearation of STD_IO");
 		}
 	}
 }

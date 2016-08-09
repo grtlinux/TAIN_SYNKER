@@ -19,8 +19,6 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v06;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Date;
@@ -57,18 +55,12 @@ public class PipedStream {
 	 */
 	private PipedInputStream inPis = null;
 	private PipedOutputStream inPos = null;
-	
-	private DataInputStream inDis = null;
-	private DataOutputStream inDos = null;
 
 	/*
 	 * RES data output
 	 */
 	private PipedInputStream outPis = null;
 	private PipedOutputStream outPos = null;
-
-	private DataInputStream outDis = null;
-	private DataOutputStream outDos = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -119,35 +111,9 @@ public class PipedStream {
 				throw e;
 			}
 		}
-		
-		if (flag) {
-			/*
-			 * data stream
-			 */
-
-			try {
-				// IN : (P)inPos:dos -> (C) inPis:dis
-				this.inDis = new DataInputStream(this.inPis);
-				this.inDos = new DataOutputStream(this.inPos);
-				
-				// OUT : (C)outPos:dos -> (P)outPis:dis
-				this.outDis = new DataInputStream(this.outPis);
-				this.outDos = new DataOutputStream(this.outPos);
-			} catch (Exception e) {
-				throw e;
-			}
-		}
 	}
 
 	public void close() throws Exception {
-		
-		if (flag) {
-			if (this.inDis != null) try { this.inDis.close(); this.inDis = null; } catch (Exception e) {}
-			if (this.inDos != null) try { this.inDos.close(); this.inDos = null; } catch (Exception e) {}
-
-			if (this.outDis != null) try { this.outDis.close(); this.outDis = null; } catch (Exception e) {}
-			if (this.outDos != null) try { this.outDos.close(); this.outDos = null; } catch (Exception e) {}
-		}
 		
 		if (flag) {
 			if (this.inPis != null) try { this.inPis.close(); this.inPis = null; } catch (Exception e) {}
@@ -169,8 +135,8 @@ public class PipedStream {
 			byte[] buf = str.getBytes();
 			wcnt = buf.length;
 			
-			this.inDos.write(buf, 0, wcnt);
-			this.inDos.flush();
+			this.inPos.write(buf, 0, wcnt);
+			this.inPos.flush();
 
 			if (flag) log.debug("PIPE (1) After  Req Write : wcnt = " + wcnt);
 		}
@@ -188,7 +154,7 @@ public class PipedStream {
 
 			byte[] buf = new byte[BUF_SIZ];
 			
-			int rcnt = this.inDis.read(buf);
+			int rcnt = this.inPis.read(buf);
 			if (rcnt < 0)
 				return null;
 			
@@ -211,8 +177,8 @@ public class PipedStream {
 			byte[] buf = str.getBytes();
 			wcnt = buf.length;
 			
-			this.outDos.write(buf, 0, wcnt);
-			this.outDos.flush();
+			this.outPos.write(buf, 0, wcnt);
+			this.outPos.flush();
 
 			if (flag) log.debug("PIPE (3) After  Res Write : wcnt = " + wcnt);
 		}
@@ -230,7 +196,7 @@ public class PipedStream {
 
 			byte[] buf = new byte[BUF_SIZ];
 			
-			int rcnt = this.outDis.read(buf);
+			int rcnt = this.outPis.read(buf);
 			if (rcnt < 0)
 				return null;
 			
