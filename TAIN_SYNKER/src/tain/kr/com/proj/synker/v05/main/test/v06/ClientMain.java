@@ -139,7 +139,7 @@ public class ClientMain {
 		if (!flag) clientModule();
 		
 		if (flag) {
-			for (int i=0; i < 10000; i++) {
+			for (int i=0; i < 1000000; i++) {
 				
 				if (!flag && i % 10 == 9) {
 					/*
