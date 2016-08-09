@@ -85,7 +85,7 @@ public class SocketStream {
 			this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
 			
 			// SO_REUSEADDR true
-			//this.socket.setReuseAddress(true);
+			this.socket.setReuseAddress(true);
 		}
 	}
 	
