@@ -113,12 +113,12 @@ public class ClientMain {
 				// e.printStackTrace();
 				throw e;
 			} finally {
-				if (ss != null) ss.close();
+				ss.close();
 			}
 			
 			thr.join();
 			
-			if (ps != null) ps.close();
+			ps.close();
 		}
 	}
 	
