@@ -21,7 +21,6 @@ package tain.kr.com.proj.synker.v05.main.test.v06;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -29,7 +28,7 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : SVRTR.java
+ *   -. FileName   : CLITR.java
  *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v04
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -39,67 +38,25 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class SVRTR extends Thread {
+public class CLITR extends Thread {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(SVRTR.class);
+	private static final Logger log = Logger.getLogger(CLITR.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private PipedStream ps = null;
-	
-	public SVRTR(PipedStream ps) {
+	public CLITR(PipedStream ps) {
 		
-		if (flag) {
-			this.ps = ps;
-		}
 	}
 	
 	public void run() {
 		
-		String req = null;
-		String res = null;
-		
-		try {
-			
-			if (flag) {
-				/*
-				 * ReqRead
-				 */
-				
-				req = ps.reqRead();
-			}
-			
-			if (flag) {
-				/*
-				 * JobProcess
-				 */
-				Date date = new Date();
-		
-				long lVal = date.getTime();
-				String strVal = date.toString();
-				
-				res = String.format("%s|%d|%s", req, lVal, strVal);
-			}
-			
-			if (flag) {
-				/*
-				 * ResWrite
-				 */
-				ps.resWrite(res);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
+	
 	private static void test01(String[] args) throws Exception {
 		
 		PipedStream ps = null;
@@ -182,7 +139,7 @@ public class SVRTR extends Thread {
 			ps.close();
 		}
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
