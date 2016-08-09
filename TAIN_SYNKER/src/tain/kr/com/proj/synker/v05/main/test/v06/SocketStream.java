@@ -189,9 +189,9 @@ public class SocketStream {
 	public void close() throws Exception {
 		
 		if (flag) {
-			if (dis != null) try { dis.close(); } catch (Exception e) {}
-			if (dos != null) try { dos.close(); } catch (Exception e) {}
-			if (socket != null) try { socket.close(); } catch (Exception e) {}
+			if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
+			if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
+			if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
 		}
 	}
 	
