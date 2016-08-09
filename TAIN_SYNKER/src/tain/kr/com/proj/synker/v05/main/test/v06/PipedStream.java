@@ -142,19 +142,19 @@ public class PipedStream {
 	public void close() throws Exception {
 		
 		if (flag) {
-			if (this.inDis != null) try { this.inDis.close(); } catch (Exception e) {}
-			if (this.inDos != null) try { this.inDos.close(); } catch (Exception e) {}
+			if (this.inDis != null) try { this.inDis.close(); this.inDis = null; } catch (Exception e) {}
+			if (this.inDos != null) try { this.inDos.close(); this.inDos = null; } catch (Exception e) {}
 
-			if (this.outDis != null) try { this.outDis.close(); } catch (Exception e) {}
-			if (this.outDos != null) try { this.outDos.close(); } catch (Exception e) {}
+			if (this.outDis != null) try { this.outDis.close(); this.outDis = null; } catch (Exception e) {}
+			if (this.outDos != null) try { this.outDos.close(); this.outDos = null; } catch (Exception e) {}
 		}
 		
 		if (flag) {
-			if (this.inPis != null) try { this.inPis.close(); } catch (Exception e) {}
-			if (this.inPos != null) try { this.inPos.close(); } catch (Exception e) {}
+			if (this.inPis != null) try { this.inPis.close(); this.inPis = null; } catch (Exception e) {}
+			if (this.inPos != null) try { this.inPos.close(); this.inPos = null; } catch (Exception e) {}
 
-			if (this.outPis != null) try { this.outPis.close(); } catch (Exception e) {}
-			if (this.outPos != null) try { this.outPos.close(); } catch (Exception e) {}
+			if (this.outPis != null) try { this.outPis.close(); this.outPis = null; } catch (Exception e) {}
+			if (this.outPos != null) try { this.outPos.close(); this.outPos = null; } catch (Exception e) {}
 		}
 	}
 	
