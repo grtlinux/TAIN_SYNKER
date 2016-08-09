@@ -72,6 +72,13 @@ public class SocketStream {
 			this.dis = new DataInputStream(this.socket.getInputStream());
 			this.dos = new DataOutputStream(this.socket.getOutputStream());
 		}
+		
+		if (flag) {
+			/*
+			 * SO_LINGER false 0
+			 */
+			this.socket.setSoLinger(false, 0);
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
