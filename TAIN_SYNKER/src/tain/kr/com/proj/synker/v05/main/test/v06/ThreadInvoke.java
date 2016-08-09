@@ -92,7 +92,8 @@ public class ThreadInvoke {
 			 */
 			ps = new PipedStream();
 			
-			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+			ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
 
 		}
 		

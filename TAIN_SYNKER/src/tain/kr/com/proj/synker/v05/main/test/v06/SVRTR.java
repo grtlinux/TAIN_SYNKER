@@ -123,7 +123,8 @@ public class SVRTR extends Thread {
 			 * use class
 			 * elements class, constructor, run method
 			 */
-			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+			ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
 		}
 
 		/////////////////////////////////////////////////
