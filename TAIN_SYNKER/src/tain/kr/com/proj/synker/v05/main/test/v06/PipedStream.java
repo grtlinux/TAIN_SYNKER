@@ -170,6 +170,7 @@ public class PipedStream {
 			wcnt = buf.length;
 			
 			this.inDos.write(buf, 0, wcnt);
+			this.inDos.flush();
 
 			if (flag) log.debug("PIPE (1) After  Req Write : wcnt = " + wcnt);
 		}
@@ -211,6 +212,7 @@ public class PipedStream {
 			wcnt = buf.length;
 			
 			this.outDos.write(buf, 0, wcnt);
+			this.outDos.flush();
 
 			if (flag) log.debug("PIPE (3) After  Res Write : wcnt = " + wcnt);
 		}
