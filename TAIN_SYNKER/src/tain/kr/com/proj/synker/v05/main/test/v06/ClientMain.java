@@ -19,8 +19,6 @@
  */
 package tain.kr.com.proj.synker.v05.main.test.v06;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -72,22 +70,7 @@ public class ClientMain {
 					 * use class
 					 * elements class, constructor, run method
 					 */
-					
-					// class
-					Class<?> cls = Class.forName("tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
-					
-					// constructor argument types
-					Class<?>[] types = new Class[] { PipedStream.class };
-					Object[] constructorArgs = new Object[] { ps };
-
-					// execute constructor
-					Constructor<?> constructor = cls.getConstructor(types);
-					Object instance = constructor.newInstance(constructorArgs);
-					
-					// execute run method of thread
-					//Method method = cls.getMethod("run");
-					Method method = cls.getMethod("start");
-					method.invoke(instance);
+					ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
 				}
 				
 				if (flag) {

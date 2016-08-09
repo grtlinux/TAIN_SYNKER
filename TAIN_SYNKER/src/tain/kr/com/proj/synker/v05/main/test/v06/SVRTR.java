@@ -119,22 +119,7 @@ public class SVRTR extends Thread {
 			 * use class
 			 * elements class, constructor, run method
 			 */
-			
-			// class
-			Class<?> cls = Class.forName("tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
-			
-			// constructor argument types
-			Class<?>[] types = new Class[] { PipedStream.class };
-			Object[] constructorArgs = new Object[] { ps };
-
-			// execute constructor
-			Constructor<?> constructor = cls.getConstructor(types);
-			Object instance = constructor.newInstance(constructorArgs);
-			
-			// execute run method of thread
-			//Method method = cls.getMethod("run");
-			Method method = cls.getMethod("start");
-			method.invoke(instance);
+			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
 		}
 
 		if (flag) {

@@ -28,8 +28,8 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : CLITR.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v04
+ *   -. FileName   : ThreadInvoke.java
+ *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v06
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -38,93 +38,57 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class CLITR extends Thread {
+public class ThreadInvoke {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(CLITR.class);
+	private static final Logger log = Logger.getLogger(ThreadInvoke.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private PipedStream ps = null;
-	
-	public CLITR(PipedStream ps) {
-	
-		if (flag) {
-			this.ps = ps;
-		}
-	}
-	
-	public void run() {
-		
-		if (flag) {
-			/*
-			 * parent thread, main thread
-			 */
-			
-			String req = "GET_DATE_TIME(" + (int) (Math.random() * 200) + ")";
-			String res = null;
-			
-			try {
-				
-				if (flag) log.debug(">>>>> REQ = [" + req + "]");
-
-				if (flag) {
-					/*
-					 * ReqWrite
-					 */
-					
-					ps.reqWrite(req);
-				}
-				
-				if (flag) {
-					/*
-					 * ResRead
-					 */
-					
-					res = ps.resRead();
-				}
-				
-				if (flag) log.debug(">>>>> RES = [" + res + "]");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		if (flag) {
-			/*
-			 * close ps
-			 */
-			try { ps.close(); } catch (Exception e) {}
-		}
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	/*
-	 * 2. Test
-	 */
-	private static void test01(String[] args) throws Exception {
-		
-		PipedStream ps = null;
-		
-		if (flag) {
-			/*
-			 * create piped stream object
-			 */
-			ps = new PipedStream();
-		}
+	public static void execute(PipedStream ps, String clsName) throws Exception {
 		
 		if (flag) {
 			/*
 			 * use class
 			 * elements class, constructor, run method
 			 */
-			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
-		}
+			
+			// class
+			Class<?> cls = Class.forName(clsName);
+			
+			// constructor argument types
+			Class<?>[] types = new Class[] { PipedStream.class };
+			Object[] constructorArgs = new Object[] { ps };
 
+			// execute constructor
+			Constructor<?> constructor = cls.getConstructor(types);
+			Object instance = constructor.newInstance(constructorArgs);
+			
+			// execute run method of thread
+			//Method method = cls.getMethod("run");
+			Method method = cls.getMethod("start");
+			method.invoke(instance);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static void test01(String[] args) throws Exception {
+		
+		PipedStream ps = null;
+
+		if (flag) {
+			/*
+			 * Test
+			 */
+			ps = new PipedStream();
+			
+			ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+
+		}
+		
 		if (flag) {
 			/*
 			 * parent thread, main thread
@@ -158,12 +122,10 @@ public class CLITR extends Thread {
 			/*
 			 * close piped stream object
 			 */
-			// thr.join();
-			// instance.join();
 			ps.close();
 		}
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
