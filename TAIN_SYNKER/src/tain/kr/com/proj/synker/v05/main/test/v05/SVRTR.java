@@ -21,6 +21,8 @@ package tain.kr.com.proj.synker.v05.main.test.v05;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.lang.reflect.Constructor;
@@ -53,15 +55,15 @@ public class SVRTR extends Thread {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private PipedInputStream pis = null;
-	private PipedOutputStream pos = null;
+	private InputStream pis = null;
+	private OutputStream pos = null;
 	
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
 	
-	public SVRTR(PipedInputStream pis, PipedOutputStream pos) {
+	public SVRTR(InputStream pis, OutputStream pos) {
 		
-		if (flag) log.debug(">>>>> Constructor of " + this.getName());
+		if (flag) log.debug(">>>>> Constructor-2 of " + this.getName());
 		
 		if (flag) {
 			this.pis = pis;
@@ -76,35 +78,64 @@ public class SVRTR extends Thread {
 		
 		if (flag) log.debug(">>>>> run method of " + this.getName());
 		
-		try {
-			
-			if (flag) {
-				/*
-				 * read from pipe
-				 */
-				byte[] buf = new byte[20];
+		if (flag) {
+			try {
 				
-				int rcnt = this.dis.read(buf);
+				byte[] inBuf = null;
+				String inStr = null;
+				byte[] outBuf = null;
+
+				if (flag) {
+					/*
+					 * read from pipe
+					 */
+					inBuf = new byte[100];
+					
+					int rcnt = this.dis.read(inBuf);
+					
+					inStr = new String(inBuf,0, rcnt);
+					
+					if (flag) log.debug("CHILD READ  (" + rcnt + ") [" + inStr + "]");
+				}
 				
-			}
-			
-			if (flag) {
-				/*
-				 * job processing
-				 */
-			}
-			
-			if (flag) {
-				/*
-				 * write to pipe
-				 */
-				byte[] buf = "PIPED_OUTPUT_STREAM".getBytes();
+				if (flag) {
+					/*
+					 * job process
+					 */
+					Date date = new Date();
+					
+					long lVal = date.getTime();
+					String strVal = date.toString();
+					
+					outBuf = String.format("%s|%d|%s", inStr, lVal, strVal).getBytes();
+				}
 				
-				this.dos.write(buf, 0, buf.length);
+				if (flag) {
+					/*
+					 * waiting
+					 */
+					long msec = 1000;
+					if (flag) log.debug("sleeping msec = " + msec);
+					try { Thread.sleep(msec); } catch (InterruptedException e) {}
+				}
+
+				if (flag) {
+					/*
+					 * write to pipe
+					 */
+					int wcnt = outBuf.length;
+					
+					this.dos.write(outBuf, 0, wcnt);
+					
+					if (flag) log.debug("CHILD WRITE  (" + wcnt + ") [" + new String(outBuf) + "]");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (dos != null) try { dos.close(); } catch (Exception e) {}
+				if (dis != null) try { dis.close(); } catch (Exception e) {}
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -157,12 +188,13 @@ public class SVRTR extends Thread {
 		}
 	}
 	
-	@SuppressWarnings({ "unused", "resource" })
 	private static void test02(String[] args) throws Exception {
 		
+		// IN : (P)posIn -> (C) pisIn
 		PipedInputStream pisIn = new PipedInputStream();
 		PipedOutputStream posIn = new PipedOutputStream(pisIn);    // posIn -> pisIn
 		
+		// OUT : (C)posOut -> (P)pisOut
 		PipedInputStream pisOut = new PipedInputStream();
 		PipedOutputStream posOut = new PipedOutputStream(pisOut);    // posOut -> pisOut
 
@@ -173,20 +205,70 @@ public class SVRTR extends Thread {
 			 */
 			
 			// class
-			Class<?> cls = Class.forName("tain.kr.com.proj.synker.v05.main.test.v04.SVRTR");
+			Class<?> cls = Class.forName("tain.kr.com.proj.synker.v05.main.test.v05.SVRTR");
 			
 			// constructor argument types
-			Class<?>[] types = new Class[] { PipedInputStream.class, PipedOutputStream.class };
+			Class<?>[] types = new Class[] { InputStream.class, OutputStream.class };
 			Object[] constructorArgs = new Object[] { pisIn, posOut };
 
-			// execute constructor
+			// constructor argument types
 			Constructor<?> constructor = cls.getConstructor(types);
+
+			// execute constructor
 			Object instance = constructor.newInstance(constructorArgs);
 			
 			// execute run method of thread
 			//Method method = cls.getMethod("run");
 			Method method = cls.getMethod("start");
 			method.invoke(instance);
+		}
+		
+		if (flag) {
+			/*
+			 * main thread
+			 */
+			
+			DataOutputStream dos = new DataOutputStream(posIn);
+			DataInputStream dis = new DataInputStream(pisOut);
+			
+			try {
+				
+				byte[] inBuf = null;
+				byte[] outBuf = null;
+				String outStr = null;
+
+				if (flag) {
+					/*
+					 * write to pipe
+					 */
+					inBuf = "GET_DATE_TIME".getBytes();
+					
+					int wcnt = inBuf.length;
+					
+					dos.write(inBuf, 0, wcnt);
+					
+					if (flag) log.debug("PARENT WRITE  (" + wcnt + ") [" + new String(inBuf) + "]");
+				}
+				
+				if (flag) {
+					/*
+					 * read from pipe
+					 */
+					outBuf = new byte[100];
+					
+					int rcnt = dis.read(outBuf);
+					
+					outStr = new String(outBuf, 0, rcnt);
+					
+					if (flag) log.debug("PARENT READ  (" + rcnt + ") [" + outStr + "]");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (dos != null) try { dos.close(); } catch (Exception e) {}
+				if (dis != null) try { dis.close(); } catch (Exception e) {}
+			}
 		}
 	}
 	
