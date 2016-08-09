@@ -77,7 +77,8 @@ public class SocketStream {
 			/*
 			 * SO_LINGER false 0
 			 */
-			this.socket.setSoLinger(false, 0);
+			//this.socket.setSoLinger(false, 1);
+			this.socket.setSoLinger(true, 1);
 		}
 	}
 	
