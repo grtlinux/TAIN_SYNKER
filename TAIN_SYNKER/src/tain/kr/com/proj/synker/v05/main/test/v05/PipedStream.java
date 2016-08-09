@@ -48,7 +48,8 @@ public class PipedStream {
 	private static final Logger log = Logger.getLogger(PipedStream.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
+
+	private static final int PIPE_SIZ = 4096;
 	private static final int BUF_SIZ = 1024;
 	
 	/*
@@ -85,7 +86,7 @@ public class PipedStream {
 		
 		if (flag) {
 			/*
-			 * piped stream
+			 * piped stream PIPE_SIZ = default
 			 */
 			
 			try {
@@ -95,6 +96,24 @@ public class PipedStream {
 				
 				// OUT : (C)outPos:dos -> (P)outPis:dis
 				this.outPis = new PipedInputStream();
+				this.outPos = new PipedOutputStream(this.outPis);
+			} catch (Exception e) {
+				throw e;
+			}
+		}
+		
+		if (!flag) {
+			/*
+			 * piped stream PIPE_SIZ = 4096
+			 */
+			
+			try {
+				// IN : (P)inPos:dos -> (C) inPis:dis
+				this.inPis = new PipedInputStream(PIPE_SIZ);
+				this.inPos = new PipedOutputStream(this.inPis);
+				
+				// OUT : (C)outPos:dos -> (P)outPis:dis
+				this.outPis = new PipedInputStream(PIPE_SIZ);
 				this.outPos = new PipedOutputStream(this.outPis);
 			} catch (Exception e) {
 				throw e;
@@ -145,7 +164,7 @@ public class PipedStream {
 		
 		if (flag) {
 			
-			if (flag) log.debug("(1) Before Req Write : data = [" + str + "]");
+			if (!flag) log.debug("(1) Before Req Write : data = [" + str + "]");
 			
 			byte[] buf = str.getBytes();
 			wcnt = buf.length;
@@ -164,7 +183,7 @@ public class PipedStream {
 		
 		if (flag) {
 
-			if (flag) log.debug("(2) Before Req Read :");
+			if (!flag) log.debug("(2) Before Req Read :");
 
 			byte[] buf = new byte[BUF_SIZ];
 			
@@ -186,7 +205,7 @@ public class PipedStream {
 		
 		if (flag) {
 
-			if (flag) log.debug("(3) Before Res Write : data = [" + str + "]");
+			if (!flag) log.debug("(3) Before Res Write : data = [" + str + "]");
 			
 			byte[] buf = str.getBytes();
 			wcnt = buf.length;
@@ -205,7 +224,7 @@ public class PipedStream {
 		
 		if (flag) {
 			
-			if (flag) log.debug("(4) Before Res Read :");
+			if (!flag) log.debug("(4) Before Res Read :");
 
 			byte[] buf = new byte[BUF_SIZ];
 			
@@ -215,7 +234,7 @@ public class PipedStream {
 			
 			str = new String(buf, 0, rcnt);
 
-			if (flag) log.debug("(5) After  Res Read : rcnt = " + rcnt + " data = [" + str + "]");
+			if (flag) log.debug("(4) After  Res Read : rcnt = " + rcnt + " data = [" + str + "]");
 		}
 		
 		return str;
