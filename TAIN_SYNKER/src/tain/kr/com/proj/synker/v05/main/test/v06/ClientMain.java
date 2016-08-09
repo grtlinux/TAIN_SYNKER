@@ -72,7 +72,8 @@ public class ClientMain {
 					 * use class
 					 * elements class, constructor, run method
 					 */
-					thr = ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
+					// thr = ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
+					thr = ThreadInvoke.execute(ps, GlobalVars.getInstance().getCliTrClass());
 				}
 				
 				if (flag) {
