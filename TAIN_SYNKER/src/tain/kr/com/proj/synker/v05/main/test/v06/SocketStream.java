@@ -47,25 +47,25 @@ public class SocketStream {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static final String REQ_HDR = "PACKET_REQ_HEADER";
-	public static final String RES_HDR = "PACKET_RES_HEADER";
-	
-	private static final int HDR_SIZ = REQ_HDR.length();
-	private static final int BUF_SIZ = 1024;
+	//private static final int BUF_SIZ = 1024;
 	
 	private Socket socket = null;
 	
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
 	
-	private String strHeader = null;
 	private byte[] bytHeader = null;
+	
+	private byte[] bytBody = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public SocketStream(Socket socket) throws Exception {
 		
 		if (flag) {
+			/*
+			 * set the objects of stream
+			 */
 			this.socket = socket;
 			
 			if (this.socket == null) {
@@ -81,17 +81,20 @@ public class SocketStream {
 			 * remove TIME_WAIT
 			 */
 			// SO_LINGER true 0
-			//this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
-			this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
+			this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
+			//this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
 			
 			// SO_REUSEADDR true
-			this.socket.setReuseAddress(true);
+			//this.socket.setReuseAddress(true);
 		}
 	}
 	
 	public void close() throws Exception {
 		
 		if (flag) {
+			/*
+			 * close the io objects
+			 */
 			if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
 			if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
 			if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
@@ -100,13 +103,20 @@ public class SocketStream {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public int setHeader(String header) throws Exception {
+	public int setHeader(String trType, String trCode) throws Exception {
 		
 		int ret = -1;
 		
 		if (flag) {
-			this.strHeader = header;
-			this.bytHeader = this.strHeader.getBytes();
+			/*
+			 * make a socket header
+			 */
+			this.bytHeader = SocketHeader.makeBytes();
+		}
+
+		if (flag) {
+			SocketHeader.TR_TYPE .setVal(this.bytHeader, trType);
+			SocketHeader.TR_CODE .setVal(this.bytHeader, trCode);
 			
 			ret = this.bytHeader.length;
 		}
@@ -114,12 +124,42 @@ public class SocketStream {
 		return ret ;
 	}
 	
+	public int setHeader(String trType, String trCode, String retCode, String retMsg) throws Exception {
+		
+		int ret = -1;
+		
+		if (flag) {
+			/*
+			 * make a socket header
+			 */
+			this.bytHeader = SocketHeader.makeBytes();
+		}
+
+		if (flag) {
+			SocketHeader.TR_TYPE .setVal(this.bytHeader, trType);
+			SocketHeader.TR_CODE .setVal(this.bytHeader, trCode);
+			
+			SocketHeader.RET_CODE.setVal(this.bytHeader, retCode);
+			SocketHeader.RET_MSG .setVal(this.bytHeader, retMsg );
+			
+			ret = this.bytHeader.length;
+		}
+		
+		return ret ;
+	}
+	
+	public byte[] getHeader() throws Exception {
+		
+		return this.bytHeader;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * write
 	 */
-	public int write(byte[] buffer) throws Exception {
+	
+	private int write() throws Exception {
 		
 		int ret = -1;
 		
@@ -127,26 +167,20 @@ public class SocketStream {
 			/*
 			 * write header to socket
 			 */
-			if (this.strHeader == null) {
-				throw new Exception("ERROR : there is no value of header...[KIEA]");
-			}
+			this.dos.write(this.bytHeader, 0, this.bytHeader.length);
 			
-			ret = this.bytHeader.length;
-
-			this.dos.write(this.bytHeader, 0, ret);
-			
-			if (flag) log.debug("SOCKET HEADER (" + ret + ") [" + this.strHeader + "]");
+			if (flag) log.debug("SOCKET WRITE HEADER (" + ret + ") [" + new String(this.bytHeader) + "]");
 		}
 		
 		if (flag) {
 			/*
 			 * write data to socket
 			 */
-			this.dos.write(buffer, 0, buffer.length);
+			this.dos.write(this.bytBody, 0, this.bytBody.length);
 			
-			ret = buffer.length;
+			ret = this.bytBody.length;
 			
-			if (flag) log.debug("SOCKET DATA   (" + ret + ") [" + new String(buffer) + "]");
+			if (flag) log.debug("SOCKET WRITE DATA   (" + ret + ") [" + new String(this.bytBody) + "]");
 		}
 
 		if (flag) {
@@ -163,11 +197,18 @@ public class SocketStream {
 		
 		if (flag) {
 			/*
+			 * set the length of data
+			 */
+			this.bytBody = str.getBytes();
+
+			SocketHeader.BODY_LEN.setVal(this.bytHeader, String.format("%04d", this.bytBody.length));
+		}
+		
+		if (flag) {
+			/*
 			 * write to ss
 			 */
-			byte[] buffer = str.getBytes();
-			
-			write(buffer);
+			write();
 		}
 	}
 	
@@ -176,55 +217,7 @@ public class SocketStream {
 	/*
 	 * read
 	 */
-	public int read(byte[] buffer) throws Exception {
-		
-		int ret = -1;
-		
-		if (flag) {
-			/*
-			 * read header from socket
-			 */
-			byte[] header = recv(HDR_SIZ);
-			
-			if (flag) log.debug("SOCKET HEADER  (" + HDR_SIZ + ") [" + new String(header) + "]");
-		}
-		
-		if (flag) {
-			/*
-			 * read data from socket
-			 * TODO 2016.08.09 : read -> recv
-			 */
-			ret = this.dis.read(buffer);
-			if (ret < 0) {
-				throw new Exception("ERROR : there is error event on read action....[KIEA]");
-			}
-
-			if (flag) log.debug("SOCKET DATA    (" + ret + ") [" + new String(buffer, 0, ret) + "]");
-		}
-
-		return ret;
-	}
 	
-	public String read() throws Exception {
-		
-		String str = null;
-		
-		if (flag) {
-			/*
-			 * read from ss
-			 */
-			byte[] buffer = new byte[BUF_SIZ];
-			
-			int rcnt = read(buffer);
-			
-			str = new String(buffer, 0, rcnt);
-		}
-		
-		return str;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
 	private byte[] recv(final int size) throws Exception {
 		
 		int ret = 0;
@@ -247,5 +240,83 @@ public class SocketStream {
 		}
 		
 		return buf;
+	}
+
+	private int readHeader() throws Exception {
+		
+		int ret = -1;
+		
+		if (flag) {
+			/*
+			 * set the length of header
+			 */
+			
+			ret = this.bytHeader.length;
+		}
+		
+		if (flag) {
+			/*
+			 * read header from socket
+			 */
+			this.bytHeader = recv(ret);
+			
+			if (flag) log.debug("SOCKET READ HEADER  (" + ret + ") [" + new String(this.bytHeader) + "]");
+		}
+
+		return ret;
+	}
+	
+	private int readBody() throws Exception {
+		
+		int ret = -1;
+		
+		if (flag) {
+			/*
+			 * to get the length of data
+			 */
+			
+			String strBodyLength = SocketHeader.BODY_LEN.getString(this.bytHeader);
+			
+			ret = Integer.parseInt(strBodyLength);
+		}
+		
+		if (flag) {
+			/*
+			 * read body from socket
+			 */
+			this.bytBody = recv(ret);
+
+			if (flag) log.debug("SOCKET READ DATA    (" + ret + ") [" + new String(this.bytBody) + "]");
+		}
+		
+		return ret;
+	}
+	
+	public String read() throws Exception {
+		
+		String str = null;
+		
+		if (flag) {
+			/*
+			 * read header
+			 */
+			readHeader();
+		}
+		
+		if (flag) {
+			/*
+			 * read body
+			 */
+			readBody();
+		}
+		
+		if (flag) {
+			/*
+			 * get data
+			 */
+			str = new String(this.bytBody);
+		}
+		
+		return str;
 	}
 }

@@ -124,7 +124,7 @@ public class ServerThread extends Thread {
 					/*
 					 * write res to socket
 					 */
-					this.ss.setHeader(SocketStream.RES_HDR);
+					this.ss.setHeader("RES", "TR0000", "00000", "SUCCESS");
 					
 					this.ss.write(res);
 				}

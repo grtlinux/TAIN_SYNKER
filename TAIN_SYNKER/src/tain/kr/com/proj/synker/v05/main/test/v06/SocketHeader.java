@@ -44,15 +44,16 @@ public enum SocketHeader {
 	// type, lead, off, len, name, desc, defVal
 	
 	TR_LEN            ('N', '0',   0,   4, "TR_LEN"        , "TR 길이"         , "0100"           ),
-	TR_CODE           ('C', ' ',   4,   6, "TR_CODE"       , "TR 코드"         , "TR0000"         ),
-	TR_DATE           ('C', '0',  10,   8, "TR_DATE"       , "TR 발생일자"     , "YYYYMMDD"       ),
-	TR_TIME           ('C', '0',  18,   6, "TR_TIME"       , "TR 발생시간"     , "HHMMSS"         ),
-	TR_USER           ('C', ' ',  24,  10, "TR_USER"       , "TR 사용자"       , "USER"           ),
-	TR_PASS           ('C', ' ',  34,  10, "TR_PASS"       , "TR 비밀번호"     , "PASS"           ),
-	KEY_CODE          ('C', ' ',  44,  10, "KEY_CODE"      , "키코드"          , "0000000000"     ),
-	BODY_LEN          ('N', '0',  54,   4, "BODY_LEN"      , "BODY 길이"       , "0000"           ),
-	RET_CODE          ('C', ' ',  58,   5, "RET_CODE"      , "리턴코드"        , ""               ),
-	RET_MSG           ('C', ' ',  63,  37, "RET_MSG"       , "리턴메시지"      , ""               ),
+	TR_TYPE           ('C', ' ',   4,   3, "TR_TYPE"       , "TR_타입"         , "REQ"            ),
+	TR_CODE           ('C', ' ',   7,   6, "TR_CODE"       , "TR 코드"         , "TR0000"         ),
+	TR_DATE           ('C', '0',  13,   8, "TR_DATE"       , "TR 발생일자"     , "YYYYMMDD"       ),
+	TR_TIME           ('C', '0',  21,   6, "TR_TIME"       , "TR 발생시간"     , "HHMMSS"         ),
+	TR_USER           ('C', ' ',  27,  10, "TR_USER"       , "TR 사용자"       , "USER"           ),
+	TR_PASS           ('C', ' ',  37,  10, "TR_PASS"       , "TR 비밀번호"     , "PASS"           ),
+	KEY_CODE          ('C', ' ',  47,  10, "KEY_CODE"      , "키코드"          , "0000000000"     ),
+	BODY_LEN          ('N', '0',  57,   4, "BODY_LEN"      , "BODY 길이"       , "0000"           ),
+	RET_CODE          ('C', ' ',  61,   5, "RET_CODE"      , "리턴코드"        , ""               ),
+	RET_MSG           ('C', ' ',  66,  34, "RET_MSG"       , "리턴메시지"      , ""               ),
 	;
 	
 	private final char type;
@@ -236,6 +237,7 @@ public enum SocketHeader {
 
 		if (flag) {
 			TR_LEN  .setVal(bytes, String.valueOf(lenTotal));
+			TR_TYPE .setVal(bytes, "");
 			TR_CODE .setVal(bytes, "");
 			TR_DATE .setVal(bytes, new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date()));
 			TR_TIME .setVal(bytes, new SimpleDateFormat("HHmmss"  , Locale.KOREA).format(new Date()));
@@ -322,6 +324,7 @@ public enum SocketHeader {
 			byte[] header = SocketHeader.makeBytes();
 			
 			log.debug("TR_LEN   = [" + TR_LEN  .getString(header) + "]");
+			log.debug("TR_TYPE  = [" + TR_TYPE .getString(header) + "]");
 			log.debug("TR_CODE  = [" + TR_CODE .getString(header) + "]");
 			log.debug("TR_DATE  = [" + TR_DATE .getString(header) + "]");
 			log.debug("TR_TIME  = [" + TR_TIME .getString(header) + "]");
@@ -332,13 +335,18 @@ public enum SocketHeader {
 			log.debug("RET_CODE = [" + RET_CODE.getString(header) + "]");
 			log.debug("RET_MSG  = [" + RET_MSG .getString(header) + "]");
 			log.debug("[" + new String(header) + "]");
-			
+
+			/*
+			 * setting value
+			 */
+			TR_TYPE .setVal(header, "REQ");
 			TR_CODE .setVal(header, "TR0000");
 			BODY_LEN.setVal(header, String.format("%04d", 1234));
 			RET_CODE.setVal(header, "00000");
 			RET_MSG .setVal(header, "SUCCESS");
 			
 			log.debug("TR_LEN   = [" + TR_LEN  .getString(header) + "]");
+			log.debug("TR_TYPE  = [" + TR_TYPE .getString(header) + "]");
 			log.debug("TR_CODE  = [" + TR_CODE .getString(header) + "]");
 			log.debug("TR_DATE  = [" + TR_DATE .getString(header) + "]");
 			log.debug("TR_TIME  = [" + TR_TIME .getString(header) + "]");
