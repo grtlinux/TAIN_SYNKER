@@ -32,7 +32,7 @@ import tain.kr.com.proj.synker.v06.stream.PipedStream;
  *
  * <PRE>
  *   -. FileName   : ThreadInvoke.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v06
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v06
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -95,7 +95,7 @@ public class ThreadInvoke {
 			 */
 			ps = new PipedStream();
 			
-			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR");
 			ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
 
 		}

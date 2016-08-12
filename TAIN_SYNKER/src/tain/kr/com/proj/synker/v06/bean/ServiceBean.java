@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
  *
  * <PRE>
  *   -. FileName   : ServiceBean.java
- *   -. Package    : tain.kr.com.proj.synker.v05.bean
+ *   -. Package    : tain.kr.com.proj.synker.v06.bean
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 6. {time}
@@ -118,9 +118,9 @@ public class ServiceBean {
 		if (flag) {
 			Map<String, ServiceBean> mapService = new HashMap<String, ServiceBean>();
 			
-			mapService.put("version", new ServiceBean("01", "version", "tain.kr.com.proj.synker.v05.main.tool.VersionMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/VersionMain.properties"));
-			mapService.put("server", new ServiceBean("02", "server", "tain.kr.com.proj.synker.v05.main.server.ServerMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/ServerMain.properties"));
-			mapService.put("client", new ServiceBean("03", "client", "tain.kr.com.proj.synker.v05.main.client.ClientMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/ClientMain.properties"));
+			mapService.put("version", new ServiceBean("01", "version", "tain.kr.com.proj.synker.v06.main.tool.VersionMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/VersionMain.properties"));
+			mapService.put("server", new ServiceBean("02", "server", "tain.kr.com.proj.synker.v06.main.server.ServerMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/ServerMain.properties"));
+			mapService.put("client", new ServiceBean("03", "client", "tain.kr.com.proj.synker.v06.main.client.ClientMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/ClientMain.properties"));
 			
 			for (Map.Entry<String,ServiceBean> entryBean : mapService.entrySet()) {
 				String serviceNo = entryBean.getKey();

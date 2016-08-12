@@ -32,7 +32,7 @@ import tain.kr.com.proj.synker.v06.version.Version;
  *
  * <PRE>
  *   -. FileName   : VersionMain.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.tool
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.tool
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 6. {time}

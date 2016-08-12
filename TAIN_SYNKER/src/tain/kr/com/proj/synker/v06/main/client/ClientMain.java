@@ -33,7 +33,7 @@ import tain.kr.com.proj.synker.v06.util.ThreadInvoke;
  *
  * <PRE>
  *   -. FileName   : ClientMain.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v02
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v02
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -77,7 +77,7 @@ public class ClientMain {
 					 * use class
 					 * elements class, constructor, run method
 					 */
-					// thr = ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.CLITR");
+					// thr = ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v06.main.test.v06.CLITR");
 					thr = ThreadInvoke.execute(ps, GlobalVars.getInstance().getCliTrClass());
 				}
 				

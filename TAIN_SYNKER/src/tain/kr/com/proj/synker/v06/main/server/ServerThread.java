@@ -33,7 +33,7 @@ import tain.kr.com.proj.synker.v06.util.ThreadInvoke;
  *
  * <PRE>
  *   -. FileName   : ServerThread.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v02
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v02
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -78,7 +78,7 @@ public class ServerThread extends Thread {
 			 * use class
 			 * elements class, constructor, run method
 			 */
-			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR");
+			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR");
 			ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
 		}
 	}

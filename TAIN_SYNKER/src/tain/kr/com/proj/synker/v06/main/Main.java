@@ -27,16 +27,16 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v05.bean.ServiceBean;
-import tain.kr.com.proj.synker.v05.util.ServiceMap;
-import tain.kr.com.proj.synker.v05.util.SynkerProperties;
+import tain.kr.com.proj.synker.v06.bean.ServiceBean;
+import tain.kr.com.proj.synker.v06.util.ServiceMap;
+import tain.kr.com.proj.synker.v06.util.SynkerProperties;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
  *   -. FileName   : Main.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main
+ *   -. Package    : tain.kr.com.proj.synker.v06.main
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 6. {time}

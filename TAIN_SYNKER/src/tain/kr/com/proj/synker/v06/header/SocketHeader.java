@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  *
  * <PRE>
  *   -. FileName   : SocketHeader.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v06
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v06
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 10. {time}

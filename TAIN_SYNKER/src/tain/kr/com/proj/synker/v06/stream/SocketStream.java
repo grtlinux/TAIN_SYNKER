@@ -33,7 +33,7 @@ import tain.kr.com.proj.synker.v06.header.SocketHeader;
  *
  * <PRE>
  *   -. FileName   : SocketStream.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v03
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v03
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}

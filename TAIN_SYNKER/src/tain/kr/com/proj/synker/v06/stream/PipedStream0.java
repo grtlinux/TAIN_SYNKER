@@ -32,7 +32,7 @@ import org.apache.log4j.Logger;
  *
  * <PRE>
  *   -. FileName   : PipedStream.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v05
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v05
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -319,7 +319,7 @@ public class PipedStream0 {
  *
  * <PRE>
  *   -. FileName   : PipedStream.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v05
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v05
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}

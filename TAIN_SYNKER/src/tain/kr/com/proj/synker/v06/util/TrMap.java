@@ -31,7 +31,7 @@ import tain.kr.com.proj.synker.v06.bean.ServiceBean;
  *
  * <PRE>
  *   -. FileName   : ServiceMap.java
- *   -. Package    : tain.kr.com.proj.synker.v05.util
+ *   -. Package    : tain.kr.com.proj.synker.v06.util
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 6. {time}

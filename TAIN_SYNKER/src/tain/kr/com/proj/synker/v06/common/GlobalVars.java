@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
  *
  * <PRE>
  *   -. FileName   : GlobalVariable.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v04
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v04
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
@@ -43,8 +43,8 @@ public class GlobalVars {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String CLI_TR_CLASS = "tain.kr.com.proj.synker.v05.main.test.v06.CLITR";
-	private static final String SVR_TR_CLASS = "tain.kr.com.proj.synker.v05.main.test.v06.SVRTR";
+	private static final String CLI_TR_CLASS = "tain.kr.com.proj.synker.v06.main.test.v06.CLITR";
+	private static final String SVR_TR_CLASS = "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR";
 	
 	private String trCode = "TR0000";
 	private String cliTrClass = CLI_TR_CLASS;

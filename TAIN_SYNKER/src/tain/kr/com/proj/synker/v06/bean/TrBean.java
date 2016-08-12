@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
  *
  * <PRE>
  *   -. FileName   : ServiceBean.java
- *   -. Package    : tain.kr.com.proj.synker.v05.bean
+ *   -. Package    : tain.kr.com.proj.synker.v06.bean
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 6. {time}
@@ -118,7 +118,7 @@ public class TrBean {
 		if (flag) {
 			Map<String, TrBean> mapService = new HashMap<String, TrBean>();
 			
-			mapService.put("version", new TrBean("01", "version", "tain.kr.com.proj.synker.v05.main.tool.VersionMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/VersionMain.properties"));
+			mapService.put("version", new TrBean("01", "version", "tain.kr.com.proj.synker.v06.main.tool.VersionMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/VersionMain.properties"));
 			
 			for (Map.Entry<String,TrBean> entryBean : mapService.entrySet()) {
 				String serviceNo = entryBean.getKey();

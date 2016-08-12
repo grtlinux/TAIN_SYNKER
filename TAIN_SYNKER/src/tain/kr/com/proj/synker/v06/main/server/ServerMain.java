@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
  *
  * <PRE>
  *   -. FileName   : ServerMain.java
- *   -. Package    : tain.kr.com.proj.synker.v05.main.test.v02
+ *   -. Package    : tain.kr.com.proj.synker.v06.main.test.v02
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 8. 9. {time}
