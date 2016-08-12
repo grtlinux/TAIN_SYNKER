@@ -46,61 +46,61 @@ public class TrBean {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String serviceNo = null;
-	private String serviceName = null;
-	private String serviceClass = null;
-	private String propFile = null;
+	private String trKey = null;
+	private String trName = null;
+	private String trCliClass = null;
+	private String trSvrClass = null;
 
 	public TrBean() {}
 	
-	public TrBean(String serviceNo, String serviceName, String serviceClass, String propFile) {
+	public TrBean(String trKey, String trName, String trCliClass, String trSvrClass) {
 		
 		if (flag) {
-			this.serviceNo = serviceNo;
-			this.serviceName = serviceName;
-			this.serviceClass = serviceClass;
-			this.propFile = propFile;
+			this.trKey = trKey;
+			this.trName = trName;
+			this.trCliClass = trCliClass;
+			this.trSvrClass = trSvrClass;
 		}
 	}
 	
-	public String getServiceNo() {
-		return serviceNo;
+	public String getTrKey() {
+		return trKey;
 	}
-	
-	public String getServiceName() {
-		return serviceName;
+
+	public String getTrName() {
+		return trName;
 	}
-	
-	public String getServiceClass() {
-		return serviceClass;
+
+	public String getTrCliClass() {
+		return trCliClass;
 	}
-	
-	public String getPropFile() {
-		return propFile;
+
+	public String getTrSvrClass() {
+		return trSvrClass;
 	}
-	
-	public void setServiceNo(String serviceNo) {
-		this.serviceNo = serviceNo;
+
+	public void setTrKey(String trKey) {
+		this.trKey = trKey;
 	}
-	
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
+
+	public void setTrName(String trName) {
+		this.trName = trName;
 	}
-	
-	public void setServiceClass(String serviceClass) {
-		this.serviceClass = serviceClass;
+
+	public void setTrCliClass(String trCliClass) {
+		this.trCliClass = trCliClass;
 	}
-	
-	public void setPropFile(String propFile) {
-		this.propFile = propFile;
+
+	public void setTrSvrClass(String trSvrClass) {
+		this.trSvrClass = trSvrClass;
 	}
-	
+
 	public String toString() {
-		return String.format("[NO,NAME,CLASS,FILE]=[%s,%s,%s,%s]"
-				, this.serviceNo
-				, this.serviceName
-				, this.serviceClass
-				, this.propFile
+		return String.format("[KEY,NAME,CLICLS,SVRCLS]=[%s,%s,%s,%s]"
+				, this.trKey
+				, this.trName
+				, this.trCliClass
+				, this.trSvrClass
 				);
 	}
 	
@@ -116,15 +116,15 @@ public class TrBean {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			Map<String, TrBean> mapService = new HashMap<String, TrBean>();
+			Map<String, TrBean> mapTr = new HashMap<String, TrBean>();
 			
-			mapService.put("version", new TrBean("01", "version", "tain.kr.com.proj.synker.v06.main.tool.VersionMain", "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER/synker/conf/VersionMain.properties"));
+			mapTr.put("TT0000", new TrBean("TT0000", "TT0000", "tain.krtain.kr.com.proj.synker.v06.tr.cli.CLITR", "tain.krtain.kr.com.proj.synker.v06.tr.svr.SVRTR"));
 			
-			for (Map.Entry<String,TrBean> entryBean : mapService.entrySet()) {
-				String serviceNo = entryBean.getKey();
+			for (Map.Entry<String,TrBean> entryBean : mapTr.entrySet()) {
+				String trKey = entryBean.getKey();
 				TrBean bean = (TrBean) entryBean.getValue();
 				
-				log.debug(">>> " + serviceNo + "  " + bean);
+				log.debug(">>> " + trKey + "  " + bean);
 			}
 		}
 	}
