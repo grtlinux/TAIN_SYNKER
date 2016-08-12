@@ -239,9 +239,9 @@ public enum SocketHeader {
 			TR_CODE .setVal(bytes, "");
 			TR_DATE .setVal(bytes, new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date()));
 			TR_TIME .setVal(bytes, new SimpleDateFormat("HHmmss"  , Locale.KOREA).format(new Date()));
-			TR_USER .setVal(bytes, "QWERT12345");
+			TR_USER .setVal(bytes, "USERT12345");
 			TR_PASS .setVal(bytes, "1Q2WER4RKD");
-			KEY_CODE.setVal(bytes, "FK39SXKMMM");
+			KEY_CODE.setVal(bytes, "FK39SXKZZZ");
 			BODY_LEN.setVal(bytes, String.valueOf(0));
 			RET_CODE.setVal(bytes, "");
 			RET_MSG .setVal(bytes, "");
@@ -312,6 +312,45 @@ public enum SocketHeader {
 			 */
 			
 			SocketHeader.print();
+		}
+		
+		if (flag) {
+			/*
+			 * USAGE 2
+			 */
+			
+			byte[] header = SocketHeader.makeBytes();
+			
+			log.debug("TR_LEN   = [" + TR_LEN  .getString(header) + "]");
+			log.debug("TR_CODE  = [" + TR_CODE .getString(header) + "]");
+			log.debug("TR_DATE  = [" + TR_DATE .getString(header) + "]");
+			log.debug("TR_TIME  = [" + TR_TIME .getString(header) + "]");
+			log.debug("TR_USER  = [" + TR_USER .getString(header) + "]");
+			log.debug("TR_PASS  = [" + TR_PASS .getString(header) + "]");
+			log.debug("KEY_CODE = [" + KEY_CODE.getString(header) + "]");
+			log.debug("BODY_LEN = [" + BODY_LEN.getString(header) + "]");
+			log.debug("RET_CODE = [" + RET_CODE.getString(header) + "]");
+			log.debug("RET_MSG  = [" + RET_MSG .getString(header) + "]");
+			log.debug("[" + new String(header) + "]");
+			
+			TR_CODE .setVal(header, "TR0000");
+			BODY_LEN.setVal(header, String.format("%04d", 1234));
+			RET_CODE.setVal(header, "00000");
+			RET_MSG .setVal(header, "SUCCESS");
+			
+			log.debug("TR_LEN   = [" + TR_LEN  .getString(header) + "]");
+			log.debug("TR_CODE  = [" + TR_CODE .getString(header) + "]");
+			log.debug("TR_DATE  = [" + TR_DATE .getString(header) + "]");
+			log.debug("TR_TIME  = [" + TR_TIME .getString(header) + "]");
+			log.debug("TR_USER  = [" + TR_USER .getString(header) + "]");
+			log.debug("TR_PASS  = [" + TR_PASS .getString(header) + "]");
+			log.debug("KEY_CODE = [" + KEY_CODE.getString(header) + "]");
+			log.debug("BODY_LEN = [" + BODY_LEN.getString(header) + "]");
+			log.debug("RET_CODE = [" + RET_CODE.getString(header) + "]");
+			log.debug("RET_MSG  = [" + RET_MSG .getString(header) + "]");
+			log.debug("[" + new String(header) + "]");
+			
+			log.debug("length of the header = " + SocketHeader.getLength());
 		}
 	}
 	
