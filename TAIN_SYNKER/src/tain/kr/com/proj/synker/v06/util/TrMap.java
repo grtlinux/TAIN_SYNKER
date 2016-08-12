@@ -21,10 +21,11 @@ package tain.kr.com.proj.synker.v06.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v06.bean.ServiceBean;
+import tain.kr.com.proj.synker.v06.bean.TrBean;
 
 /**
  * Code Templates > Comments > Types
@@ -48,26 +49,11 @@ public class TrMap {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String KEY_RANGE = "tain.kr.service.range";
-	private static final String KEY_SERVICE = "tain.kr.service";
+	private static final String KEY_MAP_STR = "tain.kr.tr.map.";
 	
-	private int rangeBegin = -1;
-	private int rangeEnd = -1;
-	
-	private Map<String, ServiceBean> mapService = null;
+	private Map<String, TrBean> mapTr = null;
 	
 	private TrMap() throws Exception {
-		
-		if (flag) {
-			/*
-			 * to get the values of range
-			 */
-			String values = SynkerProperties.getInstance().get(KEY_RANGE);
-			String[] value = values.split("-");
-			
-			this.rangeBegin = Integer.parseInt(value[0].trim());
-			this.rangeEnd = Integer.parseInt(value[1].trim());
-		}
 		
 		if (!flag) {
 			/*
@@ -81,25 +67,26 @@ public class TrMap {
 			 * make a map info of service
 			 */
 			
-			mapService = new HashMap<String, ServiceBean>();
+			mapTr = new HashMap<String, TrBean>();
 			
-			for (int idx = this.rangeBegin; idx <= this.rangeEnd; idx ++) {
-				String serviceNo = String.format("%02d", idx);
-				String serviceKey = KEY_SERVICE + "." + serviceNo;
-				
-				String serviceStr = SynkerProperties.getInstance().get(serviceKey);
-				if (serviceStr == null)
+			for (Entry<Object, Object> entry : SynkerProperties.getInstance().getProp().entrySet()) {
+				String key = (String) entry.getKey();
+				if (!key.startsWith(KEY_MAP_STR))
 					continue;
 				
-				String[] info = serviceStr.split(";");
-				if (info.length != 3)
-					continue;
+				/*
+				 * tr map contents
+				 */
+				String trKey = key.substring(KEY_MAP_STR.length());
+				String value = (String) entry.getValue();
 				
-				String serviceName = info[0].trim();
-				String serviceClass = info[1].trim();
-				String propFile = info[2].trim();
+				String[] vals = value.split(";");
 				
-				mapService.put(serviceName, new ServiceBean(serviceNo, serviceName, serviceClass, propFile));
+				String name = vals[0].trim();
+				String clsClass = vals[1].trim();
+				String svrClass = vals[2].trim();
+				
+				mapTr.put(trKey, new TrBean(trKey, name, clsClass, svrClass));
 			}
 		}
 		
@@ -113,19 +100,14 @@ public class TrMap {
 	public void print() throws Exception {
 		
 		if (flag) {
-			log.debug("Range Begin : " + this.rangeBegin);
-			log.debug("Range End   : " + this.rangeEnd);
-		}
-		
-		if (flag) {
-			for (Map.Entry<String, ServiceBean> entryBean : this.mapService.entrySet()) {
+			for (Map.Entry<String, TrBean> entryBean : this.mapTr.entrySet()) {
 				log.debug(">>>>> [" + entryBean.getKey() + "]  " + entryBean.getValue());
 			}
 		}
 	}
 	
-	public ServiceBean getBean(String serviceName) throws Exception {
-		return this.mapService.get(serviceName);
+	public TrBean getBean(String trName) throws Exception {
+		return this.mapTr.get(trName);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,21 +131,15 @@ public class TrMap {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (!flag) {
-			String str = "  01 - 05  ";
-			String[] items = str.split("\\s*-\\s*");
-			
-			for (String item : items) {
-				log.debug(">>>>> [" + item + "]");
-			}
-		}
-		
 		if (flag) {
+			/*
+			 * 
+			 */
 			TrMap.getInstance().print();
 		}
 		
 		if (flag) {
-			log.debug(">>> " + TrMap.getInstance().getBean("version"));
+			log.debug(">>> " + TrMap.getInstance().getBean("TT0000"));
 		}
 	}
 	

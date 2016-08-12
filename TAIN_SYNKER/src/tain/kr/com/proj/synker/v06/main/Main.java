@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
 import tain.kr.com.proj.synker.v06.bean.ServiceBean;
 import tain.kr.com.proj.synker.v06.util.ServiceMap;
 import tain.kr.com.proj.synker.v06.util.SynkerProperties;
+import tain.kr.com.proj.synker.v06.util.TrMap;
 
 /**
  * Code Templates > Comments > Types
@@ -104,6 +105,20 @@ public class Main {
 				ServiceMap.getInstance().print();
 			}
 		}
+
+		if (flag) {
+			/*
+			 * TrMap
+			 */
+			TrMap.getInstance();
+			
+			if (flag) {
+				/*
+				 * print for checking
+				 */
+				TrMap.getInstance().print();
+			}
+		}
 	}
 	
 	public String getDesc() throws Exception {
@@ -136,6 +151,7 @@ public class Main {
 			 */
 
 			this.service = SynkerProperties.getInstance().getSystem(KEY_MAIN_SERVICE);
+			
 			if (this.service != null) {
 				lstArgs.add("REAL");
 				lstArgs.add(this.service);

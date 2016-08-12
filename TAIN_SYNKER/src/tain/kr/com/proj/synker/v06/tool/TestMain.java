@@ -41,11 +41,11 @@ import tain.kr.com.proj.synker.v06.version.Version;
  * @author taincokr
  *
  */
-public class VersionMain {
+public class TestMain {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(VersionMain.class);
+	private static final Logger log = Logger.getLogger(TestMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
