@@ -43,8 +43,8 @@ public class GlobalVars {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String CLI_TR_CLASS = "tain.kr.com.proj.synker.v06.main.test.v06.CLITR";
-	private static final String SVR_TR_CLASS = "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR";
+	private static final String CLI_TR_CLASS = "tain.kr.com.proj.synker.v06.tr.cli.CLITR";
+	private static final String SVR_TR_CLASS = "tain.kr.com.proj.synker.v06.tr.svr.SVRTR";
 	
 	private String trCode = "TR0000";
 	private String cliTrClass = CLI_TR_CLASS;

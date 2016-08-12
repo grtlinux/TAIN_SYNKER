@@ -144,7 +144,7 @@ public class ClientMain {
 		if (!flag) clientModule();
 		
 		if (flag) {
-			for (int i=0; i < 1000000; i++) {
+			for (int i=0; i < 100; i++) {
 				
 				if (!flag && i % 10 == 9) {
 					/*
