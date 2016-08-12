@@ -21,11 +21,8 @@ package tain.kr.com.proj.synker.v06.tool;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v06.bean.ServiceBean;
 import tain.kr.com.proj.synker.v06.util.GlobalParam;
-import tain.kr.com.proj.synker.v06.util.ServiceMap;
-import tain.kr.com.proj.synker.v06.util.ServiceProperties;
-import tain.kr.com.proj.synker.v06.version.Version;
+import tain.kr.com.proj.synker.v06.util.TrMap;
 
 /**
  * Code Templates > Comments > Types
@@ -41,7 +38,6 @@ import tain.kr.com.proj.synker.v06.version.Version;
  * @author taincokr
  *
  */
-@SuppressWarnings("unused")
 public class TrListMain {
 
 	private static boolean flag = true;
@@ -76,23 +72,21 @@ public class TrListMain {
 			/*
 			 * to print the version info
 			 */
-			Version.getInstance().print();
+			TrMap.getInstance().print();
 		}
 		
 		if (flag) {
-			/*
-			 * to print the info of version service
-			 */
-			ServiceBean bean = ServiceMap.getInstance().getBean(GlobalParam.getInstance().getServiceName());
-			bean.print();
-		}
-		
-		if (flag) {
-			/*
-			 * to check the service properties
-			 */
+			if (flag) {
+				/*
+				 * check trKey = trName(trCode)
+				 */
+			}
 			
-			ServiceProperties.getInstance().print();
+			if (flag) {
+				/*
+				 * check trCliClass, trSvrClass
+				 */
+			}
 		}
 	}
 	
