@@ -85,6 +85,8 @@ public class SVRTR extends Thread {
 					String strVal = date.toString();
 					
 					res = String.format("%s|%d|%s", req, lVal, strVal);
+					
+					if (flag) log.debug("@@@@@ REQ [" + req + "] >>>>> RES [" + res + "]");
 				}
 				
 				if (flag) {

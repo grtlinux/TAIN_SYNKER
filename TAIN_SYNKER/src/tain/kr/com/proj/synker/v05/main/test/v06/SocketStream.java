@@ -81,11 +81,18 @@ public class SocketStream {
 			 * remove TIME_WAIT
 			 */
 			// SO_LINGER true 0
-			this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
-			//this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
+			//this.socket.setSoLinger(true, 0);   // remove TIME_WAIT but occur a event of Connection reset
+			this.socket.setSoLinger(false, 0);   // because of java.net.SocketException: Connection reset
 			
 			// SO_REUSEADDR true
-			//this.socket.setReuseAddress(true);
+			this.socket.setReuseAddress(true);
+		}
+
+		if (flag) {
+			/*
+			 * make a socket header
+			 */
+			this.bytHeader = SocketHeader.makeBytes();
 		}
 	}
 	
@@ -167,7 +174,9 @@ public class SocketStream {
 			/*
 			 * write header to socket
 			 */
-			this.dos.write(this.bytHeader, 0, this.bytHeader.length);
+			ret = this.bytHeader.length;
+			
+			this.dos.write(this.bytHeader, 0, ret);
 			
 			if (flag) log.debug("SOCKET WRITE HEADER (" + ret + ") [" + new String(this.bytHeader) + "]");
 		}
@@ -176,9 +185,9 @@ public class SocketStream {
 			/*
 			 * write data to socket
 			 */
-			this.dos.write(this.bytBody, 0, this.bytBody.length);
-			
 			ret = this.bytBody.length;
+			
+			this.dos.write(this.bytBody, 0, ret);
 			
 			if (flag) log.debug("SOCKET WRITE DATA   (" + ret + ") [" + new String(this.bytBody) + "]");
 		}
