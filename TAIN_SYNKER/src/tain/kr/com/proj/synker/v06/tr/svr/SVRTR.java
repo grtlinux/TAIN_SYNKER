@@ -23,9 +23,11 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v06.bean.TrBean;
 import tain.kr.com.proj.synker.v06.common.GlobalVars;
 import tain.kr.com.proj.synker.v06.stream.PipedStream;
 import tain.kr.com.proj.synker.v06.util.ThreadInvoke;
+import tain.kr.com.proj.synker.v06.util.TrMap;
 
 /**
  * Code Templates > Comments > Types
@@ -126,10 +128,20 @@ public class SVRTR extends Thread {
 		
 		if (flag) {
 			/*
+			 * TrMap to set global vars
+			 */
+			TrBean bean = TrMap.getInstance().getBean("TT0000");   // TODO 2016.08.12
+			
+			GlobalVars.getInstance().setTrCode(bean.getTrName());
+			GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
+			GlobalVars.getInstance().setSvrTrClass(bean.getTrSvrClass());
+		}
+
+		if (flag) {
+			/*
 			 * use class
 			 * elements class, constructor, run method
 			 */
-			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR");
 			ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
 		}
 
