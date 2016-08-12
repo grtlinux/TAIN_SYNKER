@@ -78,7 +78,7 @@ public class ClientMain {
 					/*
 					 * TrMap to set global vars
 					 */
-					TrBean bean = TrMap.getInstance().getBean("TT0000");
+					TrBean bean = TrMap.getInstance().getBean("TT0000");   // TODO 2016.08.12
 					
 					GlobalVars.getInstance().setTrCode(bean.getTrName());
 					GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
