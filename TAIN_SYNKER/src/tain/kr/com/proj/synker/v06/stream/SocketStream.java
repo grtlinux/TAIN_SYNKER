@@ -163,6 +163,11 @@ public class SocketStream {
 		return this.bytHeader;
 	}
 	
+	public String getTrCode() throws Exception  {
+		
+		return SocketHeader.TR_CODE.getString(this.bytHeader);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*

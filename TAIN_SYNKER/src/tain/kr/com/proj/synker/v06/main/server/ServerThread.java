@@ -23,10 +23,12 @@ import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v06.bean.TrBean;
 import tain.kr.com.proj.synker.v06.common.GlobalVars;
 import tain.kr.com.proj.synker.v06.stream.PipedStream;
 import tain.kr.com.proj.synker.v06.stream.SocketStream;
 import tain.kr.com.proj.synker.v06.util.ThreadInvoke;
+import tain.kr.com.proj.synker.v06.util.TrMap;
 
 /**
  * Code Templates > Comments > Types
@@ -72,15 +74,6 @@ public class ServerThread extends Thread {
 			
 			if (flag) log.debug(String.format("########## START <%s> ########## socket=%s ", this.getName(), this.socket.toString()));
 		}
-
-		if (flag) {
-			/*
-			 * use class
-			 * elements class, constructor, run method
-			 */
-			// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR");
-			ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
-		}
 	}
 	
 	public void run() {
@@ -99,6 +92,28 @@ public class ServerThread extends Thread {
 					req = this.ss.read();
 				}
 				
+				if (flag) {
+					/*
+					 * TrMap to set global vars
+					 */
+					String trCode = this.ss.getTrCode();
+					
+					TrBean bean = TrMap.getInstance().getBean(trCode);
+					
+					GlobalVars.getInstance().setTrCode(bean.getTrName());
+					GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
+					GlobalVars.getInstance().setSvrTrClass(bean.getTrSvrClass());
+				}
+				
+				if (flag) {
+					/*
+					 * use class
+					 * elements class, constructor, run method
+					 */
+					// ThreadInvoke.execute(ps, "tain.kr.com.proj.synker.v06.main.test.v06.SVRTR");
+					ThreadInvoke.execute(ps, GlobalVars.getInstance().getSvrTrClass());
+				}
+
 				if (flag) {
 					/*
 					 * parent thread, main thread
@@ -129,7 +144,7 @@ public class ServerThread extends Thread {
 					/*
 					 * write res to socket
 					 */
-					this.ss.setHeader("RES", "TR0000", "00000", "SUCCESS");
+					this.ss.setHeader("RES", GlobalVars.getInstance().getTrCode(), "00000", "SUCCESS");
 					
 					this.ss.write(res);
 				}

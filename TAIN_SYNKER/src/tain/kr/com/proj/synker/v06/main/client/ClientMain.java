@@ -23,10 +23,12 @@ import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v06.bean.TrBean;
 import tain.kr.com.proj.synker.v06.common.GlobalVars;
 import tain.kr.com.proj.synker.v06.stream.PipedStream;
 import tain.kr.com.proj.synker.v06.stream.SocketStream;
 import tain.kr.com.proj.synker.v06.util.ThreadInvoke;
+import tain.kr.com.proj.synker.v06.util.TrMap;
 
 /**
  * Code Templates > Comments > Types
@@ -74,6 +76,17 @@ public class ClientMain {
 				
 				if (flag) {
 					/*
+					 * TrMap to set global vars
+					 */
+					TrBean bean = TrMap.getInstance().getBean("TT0000");
+					
+					GlobalVars.getInstance().setTrCode(bean.getTrName());
+					GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
+					GlobalVars.getInstance().setSvrTrClass(bean.getTrSvrClass());
+				}
+				
+				if (flag) {
+					/*
 					 * use class
 					 * elements class, constructor, run method
 					 */
@@ -94,7 +107,7 @@ public class ClientMain {
 					 * write req to socket
 					 */
 					
-					ss.setHeader("REQ", "TR0000");
+					ss.setHeader("REQ", GlobalVars.getInstance().getTrCode());
 
 					ss.write(req);
 				}
@@ -141,10 +154,10 @@ public class ClientMain {
 			}
 		}
 
-		if (!flag) clientModule();
+		if (flag) clientModule();
 		
-		if (flag) {
-			for (int i=0; i < 100; i++) {
+		if (!flag) {
+			for (int i=0; i < 10000; i++) {
 				
 				if (!flag && i % 10 == 9) {
 					/*

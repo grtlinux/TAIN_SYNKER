@@ -43,12 +43,9 @@ public class GlobalVars {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String CLI_TR_CLASS = "tain.kr.com.proj.synker.v06.tr.cli.CLITR";
-	private static final String SVR_TR_CLASS = "tain.kr.com.proj.synker.v06.tr.svr.SVRTR";
-	
-	private String trCode = "TR0000";
-	private String cliTrClass = CLI_TR_CLASS;
-	private String svrTrClass = SVR_TR_CLASS;
+	private String trCode = null;
+	private String cliTrClass = null;
+	private String svrTrClass = null;
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

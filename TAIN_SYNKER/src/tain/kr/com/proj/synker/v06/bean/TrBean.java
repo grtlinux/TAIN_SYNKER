@@ -46,7 +46,7 @@ public class TrBean {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String trKey = null;
+	private String trKey = null;      //  trKey = trName
 	private String trName = null;
 	private String trCliClass = null;
 	private String trSvrClass = null;
