@@ -53,7 +53,7 @@ public class ClientMain {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static void clientModule() throws Exception {
+	private static void clientModule(String[] args) throws Exception {
 		
 		if (flag) {
 			
@@ -78,7 +78,7 @@ public class ClientMain {
 					/*
 					 * TrMap to set global vars
 					 */
-					TrBean bean = TrMap.getInstance().getBean("TT0000");   // TODO 2016.08.12
+					TrBean bean = TrMap.getInstance().getBean(args[2]);   // TODO 2016.08.12
 					
 					GlobalVars.getInstance().setTrCode(bean.getTrName());
 					GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
@@ -154,7 +154,7 @@ public class ClientMain {
 			}
 		}
 
-		if (flag) clientModule();
+		if (flag) clientModule(args);
 		
 		if (!flag) {
 			for (int i=0; i < 10000; i++) {
@@ -168,7 +168,7 @@ public class ClientMain {
 					if (flag) log.debug("#################################  garbage collection  ###################################\n");
 				}
 				
-				clientModule();
+				clientModule(args);
 			}
 		}
 	}
@@ -177,8 +177,8 @@ public class ClientMain {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (args.length < 2) {
-			args = new String[] { "TEST-2", "client" };
+		if (args.length < 3) {
+			args = new String[] { "TEST-2", "client", "TR0000" };
 		}
 
 		if (flag) test01(args);
