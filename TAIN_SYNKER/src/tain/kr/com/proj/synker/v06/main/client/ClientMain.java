@@ -178,7 +178,8 @@ public class ClientMain {
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
 		if (args.length < 3) {
-			args = new String[] { "TEST-2", "client", "TR0000" };
+			args = new String[] { "TEST-2", "client", "TT0000" };
+			//args = new String[] { "TEST-2", "client", "TR0000" };
 		}
 
 		if (flag) test01(args);
