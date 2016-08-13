@@ -66,7 +66,7 @@ public class CliTr0000 extends Thread {
 			 * parent thread, main thread
 			 */
 			
-			String req = "GET_DATE_TIME(" + (int) (Math.random() * 200) + ")";
+			String req = "TR0000_(" + (int) (Math.random() * 200) + ")";
 			String res = null;
 			
 			try {
