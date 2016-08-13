@@ -50,16 +50,18 @@ public class TrBean {
 	private String trName = null;
 	private String trCliClass = null;
 	private String trSvrClass = null;
+	private String trDesc = null;
 
 	public TrBean() {}
 	
-	public TrBean(String trKey, String trName, String trCliClass, String trSvrClass) {
+	public TrBean(String trKey, String trName, String trCliClass, String trSvrClass, String trDesc) {
 		
 		if (flag) {
 			this.trKey = trKey;
 			this.trName = trName;
 			this.trCliClass = trCliClass;
 			this.trSvrClass = trSvrClass;
+			this.trDesc = trDesc;
 		}
 	}
 	
@@ -79,6 +81,10 @@ public class TrBean {
 		return trSvrClass;
 	}
 
+	public String getTrDesc() {
+		return trDesc;
+	}
+
 	public void setTrKey(String trKey) {
 		this.trKey = trKey;
 	}
@@ -95,12 +101,17 @@ public class TrBean {
 		this.trSvrClass = trSvrClass;
 	}
 
+	public void setTrDesc(String trDesc) {
+		this.trDesc = trDesc;
+	}
+
 	public String toString() {
-		return String.format("[KEY,NAME,CLICLS,SVRCLS]=[%s,%s,%s,%s]"
+		return String.format("[KEY,NAME,CLICLS,SVRCLS,DESC]=[%s,%s,%s,%s,%s]"
 				, this.trKey
 				, this.trName
 				, this.trCliClass
 				, this.trSvrClass
+				, this.trDesc
 				);
 	}
 	
@@ -118,7 +129,7 @@ public class TrBean {
 		if (flag) {
 			Map<String, TrBean> mapTr = new HashMap<String, TrBean>();
 			
-			mapTr.put("TT0000", new TrBean("TT0000", "TT0000", "tain.krtain.kr.com.proj.synker.v06.tr.cli.CLITR", "tain.krtain.kr.com.proj.synker.v06.tr.svr.SVRTR"));
+			mapTr.put("TT0000", new TrBean("TT0000", "TT0000", "tain.krtain.kr.com.proj.synker.v06.tr.cli.CLITR", "tain.krtain.kr.com.proj.synker.v06.tr.svr.SVRTR", "to get current date and time, long value"));
 			
 			for (Map.Entry<String,TrBean> entryBean : mapTr.entrySet()) {
 				String trKey = entryBean.getKey();
