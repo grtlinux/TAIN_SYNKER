@@ -85,8 +85,9 @@ public class TrMap {
 				String name = vals[0].trim();
 				String clsClass = vals[1].trim();
 				String svrClass = vals[2].trim();
+				String desc = vals[3].trim();
 				
-				mapTr.put(trKey, new TrBean(trKey, name, clsClass, svrClass));
+				mapTr.put(trKey, new TrBean(trKey, name, clsClass, svrClass, desc));
 			}
 		}
 		
