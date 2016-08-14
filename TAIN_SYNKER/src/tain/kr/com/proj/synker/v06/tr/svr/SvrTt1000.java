@@ -19,7 +19,10 @@
  */
 package tain.kr.com.proj.synker.v06.tr.svr;
 
-import java.util.Date;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
@@ -72,7 +75,7 @@ public class SvrTt1000 extends Thread {
 				
 				if (flag) {
 					/*
-					 * ReqRead
+					 * 1. ReqRead
 					 */
 					
 					req = ps.reqRead();
@@ -80,27 +83,102 @@ public class SvrTt1000 extends Thread {
 				
 				if (flag) {
 					/*
-					 * JobProcess
+					 * 2. communicate from client
 					 */
-					Date date = new Date();
-			
-					long lVal = date.getTime();
-					String strVal = date.toString();
+					communicate();
 					
-					res = String.format("%s|%d|%s|%s", req, lVal, strVal, GlobalVars.getInstance().getTrCode());
+					res = String.format("%s|%s", req, "OK!!!!!");
 					
 					if (flag) log.debug("@@@@@ REQ [" + req + "] >>>>> RES [" + res + "]");
 				}
 				
 				if (flag) {
 					/*
-					 * ResWrite
+					 * 3. ResWrite
 					 */
 					ps.resWrite(res);
 				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void communicate() throws Exception {
+		
+		if (flag) {
+			/*
+			 * Server Module
+			 * to create server socket
+			 */
+
+			ServerSocket serverSocket = null;
+			Socket socket = null;
+			DataInputStream dis = null;
+			DataOutputStream dos = null;
+			
+			byte[] data = null;
+			
+			try {
+				
+				serverSocket = new ServerSocket(12346);
+				/*
+				 * SO_TIMEOUT : ServerSocket
+				 * Enable/disable SO_TIMEOUT with the specified timeout, in milliseconds. With this operation set to a non-zero timeout,
+				 * a call to accept() for this ServerSocket will block for only this amount of time.
+				 * If the timeout expires, a java.net.SocketTimeoutException is raised, though the ServerSocket is still valid.
+				 * The option must be enabled prior to entering the blocking operation to have effect. The timeout must be > 0.
+				 * A timeout of zero is interpreted as an infinite timeout.
+				 */
+				serverSocket.setSoTimeout(2000);
+				if (flag) log.info(String.format(" SUB SERVER : listening by port '12346' [%s]", serverSocket.toString()));
+				
+				socket = serverSocket.accept();
+				if (flag) log.info(String.format(" SUB SERVER : accept the connection (%s)", socket));
+
+				dis = new DataInputStream(socket.getInputStream());
+				dos = new DataOutputStream(socket.getOutputStream());
+				
+				if (flag) {
+					/*
+					 * write
+					 */
+					data = "Hello, World(SERVER)".getBytes();
+					dos.write(data);
+					
+					if (flag) log.debug(" SUB CLIENT : write[" + new String(data) + "]");
+				}
+				
+				if (flag) {
+					/*
+					 * SO_TIMEOUT : Socket
+					 * Enable/disable SO_TIMEOUT with the specified timeout, in milliseconds. With this operation set to a non-zero timeout,
+					 * a read() call on the InputStream associated with this Socket will block for only this amount of time.
+					 * If the timeout expires, a java.net.SocketTimeoutException is raised, though the Socket is still valid.
+					 * The option must be enabled prior to entering the blocking operation to have effect. The timeout must be >0.
+					 * A timeout of zero is interpreted as an infinite timeout.
+					 */
+					socket.setSoTimeout(2000);
+				}
+				
+				if (flag) {
+					/*
+					 * read
+					 */
+					data = new byte[20];
+					dis.read(data);
+					
+					if (flag) log.debug(" SUB CLIENT : read [" + new String(data) + "]");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
+				if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
+				if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
+				if (serverSocket != null) try { serverSocket.close(); socket = null; } catch (Exception e) {}
 			}
 		}
 	}
