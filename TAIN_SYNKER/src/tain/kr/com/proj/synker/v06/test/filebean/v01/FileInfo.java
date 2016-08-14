@@ -51,25 +51,21 @@ public class FileInfo {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
 	private String basePath = null;
-	private String timeDiff = null;
-	private String timeApply = null;
 	
 	@SuppressWarnings("unused")
 	private Map<String,FileInfo> mapFileInfo = null;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	
-	public FileInfo(String basePath, String timeDiff, String timeApply) {
+	public FileInfo(String basePath) {
 		
 		if (flag) {
 			this.basePath = basePath;
-			this.timeDiff = timeDiff;
-			this.timeApply = timeApply;
 			
 			this.mapFileInfo = new HashMap<String,FileInfo>();
 		}
 		
-		if (flag) log.debug(String.format("[%s:%s:%s]", this.basePath, this.timeDiff, this.timeApply));
+		if (flag) log.debug(String.format("[%s]", this.basePath));
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
