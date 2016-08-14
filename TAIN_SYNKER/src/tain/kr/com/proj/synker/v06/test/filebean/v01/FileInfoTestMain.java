@@ -47,11 +47,9 @@ public class FileInfoTestMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			String basePath = "L:/src.org";
-			String timeDiff = "S60";   // 1 minute
-			String timeApply = "H48";  // 2 days
+			String basePath = "N:/TEMP/_synker_test";
 			
-			new FileInfo(basePath, timeDiff, timeApply).execute();
+			new FileInfo(basePath).execute();
 		}
 	}
 	
