@@ -179,9 +179,12 @@ public class ClientMain {
 		
 		if (args.length < 3) {
 			//args = new String[] { "TEST-2", "client", "TT0000" };
+			args = new String[] { "TEST-2", "client", "TT1000" };
+			//args = new String[] { "TEST-2", "client", "TT2000" };
+
 			//args = new String[] { "TEST-2", "client", "TR0000" };
 			//args = new String[] { "TEST-2", "client", "TR1000" };
-			args = new String[] { "TEST-2", "client", "TR2000" };
+			//args = new String[] { "TEST-2", "client", "TR2000" };
 		}
 
 		if (flag) test01(args);
