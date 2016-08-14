@@ -21,6 +21,7 @@ package tain.kr.com.proj.synker.v06.tr.cli;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -70,7 +71,7 @@ public class CliTt1001 extends Thread {
 			 * parent thread, main thread
 			 */
 			
-			String req = "TT1000_(" + (int) (Math.random() * 200) + ")";
+			String req = "TT1001_(" + (int) (Math.random() * 200) + ")";
 			String res = null;
 			
 			try {
@@ -117,12 +118,15 @@ public class CliTt1001 extends Thread {
 	
 	private void communicate() throws Exception {
 		
+		if (flag) try { Thread.sleep(4000); } catch (InterruptedException e) {}
+		
 		if (flag) {
 			/*
 			 * Server Module
 			 * to create server socket
 			 */
 
+			ServerSocket serverSocket = null;
 			Socket socket = null;
 			DataInputStream dis = null;
 			DataOutputStream dos = null;
@@ -131,12 +135,24 @@ public class CliTt1001 extends Thread {
 			
 			try {
 				
-				socket = new Socket("127.0.0.1", 12346);
-				if (flag) log.info(String.format(" SUB CLIENT : connection by port '12346' [%s]", socket.toString()));
+				serverSocket = new ServerSocket(12346);
+				/*
+				 * SO_TIMEOUT : ServerSocket
+				 * Enable/disable SO_TIMEOUT with the specified timeout, in milliseconds. With this operation set to a non-zero timeout,
+				 * a call to accept() for this ServerSocket will block for only this amount of time.
+				 * If the timeout expires, a java.net.SocketTimeoutException is raised, though the ServerSocket is still valid.
+				 * The option must be enabled prior to entering the blocking operation to have effect. The timeout must be > 0.
+				 * A timeout of zero is interpreted as an infinite timeout.
+				 */
+				serverSocket.setSoTimeout(2000);
+				if (flag) log.info(String.format(" SUB CLIENT : listening by port '12346' [%s]", serverSocket.toString()));
+				
+				socket = serverSocket.accept();
+				if (flag) log.info(String.format(" SUB CLIENT : accept the connection (%s)", socket));
 
 				dis = new DataInputStream(socket.getInputStream());
 				dos = new DataOutputStream(socket.getOutputStream());
-
+				
 				if (flag) {
 					/*
 					 * SO_TIMEOUT : Socket
@@ -148,7 +164,7 @@ public class CliTt1001 extends Thread {
 					 */
 					socket.setSoTimeout(2000);
 				}
-
+				
 				if (flag) {
 					/*
 					 * read
@@ -175,6 +191,7 @@ public class CliTt1001 extends Thread {
 				if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
 				if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
 				if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
+				if (serverSocket != null) try { serverSocket.close(); socket = null; } catch (Exception e) {}
 			}
 		}
 	}
@@ -199,7 +216,7 @@ public class CliTt1001 extends Thread {
 			/*
 			 * TrMap to set global vars
 			 */
-			TrBean bean = TrMap.getInstance().getBean("TR0000");   // TODO 2016.08.12
+			TrBean bean = TrMap.getInstance().getBean("TT1001");   // TODO 2016.08.12
 			
 			GlobalVars.getInstance().setTrCode(bean.getTrName());
 			GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
