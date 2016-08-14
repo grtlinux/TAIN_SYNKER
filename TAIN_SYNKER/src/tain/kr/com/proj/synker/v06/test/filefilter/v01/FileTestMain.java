@@ -171,6 +171,8 @@ public class FileTestMain {
 		
 		if (flag) {
 			/*
+			 * TODO 2016.08.14 : choice
+			 * 
 			 * 4. File[] File.listFiles(FileFilter)
 			 */
 			File file = null;
