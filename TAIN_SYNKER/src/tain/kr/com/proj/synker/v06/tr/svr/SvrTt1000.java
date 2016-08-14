@@ -142,16 +142,6 @@ public class SvrTt1000 extends Thread {
 				
 				if (flag) {
 					/*
-					 * write
-					 */
-					data = "Hello, World(SERVER)".getBytes();
-					dos.write(data);
-					
-					if (flag) log.debug(" SUB CLIENT : write[" + new String(data) + "]");
-				}
-				
-				if (flag) {
-					/*
 					 * SO_TIMEOUT : Socket
 					 * Enable/disable SO_TIMEOUT with the specified timeout, in milliseconds. With this operation set to a non-zero timeout,
 					 * a read() call on the InputStream associated with this Socket will block for only this amount of time.
@@ -160,6 +150,16 @@ public class SvrTt1000 extends Thread {
 					 * A timeout of zero is interpreted as an infinite timeout.
 					 */
 					socket.setSoTimeout(2000);
+				}
+				
+				if (flag) {
+					/*
+					 * write
+					 */
+					data = "Hello, World(SERVER)".getBytes();
+					dos.write(data);
+					
+					if (flag) log.debug(" SUB CLIENT : write[" + new String(data) + "]");
 				}
 				
 				if (flag) {
