@@ -19,6 +19,10 @@
  */
 package tain.kr.com.proj.synker.v06.tr.cli;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v06.bean.TrBean;
@@ -66,7 +70,7 @@ public class CliTt1000 extends Thread {
 			 * parent thread, main thread
 			 */
 			
-			String req = "TR1000_(" + (int) (Math.random() * 200) + ")";
+			String req = "TT1000_(" + (int) (Math.random() * 200) + ")";
 			String res = null;
 			
 			try {
@@ -75,7 +79,7 @@ public class CliTt1000 extends Thread {
 
 				if (flag) {
 					/*
-					 * ReqWrite
+					 * 1. ReqWrite
 					 */
 					
 					ps.reqWrite(req);
@@ -83,7 +87,14 @@ public class CliTt1000 extends Thread {
 				
 				if (flag) {
 					/*
-					 * ResRead
+					 * 2. connect to server
+					 */
+					communicate();
+				}
+				
+				if (flag) {
+					/*
+					 * 3. ResRead
 					 */
 					
 					res = ps.resRead();
@@ -101,6 +112,70 @@ public class CliTt1000 extends Thread {
 			 * close ps
 			 */
 			try { ps.close(); } catch (Exception e) {}
+		}
+	}
+	
+	private void communicate() throws Exception {
+		
+		if (flag) {
+			/*
+			 * Server Module
+			 * to create server socket
+			 */
+
+			Socket socket = null;
+			DataInputStream dis = null;
+			DataOutputStream dos = null;
+			
+			byte[] data = null;
+			
+			try {
+				
+				socket = new Socket("127.0.0.1", 12346);
+				if (flag) log.info(String.format(" SUB CLIENT : connection by port '12346' [%s]", socket.toString()));
+
+				dis = new DataInputStream(socket.getInputStream());
+				dos = new DataOutputStream(socket.getOutputStream());
+
+				if (flag) {
+					/*
+					 * SO_TIMEOUT : Socket
+					 * Enable/disable SO_TIMEOUT with the specified timeout, in milliseconds. With this operation set to a non-zero timeout,
+					 * a read() call on the InputStream associated with this Socket will block for only this amount of time.
+					 * If the timeout expires, a java.net.SocketTimeoutException is raised, though the Socket is still valid.
+					 * The option must be enabled prior to entering the blocking operation to have effect. The timeout must be >0.
+					 * A timeout of zero is interpreted as an infinite timeout.
+					 */
+					socket.setSoTimeout(2000);
+				}
+
+				if (flag) {
+					/*
+					 * read
+					 */
+					data = new byte[20];
+					dis.read(data);
+					
+					if (flag) log.debug(" SUB CLIENT : read [" + new String(data) + "]");
+				}
+				
+				if (flag) {
+					/*
+					 * write
+					 */
+					data = "Hello, World(CLIENT)".getBytes();
+					dos.write(data);
+					
+					if (flag) log.debug(" SUB CLIENT : write[" + new String(data) + "]");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
+				if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
+				if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
+			}
 		}
 	}
 	
