@@ -21,7 +21,6 @@ package tain.kr.com.proj.synker.v06.tr.svr;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -113,7 +112,6 @@ public class SvrTt1001 extends Thread {
 			 * to create server socket
 			 */
 
-			ServerSocket serverSocket = null;
 			Socket socket = null;
 			DataInputStream dis = null;
 			DataOutputStream dos = null;
@@ -122,34 +120,38 @@ public class SvrTt1001 extends Thread {
 			
 			try {
 				
-				serverSocket = new ServerSocket(12346);
-				/*
-				 * SO_TIMEOUT : ServerSocket
-				 * Enable/disable SO_TIMEOUT with the specified timeout, in milliseconds. With this operation set to a non-zero timeout,
-				 * a call to accept() for this ServerSocket will block for only this amount of time.
-				 * If the timeout expires, a java.net.SocketTimeoutException is raised, though the ServerSocket is still valid.
-				 * The option must be enabled prior to entering the blocking operation to have effect. The timeout must be > 0.
-				 * A timeout of zero is interpreted as an infinite timeout.
-				 */
-				serverSocket.setSoTimeout(2000);
-				if (flag) log.info(String.format(" SUB SERVER : listening by port '12346' [%s]", serverSocket.toString()));
-				
-				socket = serverSocket.accept();
-				if (flag) log.info(String.format(" SUB SERVER : accept the connection (%s)", socket));
-
-				dis = new DataInputStream(socket.getInputStream());
-				dos = new DataOutputStream(socket.getOutputStream());
-				
 				if (flag) {
 					/*
-					 * write
+					 * connection try logic
 					 */
-					data = "Hello, World(SERVER)".getBytes();
-					dos.write(data);
+					final int CNT_RETRY = 3;
 					
-					if (flag) log.debug(" SUB CLIENT : write[" + new String(data) + "]");
+					for (int i=1; i <= CNT_RETRY; i++) {
+						
+						try {
+							socket = new Socket("127.0.0.1", 12346);
+						} catch (Exception e) {
+							if (!flag) e.printStackTrace();
+							
+							if (i >= CNT_RETRY) {
+								throw new Exception("ERROR : try connection is OVER...(KIEA)");
+							}
+							
+							log.debug("connection try again (" + i + ")");
+							try { Thread.sleep(1000); } catch (InterruptedException ee) {}
+							
+							continue;
+						}
+						
+						break;
+					}
+
+					if (flag) log.info(String.format(" SUB SERVER : connection by port '12346' [%s]", socket.toString()));
 				}
 				
+				dis = new DataInputStream(socket.getInputStream());
+				dos = new DataOutputStream(socket.getOutputStream());
+
 				if (flag) {
 					/*
 					 * SO_TIMEOUT : Socket
@@ -161,6 +163,16 @@ public class SvrTt1001 extends Thread {
 					 */
 					socket.setSoTimeout(2000);
 				}
+
+				if (flag) {
+					/*
+					 * write
+					 */
+					data = "Hello, World(SERVER)".getBytes();
+					dos.write(data);
+					
+					if (flag) log.debug(" SUB SERVER : write[" + new String(data) + "]");
+				}
 				
 				if (flag) {
 					/*
@@ -169,7 +181,7 @@ public class SvrTt1001 extends Thread {
 					data = new byte[20];
 					dis.read(data);
 					
-					if (flag) log.debug(" SUB CLIENT : read [" + new String(data) + "]");
+					if (flag) log.debug(" SUB SERVER : read [" + new String(data) + "]");
 				}
 				
 			} catch (Exception e) {
@@ -178,7 +190,6 @@ public class SvrTt1001 extends Thread {
 				if (dis != null) try { dis.close(); dis = null; } catch (Exception e) {}
 				if (dos != null) try { dos.close(); dos = null; } catch (Exception e) {}
 				if (socket != null) try { socket.close(); socket = null; } catch (Exception e) {}
-				if (serverSocket != null) try { serverSocket.close(); socket = null; } catch (Exception e) {}
 			}
 		}
 	}
@@ -205,7 +216,7 @@ public class SvrTt1001 extends Thread {
 			/*
 			 * TrMap to set global vars
 			 */
-			TrBean bean = TrMap.getInstance().getBean("TR0000");   // TODO 2016.08.12
+			TrBean bean = TrMap.getInstance().getBean("TT1001");   // TODO 2016.08.12
 			
 			GlobalVars.getInstance().setTrCode(bean.getTrName());
 			GlobalVars.getInstance().setCliTrClass(bean.getTrCliClass());
