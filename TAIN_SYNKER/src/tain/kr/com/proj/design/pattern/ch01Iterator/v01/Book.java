@@ -35,6 +35,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
+@SuppressWarnings("unused")
 public class Book {
 
 	private static boolean flag = true;
@@ -42,7 +43,23 @@ public class Book {
 	private static final Logger log = Logger.getLogger(Book.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final String name;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public Book(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String toString() {
+		return "BOOK = " + this.name;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 }
