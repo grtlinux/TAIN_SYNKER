@@ -19,7 +19,7 @@
  */
 package tain.kr.com.proj.design.pattern.ch01Iterator.v01;
 
-import org.apache.log4j.Logger;
+import java.util.Vector;
 
 /**
  * Code Templates > Comments > Types
@@ -35,15 +35,33 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class BookShelfAggregate {
-
-	private static boolean flag = true;
-
-	private static final Logger log = Logger
-			.getLogger(BookShelfAggregate.class);
+public class BookShelfAggregate implements Aggregate {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final Vector<Book> books;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public BookShelfAggregate(int initSize) {
+		this.books = new Vector<Book>(initSize);
+	}
+	
+	public void appendBook(Book book) {
+		this.books.add(book);
+	}
+	
+	public Book getBookAt(int index) {
+		return this.books.get(index);
+	}
+	
+	public int getLength() {
+		return books.size();
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	public Iterator iterator() {
+		return new BookShelfIterator(this);
+	}
 }
