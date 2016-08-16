@@ -19,7 +19,6 @@
  */
 package tain.kr.com.proj.design.pattern.ch01Iterator.v01;
 
-import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
@@ -35,14 +34,33 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class BookShelfIterator {
-
-	private static boolean flag = true;
-
-	private static final Logger log = Logger.getLogger(BookShelfIterator.class);
+public class BookShelfIterator implements Iterator {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final BookShelfAggregate bookShelfAggregate;
+	private int index;
+	
+	public BookShelfIterator(BookShelfAggregate bookShelfAggregate) {
+		this.bookShelfAggregate = bookShelfAggregate;
+		this.index = 0;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	public boolean hasNext() {
+		if (this.index < this.bookShelfAggregate.getLength()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public Object next() {
+		Book book = this.bookShelfAggregate.getBookAt(this.index);
+		this.index ++;
+		
+		return book;
+	}
 }
