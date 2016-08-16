@@ -20,6 +20,8 @@
 package tain.kr.com.proj.synker.v06.test.filefilter.v02;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -76,7 +78,7 @@ public class FileEntry {
 			this.gateDirName = this.fullName.substring(0, gateSize);
 
 			if (file.isDirectory()) {
-				this.type = "D";
+				this.type = "DIR";
 				
 				this.childDirName = this.fullName.substring(gateSize);
 				this.fileName = "";
@@ -85,7 +87,7 @@ public class FileEntry {
 				this.longSize = file.length();
 				this.longCRC = 0;
 			} else {
-				this.type = "F";
+				this.type = "FILE";
 
 				int idx = this.fullName.lastIndexOf('/');
 				
@@ -135,8 +137,8 @@ public class FileEntry {
 	
 	public String toString() {
 		
-		return String.format("FileEntry INFO => [%s] [%s] [%s] [%s] [%s] [%d] [%d] [%d]"
-				, this.type
+		return String.format("FileEntry INFO => [%c] [%s] [%s] [%s] [%s] [%d] [%d] [%d]"
+				, this.type.charAt(0)
 				, this.fullName
 				, this.gateDirName
 				, this.childDirName
@@ -148,5 +150,28 @@ public class FileEntry {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		Map<String, FileEntry> mapFileEntry = new HashMap<String, FileEntry>();
+		
+		FileEntry entry = null;
+
+		if (flag) {
+			entry = new FileEntry(new File("N:/TEMP/_synker_test/bin"));
+			mapFileEntry.put(entry.getFullName(), entry);
+
+			entry = new FileEntry(new File("N:/TEMP/_synker_test/bin/mvnDebug.cmd"));
+			mapFileEntry.put(entry.getFullName(), entry);
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }
