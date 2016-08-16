@@ -19,7 +19,6 @@
  */
 package tain.kr.com.proj.design.pattern.ch01Iterator.v01;
 
-import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
@@ -35,13 +34,14 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class Iterator {
-
-	private static boolean flag = true;
-
-	private static final Logger log = Logger.getLogger(Iterator.class);
+public interface Iterator {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public abstract boolean hasNext();
+	
+	public abstract Object next();
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
