@@ -48,6 +48,7 @@ public class FileEntry {
 	/*
 	 * TODO 2016.08.16 : have to change before long
 	 */
+	public static final String SYSTEM_NAME = "SYNKER_TEST";
 	public static final String GATE_FOLDER = "N:/TEMP/_synker_test";
 	
 	private final String type;      // F:FILE   D:DIR
