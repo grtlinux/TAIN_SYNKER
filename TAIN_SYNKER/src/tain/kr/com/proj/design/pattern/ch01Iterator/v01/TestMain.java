@@ -45,4 +45,27 @@ public class TestMain {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/*
+	 * make source sequencely
+	 * 
+	 *    1. Book
+	 *    2. Iterator
+	 *    3. Aggregate
+	 *    4. BookShelfIterator
+	 *    5. BookShelfAggregate
+	 *    6. TestMain
+	 */
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }
