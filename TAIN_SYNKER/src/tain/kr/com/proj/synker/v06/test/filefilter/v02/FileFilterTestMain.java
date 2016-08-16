@@ -50,14 +50,14 @@ public class FileFilterTestMain {
 	
 	private final String gateFolder;
 	
-	private Map<String, FileFilterTestMain> mapTest = null;
+	private Map<String, FileEntry> mapTest = null;
 	
 	private FileFilterTestMain() {
 
 		if (flag || true) {
 			this.gateFolder = FileEntry.GATE_FOLDER.replace('\\', '/');
 			
-			this.mapTest = new HashMap<String, FileFilterTestMain>();
+			this.mapTest = new HashMap<String, FileEntry>();
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class FileFilterTestMain {
 		}
 	}
 	
-	public Map<String, FileFilterTestMain> getMapTest() throws Exception {
+	public Map<String, FileEntry> getMapTest() throws Exception {
 		return this.mapTest;
 	}
 	
