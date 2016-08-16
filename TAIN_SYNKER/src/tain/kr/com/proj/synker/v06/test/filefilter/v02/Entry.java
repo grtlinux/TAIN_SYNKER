@@ -53,6 +53,7 @@ public abstract class Entry {
 	
 	public abstract long getLongDate();
 	public abstract long getLongSize();
+	public abstract long getLongCRC();
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -61,7 +62,7 @@ public abstract class Entry {
 		
 		sb.append("[" + getType() + "] ");
 		sb.append(getGateDirName()).append(getChildDirName()).append(getFileName());
-		sb.append(String.format("      [%d] [%d]", getLongDate(), getLongSize()));
+		sb.append(String.format("      [%d] [%d] [%d]", getLongDate(), getLongSize(), getLongCRC()));
 		
 		return sb.toString();
 	}
