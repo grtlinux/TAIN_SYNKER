@@ -21,7 +21,6 @@ package tain.kr.com.proj.synker.v06.test.filefilter.v02;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -49,94 +48,28 @@ public class FileFilterTestMain {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private final String gateFolder;
-	private final int gateSize;
 	
 	private FileFilterTestMain() {
 
-		this.gateFolder = "N:\\TEMP\\_synker_test".replace('\\', '/');
-		this.gateSize = this.gateFolder.length();
+		if (flag || true) {
+			this.gateFolder = FileEntry.GATE_FOLDER.replace('\\', '/');
+		}
 	}
 	
 	public void execute() throws Exception {
 		
 		if (flag) {
 			
-			entryList(new File(gateFolder));
+			entryList(new File(this.gateFolder));
 		}
 	}
 	
 	private void entryList(File folder) throws Exception {
 		
 		if (flag) {
-			@SuppressWarnings("unused")
-			File[] files = null;
-			
 			try {
 				
-				/*
-				 * check points
-				 *    1. gateFolder
-				 *    2. folder
-				 *    3. file
-				 */
-				@SuppressWarnings("unused")
-				FileFilter fileFilter = new FileFilter() {
-					
-					@Override
-					public boolean accept(File file) {
-						
-						if (!flag) {
-							String tmCal = null;
-							
-							if (flag) {
-								long lm = file.lastModified();
-								long ms = lm % 1000;
-								long sec = (lm / 1000) % 60;
-								long min = (lm / 1000 / 60) % 60;
-								long hour = (lm / 1000 / 60 / 60 + 9) % 24;
-								tmCal = String.format("[%02d:%02d:%02d.%03d]", hour, min, sec, ms);
-							}
-							
-							try {
-								StringBuffer sb = new StringBuffer();
-								sb.append(String.format("1 > "));
-								sb.append(String.valueOf(file.getName())).append(" - ");
-								sb.append(String.valueOf(file.getAbsolutePath())).append(" - ");
-								sb.append(String.valueOf(file.getCanonicalPath())).append(" - ");
-								sb.append(String.valueOf(file.lastModified())).append(" - ").append(String.valueOf(new Date(file.lastModified()))).append(" - ").append(tmCal).append(" - ");
-								sb.append(String.valueOf(file.length())).append(" - ");
-								
-								log.debug(sb.toString());
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-							// get name of file
-							String name = file.getName();
-							
-							// get last index of '.' char.
-							int lastIndex = name.lastIndexOf('.');
-							
-							if (lastIndex > 0) {
-								// get extension
-								String ext = name.substring(lastIndex);
-								
-								// match each name extension
-								if (".iso".equals(ext)) {
-									return true;
-								}
-							}
-						}
-						
-						if (flag) {
-							
-						}
-						
-						return false;
-					}
-				};
-				
-				files = folder.listFiles(new FileFilter() {
+				folder.listFiles(new FileFilter() {
 					
 					@Override
 					public boolean accept(File file) {
@@ -147,7 +80,7 @@ public class FileFilterTestMain {
 							 */
 						}
 						
-						printInfo(file);
+						makeFileEntry(file);
 						
 						if (file.isDirectory()) {
 							try {
@@ -161,59 +94,13 @@ public class FileFilterTestMain {
 					}
 					
 					/*
-					 * print information
+					 * make FileEntry
 					 */
-					private void printInfo(File file) {
+					private void makeFileEntry(File file) {
 						
 						if (flag) {
-							
-							StringBuffer sb = new StringBuffer();
-
-							try {
-								String strFileName = file.getAbsolutePath().replace('\\', '/');
-								//int len = strFileName.length();
-								
-								sb.append(String.format("%s \t", file.isDirectory() ? "FOLDER" : "FILE  "));
-								
-								String strGateFolder = strFileName.substring(0, gateSize);
-
-								String strFolder = "";
-								String strFile = "";
-								
-								if (file.isDirectory()) {
-									strFolder = strFileName.substring(gateSize);
-									strFile = "";
-								
-									sb.append(String.format("[%s]\t[%s]\t[%s]", strGateFolder, strFolder, strFile));
-								} else {
-									int idx = strFileName.lastIndexOf('/');
-									
-									strFolder = strFileName.substring(gateSize, idx);
-									strFile = strFileName.substring(idx);
-									
-									sb.append(String.format("[%s]\t[%s]\t[%s]", strGateFolder, strFolder, strFile));
-								}
-								
-								if (flag) System.out.println(sb.toString());
-
-								
-								
-								
-								
-								if (!flag) {
-									/*
-									 * appendix
-									 */
-									if (!flag) sb.append(String.valueOf(file.getName())).append(" - ");
-									if (!flag) sb.append(String.valueOf(file.getAbsolutePath())).append(" - ");
-									if (!flag) sb.append(String.valueOf(file.getCanonicalPath())).append(" - ");
-									if (!flag) sb.append(String.valueOf(file.lastModified())).append(" - ").append(String.valueOf(new Date(file.lastModified()))).append(" - ");
-									if (!flag) sb.append(String.valueOf(file.length())).append(" - ");
-								}
-								
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+						
+							new FileEntry(file);
 						}
 					}
 				});
