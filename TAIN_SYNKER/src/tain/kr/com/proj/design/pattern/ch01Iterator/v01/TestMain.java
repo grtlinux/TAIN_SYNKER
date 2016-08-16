@@ -58,7 +58,22 @@ public class TestMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
+			BookShelfAggregate bookShelfAggregate = new BookShelfAggregate(2);
 			
+			bookShelfAggregate.appendBook(new Book("Around the world in 80 days"));
+			bookShelfAggregate.appendBook(new Book("Bible"));
+			bookShelfAggregate.appendBook(new Book("Cinderella"));
+			bookShelfAggregate.appendBook(new Book("Daddy-Long-Legs"));
+			bookShelfAggregate.appendBook(new Book("East of Eden"));
+			bookShelfAggregate.appendBook(new Book("Frankestein"));
+			bookShelfAggregate.appendBook(new Book("Guliver's Travels"));
+			bookShelfAggregate.appendBook(new Book("Hamlet"));
+			
+			Iterator iterator = bookShelfAggregate.iterator();
+			while (iterator.hasNext()) {
+				Book book = (Book) iterator.next();
+				System.out.println(book);
+			}
 		}
 	}
 	
