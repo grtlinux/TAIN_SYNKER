@@ -21,6 +21,8 @@ package tain.kr.com.proj.synker.v06.test.filefilter.v02;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -42,17 +44,20 @@ public class FileFilterTestMain {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger
-			.getLogger(FileFilterTestMain.class);
+	private static final Logger log = Logger.getLogger(FileFilterTestMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private final String gateFolder;
 	
+	private Map<String, FileFilterTestMain> mapTest = null;
+	
 	private FileFilterTestMain() {
 
 		if (flag || true) {
 			this.gateFolder = FileEntry.GATE_FOLDER.replace('\\', '/');
+			
+			this.mapTest = new HashMap<String, FileFilterTestMain>();
 		}
 	}
 	
@@ -111,6 +116,10 @@ public class FileFilterTestMain {
 				
 			}
 		}
+	}
+	
+	public Map<String, FileFilterTestMain> getMapTest() throws Exception {
+		return this.mapTest;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
