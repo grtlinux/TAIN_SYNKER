@@ -25,6 +25,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.Gson;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -159,12 +161,36 @@ public class FileEntry {
 		
 		FileEntry entry = null;
 
+		Gson gson = null;
+		
+		String strJson = null;
+		
 		if (flag) {
+			/*
+			 * 
+			 */
 			entry = new FileEntry(new File("N:/TEMP/_synker_test/bin"));
 			mapFileEntry.put(entry.getFullName(), entry);
 
 			entry = new FileEntry(new File("N:/TEMP/_synker_test/bin/mvnDebug.cmd"));
 			mapFileEntry.put(entry.getFullName(), entry);
+		}
+		
+		if (flag) {
+			/*
+			 * Map -> Gson
+			 */
+			gson = new Gson();
+			
+			strJson = gson.toJson(mapFileEntry);
+			
+			if (flag) System.out.println(strJson);
+		}
+		
+		if (flag) {
+			/*
+			 * Gson -> Map
+			 */
 		}
 	}
 	
