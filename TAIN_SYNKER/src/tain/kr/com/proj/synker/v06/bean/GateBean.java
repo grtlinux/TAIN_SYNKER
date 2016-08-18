@@ -48,18 +48,20 @@ public class GateBean {
 	
 	private String gateNo = null;
 	private String gateName = null;
-	private String gateDesc = null;
 	private String gateFolder = null;
+	private String gateType = null;
+	private String gateDesc = null;
 
 	public GateBean() {}
 	
-	public GateBean(String gateNo, String gateName, String gateDesc, String gateFolder) {
+	public GateBean(String gateNo, String gateName, String gateFolder, String gateType, String gateDesc) {
 		
 		if (flag) {
 			this.gateNo = gateNo;
 			this.gateName = gateName;
-			this.gateDesc = gateDesc;
 			this.gateFolder = gateFolder;
+			this.gateType = gateType;
+			this.gateDesc = gateDesc;
 		}
 	}
 
@@ -71,12 +73,16 @@ public class GateBean {
 		return gateName;
 	}
 
-	public String getGateDesc() {
-		return gateDesc;
-	}
-
 	public String getGateFolder() {
 		return gateFolder;
+	}
+
+	public String getGateType() {
+		return gateType;
+	}
+
+	public String getGateDesc() {
+		return gateDesc;
 	}
 
 	public void setGateNo(String gateNo) {
@@ -87,20 +93,25 @@ public class GateBean {
 		this.gateName = gateName;
 	}
 
-	public void setGateDesc(String gateDesc) {
-		this.gateDesc = gateDesc;
-	}
-
 	public void setGateFolder(String gateFolder) {
 		this.gateFolder = gateFolder;
 	}
 
+	public void setGateType(String gateType) {
+		this.gateType = gateType;
+	}
+
+	public void setGateDesc(String gateDesc) {
+		this.gateDesc = gateDesc;
+	}
+
 	public String toString() {
-		return String.format("[NO,NAME,DESC,FOLDER]=[%s,%s,%s,%s]"
+		return String.format("[NO,NAME,FOLDER,TYPE,DESC]=[%s,%s,%s,%s,%s]"
 				, this.gateNo
 				, this.gateName
-				, this.gateDesc
 				, this.gateFolder
+				, this.gateType
+				, this.gateDesc
 				);
 	}
 	
@@ -118,9 +129,9 @@ public class GateBean {
 		if (flag) {
 			Map<String, GateBean> mapGate = new HashMap<String, GateBean>();
 			
-			mapGate.put("01", new GateBean("01", "FIRST", "first system", "FOLDER"));
-			mapGate.put("02", new GateBean("02", "SECOND", "second system", "FOLDER"));
-			mapGate.put("03", new GateBean("03", "THIRD", "third system", "FOLDER"));
+			mapGate.put("01", new GateBean("01", "FIRST", "FOLDER", "TYPE-1", "first system"));
+			mapGate.put("02", new GateBean("02", "SECOND", "FOLDER", "TYPE-1",  "second system"));
+			mapGate.put("03", new GateBean("03", "THIRD", "FOLDER", "TYPE-1",  "third system"));
 			
 			for (Map.Entry<String,GateBean> entryBean : mapGate.entrySet()) {
 				String gateNo = entryBean.getKey();
