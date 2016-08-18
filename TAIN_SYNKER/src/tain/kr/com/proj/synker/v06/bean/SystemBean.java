@@ -24,6 +24,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v06.util.SynkerProperties;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -50,14 +52,51 @@ public class SystemBean {
 	private String systemName = null;
 	private String systemDesc = null;
 
+	private Map<String, GateBean> mapGate = null;
+	
 	public SystemBean() {}
 	
-	public SystemBean(String systemNo, String systemName, String systemDesc) {
+	public SystemBean(String systemNo, String systemName, String systemDesc) throws Exception {
 		
 		if (flag) {
+			/*
+			 * system information
+			 */
 			this.systemNo = systemNo;
 			this.systemName = systemName;
 			this.systemDesc = systemDesc;
+		}
+		
+		if (flag) {
+			/*
+			 * create sub information of gate
+			 */
+			this.mapGate = new HashMap<String, GateBean>();
+		}
+		
+		if (flag) {
+			/*
+			 * set sub information of gate
+			 */
+			for (int idx = 1; idx <= 10; idx ++) {
+				String gateNo = String.format("%02d", idx);
+				String gateKey = "tain.kr.system" + "." + this.systemNo + ".gate." + gateNo + ".info";
+				
+				String gateStr = SynkerProperties.getInstance().get(gateKey);
+				if (gateStr == null)
+					continue;
+				
+				String[] info = gateStr.split(";");
+				if (info.length != 4)
+					continue;
+				
+				String gateName = info[0].trim();
+				String gateFolder = info[1].trim();
+				String gateType = info[2].trim();
+				String gateDesc = info[3].trim();
+				
+				this.mapGate.put(gateName, new GateBean(gateNo, gateName, gateFolder, gateType, gateDesc));
+			}
 		}
 	}
 	
