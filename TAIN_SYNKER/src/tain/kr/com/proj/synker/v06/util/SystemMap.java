@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v06.bean.ServiceBean;
+import tain.kr.com.proj.synker.v06.bean.SystemBean;
 
 /**
  * Code Templates > Comments > Types
@@ -54,7 +54,7 @@ public class SystemMap {
 	private int rangeBeg = -1;
 	private int rangeEnd = -1;
 	
-	private Map<String, ServiceBean> mapService = null;
+	private Map<String, SystemBean> mapSystem = null;
 	
 	private SystemMap() throws Exception {
 		
@@ -81,25 +81,24 @@ public class SystemMap {
 			 * make a map info of service
 			 */
 			
-			mapService = new HashMap<String, ServiceBean>();
+			mapSystem = new HashMap<String, SystemBean>();
 			
 			for (int idx = this.rangeBeg; idx <= this.rangeEnd; idx ++) {
-				String serviceNo = String.format("%02d", idx);
-				String serviceKey = KEY_SERVICE + "." + serviceNo;
+				String systemNo = String.format("%02d", idx);
+				String systemKey = KEY_SERVICE + "." + systemNo + ".info";
 				
-				String serviceStr = SynkerProperties.getInstance().get(serviceKey);
-				if (serviceStr == null)
+				String systemStr = SynkerProperties.getInstance().get(systemKey);
+				if (systemStr == null)
 					continue;
 				
-				String[] info = serviceStr.split(";");
-				if (info.length != 3)
+				String[] info = systemStr.split(";");
+				if (info.length != 2)
 					continue;
 				
-				String serviceName = info[0].trim();
-				String serviceClass = info[1].trim();
-				String propFile = info[2].trim();
+				String systemName = info[0].trim();
+				String systemDesc = info[1].trim();
 				
-				mapService.put(serviceName, new ServiceBean(serviceNo, serviceName, serviceClass, propFile));
+				mapSystem.put(systemName, new SystemBean(systemNo, systemName, systemDesc));
 			}
 		}
 		
@@ -118,14 +117,14 @@ public class SystemMap {
 		}
 		
 		if (flag) {
-			for (Map.Entry<String, ServiceBean> entryBean : this.mapService.entrySet()) {
+			for (Map.Entry<String, SystemBean> entryBean : this.mapSystem.entrySet()) {
 				log.debug(">>>>> [" + entryBean.getKey() + "]  " + entryBean.getValue());
 			}
 		}
 	}
 	
-	public ServiceBean getBean(String serviceName) throws Exception {
-		return this.mapService.get(serviceName);
+	public SystemBean getBean(String systemName) throws Exception {
+		return this.mapSystem.get(systemName);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,12 +158,13 @@ public class SystemMap {
 			}
 		}
 		
-		if (!flag) {
+		if (flag) {
 			SystemMap.getInstance().print();
 		}
 		
-		if (!flag) {
-			log.debug(">>> " + SystemMap.getInstance().getBean("version"));
+		if (flag) {
+			//log.debug(">>> " + SystemMap.getInstance().getBean("01"));
+			log.debug(">>> " + SystemMap.getInstance().getBean("FIRST"));
 		}
 	}
 	
