@@ -138,6 +138,17 @@ public class SystemBean {
 		}
 	}
 	
+	public void printGate() {
+		
+		for (Map.Entry<String, GateBean> entry : mapGate.entrySet()) {
+			
+			String gateKey = entry.getKey();
+			GateBean gateBean = entry.getValue();
+			
+			log.debug(">>>>> [" + gateKey + "]  " + gateBean);
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
