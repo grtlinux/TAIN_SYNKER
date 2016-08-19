@@ -118,7 +118,15 @@ public class SystemMap {
 		
 		if (flag) {
 			for (Map.Entry<String, SystemBean> entryBean : this.mapSystem.entrySet()) {
-				log.debug(">>>>> [" + entryBean.getKey() + "]  " + entryBean.getValue());
+				
+				String systemKey = entryBean.getKey();
+				SystemBean systemBean = entryBean.getValue();
+
+				log.debug(">>>>> [" + systemKey + "]  " + systemBean);
+				
+				if (flag) {
+					systemBean.printGate();
+				}
 			}
 		}
 	}
@@ -162,7 +170,7 @@ public class SystemMap {
 			SystemMap.getInstance().print();
 		}
 		
-		if (flag) {
+		if (!flag) {
 			//log.debug(">>> " + SystemMap.getInstance().getBean("01"));
 			log.debug(">>> " + SystemMap.getInstance().getBean("FIRST"));
 		}
