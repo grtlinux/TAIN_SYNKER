@@ -1,14 +1,16 @@
 
 source order
 
-	1. Book
+	1. Book             : content
 
-	2. Iterator
 
-	3. Aggregate
+	2. Iterator           : tool
 
-	4. BookShelfIterator
+	3. Aggregate           : contents
 
-	5. BookShelfAggregate
+
+	4. BookShelfIterator    : tool
+
+	5. BookShelfAggregate   : contents
 
 	6. TestMain
