@@ -112,8 +112,8 @@ public class SystemMap {
 	public void print() throws Exception {
 		
 		if (flag) {
-			log.debug("Range Begin : " + this.rangeBeg);
-			log.debug("Range End   : " + this.rangeEnd);
+			log.debug("Range Beg : " + this.rangeBeg);
+			log.debug("Range End : " + this.rangeEnd);
 		}
 		
 		if (flag) {
