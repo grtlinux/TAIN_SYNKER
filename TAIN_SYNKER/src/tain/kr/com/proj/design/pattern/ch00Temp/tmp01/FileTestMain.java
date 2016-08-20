@@ -21,6 +21,9 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.design.pattern.ch11Composite.v02.File;
+import tain.kr.com.proj.design.pattern.ch11Composite.v02.Folder;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -80,6 +83,26 @@ public class FileTestMain {
 			kang.add(new File("junk.mail", 500));
 			
 			rootdir.printList();
+		}
+
+		if (flag) {
+			
+			Folder root = new Folder("root");
+			
+			Folder usr = new Folder("usr");
+			root.add(usr);
+			
+			Folder kim = new Folder("kim");
+			usr.add(kim);
+			
+			File file = new File("Composite.java", 100);
+			kim.add(file);
+			
+			root.printList();
+			
+			System.out.println();
+			System.out.println("file = " + file.getFullName());
+			System.out.println("kim = " + kim.getFullName());
 		}
 	}
 	

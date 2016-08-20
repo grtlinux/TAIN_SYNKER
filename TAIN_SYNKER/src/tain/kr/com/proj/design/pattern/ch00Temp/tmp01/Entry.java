@@ -20,6 +20,7 @@
 package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
 
 
+
 /**
  * Code Templates > Comments > Types
  *
@@ -56,5 +57,21 @@ public abstract class Entry {
 
 	public Entry add(Entry entry) throws FileTreatmentException {
 		throw new FileTreatmentException();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	protected Entry parent;
+	
+	public String getFullName() {
+		StringBuffer fullName = new StringBuffer();
+		
+		Entry entry = this;
+		do {
+			fullName.insert(0,  "/" + entry.getName());
+			entry = entry.parent;
+		} while (entry != null);
+		
+		return fullName.toString();
 	}
 }

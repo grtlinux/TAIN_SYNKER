@@ -64,7 +64,7 @@ public class Folder extends Entry {
 		int size = 0;
 		
 		if (!flag) {
-			Iterator<Entry> iter = folder.iterator();
+			Iterator<Entry> iter = this.folder.iterator();
 			while (iter.hasNext()) {
 				Entry entry = iter.next();
 				size += entry.getSize();
@@ -72,7 +72,7 @@ public class Folder extends Entry {
 		}
 
 		if (flag) {
-			for (Entry entry : folder) {
+			for (Entry entry : this.folder) {
 				size += entry.getSize();
 			}
 		}
@@ -85,16 +85,16 @@ public class Folder extends Entry {
 		System.out.println(prefix + "/" + this);
 
 		if (!flag) {
-			Iterator<Entry> iter = folder.iterator();
+			Iterator<Entry> iter = this.folder.iterator();
 			while (iter.hasNext()) {
 				Entry entry = iter.next();
-				entry.printList(prefix + "/" + name);
+				entry.printList(prefix + "/" + this.name);
 			}
 		}
 		
 		if (flag) {
 			for (Entry entry : folder) {
-				entry.printList(prefix + "/" + name);
+				entry.printList(prefix + "/" + this.name);
 			}
 		}
 	}
@@ -102,7 +102,14 @@ public class Folder extends Entry {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public Entry add(Entry entry) {
-		folder.add(entry);
+		if (!flag) {
+			this.folder.add(entry);
+		}
+		
+		if (flag) {
+			this.folder.add(entry);
+			entry.parent = this;
+		}
 		return this;
 	}
 }
