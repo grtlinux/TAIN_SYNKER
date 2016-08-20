@@ -48,11 +48,17 @@ public class Thread01Main {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
+			/*
+			 * 1. MyThread
+			 */
 			Thread thread = new MyThread("KANG-1");
 			thread.start();
 		}
 		
 		if (flag) {
+			/*
+			 * 2. Thread
+			 */
 			Thread thread = new Thread() {
 				public void run() {
 					System.out.println("THREAD-2 start thread...");
@@ -64,11 +70,17 @@ public class Thread01Main {
 		}
 		
 		if (flag) {
+			/*
+			 * 3. MyRunnable
+			 */
 			Thread thread = new Thread(new MyRunnable("KANG-2"));
 			thread.start();
 		}
 		
 		if (flag) {
+			/*
+			 * 4. Runnable
+			 */
 			Thread thread = new Thread(new Runnable(){
 				public void run() {
 					System.out.println("RUNNABLE-4 start thread...");
