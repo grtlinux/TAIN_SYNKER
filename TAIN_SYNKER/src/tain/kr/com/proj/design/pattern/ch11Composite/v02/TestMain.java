@@ -49,6 +49,47 @@ public class TestMain {
 		
 		if (flag) {
 			
+			System.out.println("Making root entries...");
+			
+			Folder rootdir = new Folder("root");
+			Folder bindir = new Folder("bin");
+			Folder tmpdir = new Folder("tmp");
+			Folder usrdir = new Folder("usr");
+			
+			rootdir.add(bindir);
+			rootdir.add(tmpdir);
+			rootdir.add(usrdir);
+			
+			bindir.add(new File("vi", 10000));
+			bindir.add(new File("latex", 20000));
+			
+			rootdir.printList();
+			
+			System.out.println();
+			
+			System.out.println("Making user entries...");
+			
+			Folder kim = new Folder("kim");
+			Folder lee = new Folder("lee");
+			Folder kang = new Folder("kang");
+			
+			usrdir.add(kim);
+			usrdir.add(lee);
+			usrdir.add(kang);
+			
+			kim.add(new File("diary.html", 100));
+			kim.add(new File("Composite.java", 200));
+			lee.add(new File("memo.txt", 300));
+			kang.add(new File("game.doc", 400));
+			kang.add(new File("junk.mail", 500));
+			
+			rootdir.printList();
+
+			System.out.println();
+		}
+		
+		if (flag) {
+			
 			Folder root = new Folder("root");
 			
 			Folder usr = new Folder("usr");
