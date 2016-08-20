@@ -19,13 +19,13 @@
  */
 package tain.kr.com.proj.design.pattern.ch01Iterator.v02;
 
-import java.util.Vector;
+import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : ContentBooks.java
+ *   -. FileName   : BookTestMain.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch01Iterator.v02
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -35,34 +35,42 @@ import java.util.Vector;
  * @author taincokr
  *
  */
-public class ContentBooks {
+public class BookTestMain {
+
+	private static boolean flag = true;
+
+	private static final Logger log = Logger.getLogger(BookTestMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private final Vector<Book> books;
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public ContentBooks() {
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static void test01(String[] args) throws Exception {
 		
-		this.books = new Vector<Book>();
+		if (flag) {
+			ContentBooks contentBooks = new ContentBooks();
+			
+			contentBooks.add(new Book("Around the world in 80 days"));
+			contentBooks.add(new Book("Bible"));
+			contentBooks.add(new Book("Cinderella"));
+			contentBooks.add(new Book("Daddy-long-legs"));
+			contentBooks.add(new Book("East of Eden"));
+			contentBooks.add(new Book("Frankestein"));
+			contentBooks.add(new Book("Guliver's travels"));
+			contentBooks.add(new Book("Hamlet"));
+			
+			ToolBooks tool = contentBooks.getTool();
+			while (tool.hasNext()) {
+				Book book = (Book) tool.next();
+				System.out.println(book);
+			}
+		}
 	}
 	
-	public void add(Book book) {
-		this.books.add(book);
-	}
-	
-	public Book get(int index) {
-		return this.books.get(index);
-	}
-	
-	public int length() {
-		return this.books.size();
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public ToolBooks getTool() {
-		return new ToolBooks(this);
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
 	}
 }

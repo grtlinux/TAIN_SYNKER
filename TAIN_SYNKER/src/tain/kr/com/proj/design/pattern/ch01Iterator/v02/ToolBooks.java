@@ -19,13 +19,12 @@
  */
 package tain.kr.com.proj.design.pattern.ch01Iterator.v02;
 
-import java.util.Vector;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : ContentBooks.java
+ *   -. FileName   : ToolBooks.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch01Iterator.v02
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -35,34 +34,34 @@ import java.util.Vector;
  * @author taincokr
  *
  */
-public class ContentBooks {
+public class ToolBooks {
 
+	private final ContentBooks contentBooks;
+	private int index;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private final Vector<Book> books;
+	public ToolBooks(ContentBooks contentBooks) {
+		this.contentBooks = contentBooks;
+		this.index = 0;
+	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public ContentBooks() {
+	public boolean hasNext() {
+		if (this.index < this.contentBooks.length()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Object next() {
+		Book book = this.contentBooks.get(this.index);
+		this.index ++;
 		
-		this.books = new Vector<Book>();
-	}
-	
-	public void add(Book book) {
-		this.books.add(book);
-	}
-	
-	public Book get(int index) {
-		return this.books.get(index);
-	}
-	
-	public int length() {
-		return this.books.size();
+		return book;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public ToolBooks getTool() {
-		return new ToolBooks(this);
-	}
 }
