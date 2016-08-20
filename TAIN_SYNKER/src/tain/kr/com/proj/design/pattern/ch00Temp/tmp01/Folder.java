@@ -39,6 +39,8 @@ import java.util.Vector;
  */
 public class Folder extends Entry {
 
+	private static boolean flag = true;
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private final String name;
@@ -61,10 +63,18 @@ public class Folder extends Entry {
 		
 		int size = 0;
 		
-		Iterator<Entry> iter = folder.iterator();
-		while (iter.hasNext()) {
-			Entry entry = iter.next();
-			size += entry.getSize();
+		if (!flag) {
+			Iterator<Entry> iter = folder.iterator();
+			while (iter.hasNext()) {
+				Entry entry = iter.next();
+				size += entry.getSize();
+			}
+		}
+
+		if (flag) {
+			for (Entry entry : folder) {
+				size += entry.getSize();
+			}
 		}
 		
 		return size;
@@ -74,10 +84,18 @@ public class Folder extends Entry {
 	protected void printList(String prefix) {
 		System.out.println(prefix + "/" + this);
 
-		Iterator<Entry> iter = folder.iterator();
-		while (iter.hasNext()) {
-			Entry entry = iter.next();
-			entry.printList(prefix + "/" + name);
+		if (!flag) {
+			Iterator<Entry> iter = folder.iterator();
+			while (iter.hasNext()) {
+				Entry entry = iter.next();
+				entry.printList(prefix + "/" + name);
+			}
+		}
+		
+		if (flag) {
+			for (Entry entry : folder) {
+				entry.printList(prefix + "/" + name);
+			}
 		}
 	}
 	
