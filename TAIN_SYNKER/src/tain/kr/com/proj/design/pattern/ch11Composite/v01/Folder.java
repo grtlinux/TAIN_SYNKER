@@ -50,36 +50,39 @@ public class Folder extends Entry {
 		this.folder = new Vector<Entry>();
 	}
 	
+	@Override
 	public String getName() {
 		return this.name;
 	}
 	
+	@Override
 	public int getSize() {
 		int size = 0;
 		
-		Iterator<Entry> it = folder.iterator();
-		while (it.hasNext()) {
-			Entry entry = it.next();
+		Iterator<Entry> iter = this.folder.iterator();
+		while (iter.hasNext()) {
+			Entry entry = iter.next();
 			size += entry.getSize();
 		}
 		
 		return size;
 	}
 	
-	public Entry add(Entry entry) {
-		folder.addElement(entry);
-		return this;
-	}
-
+	@Override
 	protected void printList(String prefix) {
 		System.out.println(prefix + "/" + this);
 		
-		Iterator<Entry> it = folder.iterator();
-		while (it.hasNext()) {
-			Entry entry = it.next();
-			entry.printList(prefix + "/" + name);
+		Iterator<Entry> iter = this.folder.iterator();
+		while (iter.hasNext()) {
+			Entry entry = iter.next();
+			entry.printList(prefix + "/" + this.name);
 		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public Entry add(Entry entry) {
+		this.folder.add(entry);
+		return this;
+	}
 }

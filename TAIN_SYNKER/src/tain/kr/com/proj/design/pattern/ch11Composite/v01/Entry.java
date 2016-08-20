@@ -37,12 +37,11 @@ package tain.kr.com.proj.design.pattern.ch11Composite.v01;
 public abstract class Entry {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public abstract String getName();
-	public abstract int getSize();
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	public abstract String getName();      // <- abstract
+	public abstract int getSize();        // <- abstract
+	
 	public String toString() {
 		return getName() + " (" + getSize() + ")";
 	}
@@ -51,11 +50,12 @@ public abstract class Entry {
 		printList("");
 	}
 	
-	protected abstract void printList(String prefix);
+	protected abstract void printList(String prefix);       // <- abstract
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	public Entry add(Entry entry) throws FileTreatmentException {
 		throw new FileTreatmentException();
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
 }
