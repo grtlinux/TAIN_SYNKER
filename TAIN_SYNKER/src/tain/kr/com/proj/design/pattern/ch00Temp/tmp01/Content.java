@@ -24,7 +24,7 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : BookShelfIterator.java
+ *   -. FileName   : Content.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch00Temp.tmp01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -34,39 +34,7 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
  * @author taincokr
  *
  */
-public class BookShelfIterator implements Iterator {
+public interface Content {
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private final BookShelfAggregate bookShelfAggregate;
-	private int index;
-	
-	public BookShelfIterator(BookShelfAggregate bookShelfAggregate) {
-		
-		this.bookShelfAggregate = bookShelfAggregate;
-		this.index = 0;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public boolean hasNext() {
-		if (this.index < this.bookShelfAggregate.getLength()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Object next() {
-		
-		Book book = this.bookShelfAggregate.getBook(this.index);
-		this.index ++;
-		
-		return book;
-	}
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
+	public abstract Tool getTool();
 }

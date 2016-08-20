@@ -51,7 +51,7 @@ public class Book {
 	}
 	
 	public String toString() {
-		return String.format("Book [%s]", getName());
+		return String.format("Book('%s')", this.getName());
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

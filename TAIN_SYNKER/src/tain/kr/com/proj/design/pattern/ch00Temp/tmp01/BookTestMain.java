@@ -19,12 +19,13 @@
  */
 package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
 
+import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Iterator.java
+ *   -. FileName   : BookTestMain.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch00Temp.tmp01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -34,14 +35,42 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
  * @author taincokr
  *
  */
-public interface Iterator {
+public class BookTestMain {
+
+	private static boolean flag = true;
+
+	private static final Logger log = Logger.getLogger(BookTestMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public abstract boolean hasNext();
-	
-	public abstract Object next();
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			ContentBooks contentBooks = new ContentBooks();
+			
+			contentBooks.add(new Book("Around the world in 80 days"));
+			contentBooks.add(new Book("Bible"));
+			contentBooks.add(new Book("Cinderella"));
+			contentBooks.add(new Book("Daddy-long-legs"));
+			contentBooks.add(new Book("East of Eden"));
+			contentBooks.add(new Book("Frankestein"));
+			contentBooks.add(new Book("Guliver's travels"));
+			contentBooks.add(new Book("Hamlet"));
+			
+			Tool tool = contentBooks.getTool();
+			while (tool.hasNext()) {
+				Book book = (Book) tool.next();
+				System.out.println(book);
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }

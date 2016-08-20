@@ -24,7 +24,7 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Aggregate.java
+ *   -. FileName   : Tool.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch00Temp.tmp01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -34,13 +34,8 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
  * @author taincokr
  *
  */
-public interface Aggregate {
+public interface Tool {
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public abstract Iterator iterator();
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
+	public abstract boolean hasNext();
+	public abstract Object next();
 }

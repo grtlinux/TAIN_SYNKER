@@ -19,13 +19,12 @@
  */
 package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
 
-import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : TestMain.java
+ *   -. FileName   : ToolBooks.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch00Temp.tmp01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -35,42 +34,38 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class TestMain {
-
-	private static boolean flag = true;
-
-	private static final Logger log = Logger.getLogger(TestMain.class);
+public class ToolBooks implements Tool {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final ContentBooks contentBooks;
+	private int index;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public ToolBooks(ContentBooks contentBooks) {
+		this.contentBooks = contentBooks;
+		this.index = 0;
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private static void test01(String[] args) throws Exception {
-		
-		if (flag) {
-			BookShelfAggregate bookShelfAggregate = new BookShelfAggregate();
-			
-			bookShelfAggregate.appendBook(new Book("Around the world in 80 days"));
-			bookShelfAggregate.appendBook(new Book("Bible"));
-			bookShelfAggregate.appendBook(new Book("Cinderella"));
-			bookShelfAggregate.appendBook(new Book("Daddy-Long-Legs"));
-			bookShelfAggregate.appendBook(new Book("East of Eden"));
-			bookShelfAggregate.appendBook(new Book("Frankestein"));
-			bookShelfAggregate.appendBook(new Book("Guliver's Travels"));
-			bookShelfAggregate.appendBook(new Book("Hamlet"));
-			
-			Iterator iterator = bookShelfAggregate.iterator();
-			while (iterator.hasNext()) {
-				Book book = (Book) iterator.next();
-				System.out.println(book);
-			}
+	@Override
+	public boolean hasNext() {
+		if (this.index < this.contentBooks.length()) {
+			return true;
 		}
+		
+		return false;
+	}
+
+	@Override
+	public Object next() {
+		Book book = this.contentBooks.get(this.index);
+		this.index ++;
+		return book;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		
-		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
-		
-		if (flag) test01(args);
-	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 }

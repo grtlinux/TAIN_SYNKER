@@ -21,12 +21,11 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
 
 import java.util.Vector;
 
-
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : BookShelfAggregate.java
+ *   -. FileName   : ContentBooks.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch00Temp.tmp01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -36,7 +35,7 @@ import java.util.Vector;
  * @author taincokr
  *
  */
-public class BookShelfAggregate implements Aggregate {
+public class ContentBooks implements Content {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -44,30 +43,25 @@ public class BookShelfAggregate implements Aggregate {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public BookShelfAggregate() {
-		
-		this.books = new Vector<Book>(5);
+	public ContentBooks() {
+		this.books = new Vector<Book>();
 	}
 	
-	public void appendBook(Book book) {
+	public void add(Book book) {
 		this.books.add(book);
 	}
 	
-	public Book getBook(int index) {
+	public Book get(int index) {
 		return this.books.get(index);
 	}
 	
-	public int getLength() {
+	public int length() {
 		return this.books.size();
-	}
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public Iterator iterator() {
-		return new BookShelfIterator(this);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	public Tool getTool() {
+		return new ToolBooks(this);
+	}
 }
