@@ -59,7 +59,7 @@ public class BookTestMain {
 			contentBooks.add(new Book("Guliver's travels"));
 			contentBooks.add(new Book("Hamlet"));
 			
-			Tool tool = contentBooks.getTool();
+			ToolBooks tool = contentBooks.getTool();
 			while (tool.hasNext()) {
 				Book book = (Book) tool.next();
 				System.out.println(book);

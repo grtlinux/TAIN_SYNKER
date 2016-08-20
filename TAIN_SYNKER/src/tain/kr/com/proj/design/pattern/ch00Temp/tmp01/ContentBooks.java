@@ -35,7 +35,7 @@ import java.util.Vector;
  * @author taincokr
  *
  */
-public class ContentBooks implements Content {
+public class ContentBooks {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -61,7 +61,7 @@ public class ContentBooks implements Content {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public Tool getTool() {
+	public ToolBooks getTool() {
 		return new ToolBooks(this);
 	}
 }

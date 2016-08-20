@@ -34,7 +34,7 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp01;
  * @author taincokr
  *
  */
-public class ToolBooks implements Tool {
+public class ToolBooks {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -50,7 +50,6 @@ public class ToolBooks implements Tool {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
 	public boolean hasNext() {
 		if (this.index < this.contentBooks.length()) {
 			return true;
@@ -59,7 +58,6 @@ public class ToolBooks implements Tool {
 		return false;
 	}
 
-	@Override
 	public Object next() {
 		Book book = this.contentBooks.get(this.index);
 		this.index ++;
