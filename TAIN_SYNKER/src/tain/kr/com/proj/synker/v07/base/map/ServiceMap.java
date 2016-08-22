@@ -21,6 +21,7 @@ package tain.kr.com.proj.synker.v07.base.map;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -219,13 +220,25 @@ public class ServiceMap {
 				log.debug(">>>>> [" + item + "]");
 			}
 		}
+		
+		if (flag) {
+			String str = "TT0000,TR0000,";
+			String[] items = str.split(",");
+			
+			for (String item : items) {
+				System.out.println("[" + item + "]");
+			}
+			
+			System.out.println(Arrays.asList(items));
+			// System.out.println(new ArrayList<String>(Arrays.asList(items)));
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (flag) test01(args);
-		if (!flag) test02(args);
+		if (!flag) test01(args);
+		if (flag) test02(args);
 	}
 }
