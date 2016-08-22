@@ -21,16 +21,14 @@ package tain.kr.com.proj.synker.v07.main;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v06.bean.ServiceBean;
-import tain.kr.com.proj.synker.v06.util.ServiceMap;
-import tain.kr.com.proj.synker.v06.util.SynkerProperties;
-import tain.kr.com.proj.synker.v06.util.TrMap;
+import tain.kr.com.proj.synker.v07.base.bean.ServiceBean;
+import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
+import tain.kr.com.proj.synker.v07.base.map.ServiceMap;
+import tain.kr.com.proj.synker.v07.base.map.SynkerProperties;
 
 /**
  * Code Templates > Comments > Types
@@ -55,11 +53,9 @@ public class Main {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static final String KEY_DESC = "tain.kr.main.desc";
-	private static final String KEY_MAIN_SERVICE = "tain.kr.main.service";
 
 	private String clsName = null;
 	private String desc = null;
-	private String service = null;
 	
 	private Main() throws Exception {
 		
@@ -73,22 +69,24 @@ public class Main {
 			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.', '/'));
 			
 			this.desc = rb.getString(KEY_DESC);
-		}
 
+			if (flag) {
+				log.info("class name   : " + this.clsName);
+				log.info("desc         : " + this.desc);
+			}
+		}
+		
+		if (flag) check();
+	}
+
+	private void check() throws Exception {
+		
 		if (flag) {
 			/*
 			 * SynkerProperties
 			 */
 			
 			SynkerProperties.getInstance();
-			
-			if (!flag) {
-				/*
-				 * print for checking
-				 */
-				SynkerProperties.getInstance().printSystem();
-				SynkerProperties.getInstance().print();
-			}
 		}
 
 		if (flag) {
@@ -97,46 +95,29 @@ public class Main {
 			 */
 		
 			ServiceMap.getInstance();
-
-			if (!flag) {
-				/*
-				 * print for checking
-				 */
-				ServiceMap.getInstance().print();
-			}
 		}
 
-		if (flag) {
-			/*
-			 * TrMap
-			 */
-			TrMap.getInstance();
-			
-			if (flag) {
-				/*
-				 * print for checking
-				 */
-				TrMap.getInstance().print();
-			}
-		}
+//		if (flag) {
+//			/*
+//			 * TrMap
+//			 */
+//			TrMap.getInstance();
+//			
+//			if (flag) {
+//				/*
+//				 * print for checking
+//				 */
+//				TrMap.getInstance().print();
+//			}
+//		}
 	}
 	
-	public String getDesc() throws Exception {
-		return this.desc;
-	}
-	
-	public void print() throws Exception {
-		if (flag) {
-			log.info("class name   : " + this.clsName);
-			log.info("desc         : " + this.desc);
-		}
-	}
 	
 	public void execute(String[] args) throws Exception {
 		
-		List<String> lstArgs = new ArrayList<String>();
-		
-		if (!flag) {
+		if (flag) log.debug("############################## Main.execute(args) ##############################");
+
+		if (flag) {
 			/*
 			 * print for checking arguments
 			 */
@@ -147,30 +128,10 @@ public class Main {
 		
 		if (flag) {
 			/*
-			 * to get the service bean
-			 */
-
-			this.service = SynkerProperties.getInstance().getSystem(KEY_MAIN_SERVICE);
-			
-			if (this.service != null) {
-				lstArgs.add("REAL");
-				lstArgs.add(this.service);
-			} else {
-				this.service = "server";
-				//this.service = "client";
-				//this.service = "version";
-				
-				lstArgs.add("TEST-1");
-				lstArgs.add(this.service);
-			}
-		}
-		
-		if (flag) {
-			/*
 			 * to execute the service
 			 */
 			
-			ServiceBean bean = ServiceMap.getInstance().getBean(this.service);
+			ServiceBean bean = ServiceMap.getInstance().getBean(GlobalParam.getInstance().getMainService());
 			
 			try {
 				Class<?> c = Class.forName(bean.getServiceClass());
@@ -181,9 +142,9 @@ public class Main {
 				Method main = c.getDeclaredMethod("main", argTypes);
 				//String[] mainArgs = Arrays.copyOfRange(args, 1, args.length);
 				//String[] mainArgs = Arrays.copyOfRange(args, 0, args.length);
-				String[] mainArgs = lstArgs.toArray(new String[lstArgs.size()]);
+				//String[] mainArgs = lstArgs.toArray(new String[lstArgs.size()]);
 				
-				main.invoke(null, (Object) mainArgs);
+				main.invoke(null, (Object) args);
 				
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -213,6 +174,8 @@ public class Main {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
 		
@@ -220,6 +183,8 @@ public class Main {
 			/*
 			 * 1st module entry point
 			 */
+			
+			args = new String[] { "TEST-1" };
 			
 			Main.getInstance().execute(args);
 		}

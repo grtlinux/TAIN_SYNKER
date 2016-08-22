@@ -161,6 +161,7 @@ public class SynkerProperties {
 				/*
 				 * print for checking
 				 */
+				log.debug("############################## Synker.Properties ##############################");
 				instance.printSystem();
 				instance.print();
 			}

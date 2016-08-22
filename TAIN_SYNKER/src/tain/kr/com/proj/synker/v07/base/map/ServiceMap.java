@@ -184,6 +184,7 @@ public class ServiceMap {
 				/*
 				 * print for checking
 				 */
+				log.debug("############################## ServiceMap.Properties ##############################");
 				instance.print();
 			}
 		}
