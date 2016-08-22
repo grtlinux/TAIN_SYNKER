@@ -120,6 +120,7 @@ public class GlobalParam {
 		if (instance == null) {
 			instance = new GlobalParam();
 			
+			log.debug("############################## GlobalParam ##############################");
 			if (flag) instance.print();
 		}
 		
