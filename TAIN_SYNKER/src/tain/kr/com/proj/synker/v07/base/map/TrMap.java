@@ -19,13 +19,17 @@
  */
 package tain.kr.com.proj.synker.v07.base.map;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v06.bean.TrBean;
+import tain.kr.com.proj.synker.v07.base.bean.TrBean;
+import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
 
 /**
  * Code Templates > Comments > Types
@@ -49,11 +53,51 @@ public class TrMap {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private static final String PROP_FILE = "TrMap.properties";
+
+	private String propFileName = null;
+	
 	private static final String KEY_MAP_STR = "tain.kr.tr.map.";
 	
 	private Map<String, TrBean> mapTr = null;
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	private TrMap() throws Exception {
+		
+		Properties prop = null;
+		
+		if (flag) {
+			/*
+			 * get the properties information
+			 */
+			
+			this.propFileName = GlobalParam.getInstance().getConfFolder() + "/" + PROP_FILE;
+			
+			File file = new File(this.propFileName);
+			if (!file.exists()) {
+				String errMsg = "ERROR : couldn't find the properties file [" + this.propFileName + "]";
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
+				
+				System.exit(-1);
+			}
+			
+			prop = new Properties();
+			
+			FileInputStream fis = null;
+			
+			try {
+				fis = new FileInputStream(this.propFileName);
+				prop.load(fis);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (fis != null) {
+					try { fis.close(); } catch (Exception e) {}
+				}
+			}
+		}
 		
 		if (!flag) {
 			/*
@@ -69,7 +113,7 @@ public class TrMap {
 			
 			mapTr = new HashMap<String, TrBean>();
 			
-			for (Entry<Object, Object> entry : SynkerProperties.getInstance().getProp().entrySet()) {
+			for (Entry<Object, Object> entry : prop.entrySet()) {
 				String key = (String) entry.getKey();
 				if (!key.startsWith(KEY_MAP_STR))
 					continue;
@@ -112,9 +156,6 @@ public class TrMap {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static TrMap instance = null;
 	
@@ -122,6 +163,14 @@ public class TrMap {
 		
 		if (instance == null) {
 			instance = new TrMap();
+
+			if (flag) {
+				/*
+				 * print for checking
+				 */
+				log.debug("############################## TrMap.Properties ##############################");
+				instance.print();
+			}
 		}
 		
 		return instance;
@@ -136,11 +185,11 @@ public class TrMap {
 			/*
 			 * 
 			 */
-			TrMap.getInstance().print();
+			TrMap.getInstance();
 		}
 		
 		if (flag) {
-			log.debug(">>> " + TrMap.getInstance().getBean("TT0000"));
+			log.debug(">>> TR information of 'TT0000' " + TrMap.getInstance().getBean("TT0000"));
 		}
 	}
 	
