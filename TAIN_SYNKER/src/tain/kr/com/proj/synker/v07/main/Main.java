@@ -29,6 +29,7 @@ import tain.kr.com.proj.synker.v07.base.bean.ServiceBean;
 import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
 import tain.kr.com.proj.synker.v07.base.map.ServiceMap;
 import tain.kr.com.proj.synker.v07.base.map.SynkerProperties;
+import tain.kr.com.proj.synker.v07.base.map.TrMap;
 
 /**
  * Code Templates > Comments > Types
@@ -97,19 +98,12 @@ public class Main {
 			ServiceMap.getInstance();
 		}
 
-//		if (flag) {
-//			/*
-//			 * TrMap
-//			 */
-//			TrMap.getInstance();
-//			
-//			if (flag) {
-//				/*
-//				 * print for checking
-//				 */
-//				TrMap.getInstance().print();
-//			}
-//		}
+		if (flag) {
+			/*
+			 * TrMap
+			 */
+			TrMap.getInstance();
+		}
 	}
 	
 	
