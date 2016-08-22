@@ -205,7 +205,7 @@ public class ServiceMap {
 		}
 		
 		if (flag) {
-			log.debug(">>> service of version : " + ServiceMap.getInstance().getBean("version"));
+			log.debug(">>> service of 'version' : " + ServiceMap.getInstance().getBean("version"));
 		}
 	}
 	
