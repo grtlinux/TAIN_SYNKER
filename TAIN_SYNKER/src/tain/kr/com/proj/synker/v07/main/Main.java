@@ -178,8 +178,6 @@ public class Main {
 			 * 1st module entry point
 			 */
 			
-			args = new String[] { "TEST-1" };
-			
 			Main.getInstance().execute(args);
 		}
 	}
@@ -188,6 +186,10 @@ public class Main {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
+		if (args.length == 0) {
+			args = new String[] { "TEST-1" };
+		}
+
 		if (flag) test01(args);
 	}
 }
