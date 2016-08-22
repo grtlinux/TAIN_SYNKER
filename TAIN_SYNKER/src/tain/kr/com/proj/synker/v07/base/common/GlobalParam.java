@@ -19,6 +19,7 @@
  */
 package tain.kr.com.proj.synker.v07.base.common;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -47,6 +48,7 @@ public class GlobalParam {
 	
 	private static final String KEY_CONF_FOLDER = "tain.kr.synker.conf.folder";
 	private static final String KEY_MAIN_SERVICE = "tain.kr.main.service";
+	private static final String KEY_TR_LIST = "tain.kr.tr.list";
 	
 	
 	/*
@@ -55,6 +57,7 @@ public class GlobalParam {
 	
 	private final String confFolder;
 	private final String mainService;
+	private final String[] trList;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,14 +70,24 @@ public class GlobalParam {
 			Properties prop = System.getProperties();
 			
 			this.confFolder = prop.getProperty(KEY_CONF_FOLDER, "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER//synker/conf");
+			
 			switch (0) {
 			case 1:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "server"); break;
 			case 2:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "client"); break;
 			default: this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "version"); break;
 			}
+			
+			String str = prop.getProperty(KEY_TR_LIST, "TT0000,TR0000,,");
+			if (str == null) {
+				this.trList = null;
+			} else {
+				this.trList = str.split(",");
+			}
+			
 		} else {
 			this.confFolder = "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER//synker/conf";
 			this.mainService = "version";
+			this.trList = new String[] { "TT0000", "TR0000" };
 		}
 	}
 	
@@ -86,6 +99,10 @@ public class GlobalParam {
 		return this.mainService;
 	}
 
+	public String[] getTrList() {
+		return this.trList;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String toString() {
@@ -93,6 +110,7 @@ public class GlobalParam {
 		
 		sb.append(String.format("[%s=%s],", KEY_CONF_FOLDER, this.getConfFolder()));
 		sb.append(String.format("[%s=%s],", KEY_MAIN_SERVICE, this.getMainService()));
+		sb.append(String.format("[%s=%s],", KEY_TR_LIST, Arrays.asList(this.getTrList())));
 		
 		return sb.toString();
 	}
@@ -106,6 +124,7 @@ public class GlobalParam {
 		if (flag) {
 			log.debug("GlobalParam.getInstance().getConfFolder() = " + this.getConfFolder());
 			log.debug("GlobalParam.getInstance().getMainService() = " + this.getMainService());
+			log.debug("GlobalParam.getInstance().getTrList() = " + Arrays.asList(this.getTrList()));
 		}
 	}
 	
