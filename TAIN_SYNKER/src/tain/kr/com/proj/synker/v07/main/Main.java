@@ -189,10 +189,10 @@ public class Main {
 		if (args.length == 0) {
 			args = new String[] { "TEST-1" };
 
-			//GlobalParam.getInstance();   // version
-			//GlobalParam.getInstance(1);  // client
-			GlobalParam.getInstance(2);  // server
 			//GlobalParam.getInstance(3);  // version
+			//GlobalParam.getInstance();   // version
+			GlobalParam.getInstance(1);  // client
+			GlobalParam.getInstance(2);  // server
 		}
 
 		if (flag) test01(args);
