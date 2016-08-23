@@ -71,7 +71,7 @@ public class GlobalVars {
 			 * set the GlobalVars
 			 */
 			ServiceBean bean = ServiceMap.getInstance().getBean(serviceName);
-			if (flag) log.debug(String.format("[%s] => %s", serviceName, bean));
+			if (!flag) log.debug(String.format("[%s] => %s", serviceName, bean));
 			
 			File file = new File(bean.getPropFile());
 			if (!file.exists()) {
@@ -135,7 +135,18 @@ public class GlobalVars {
 	
 	public void print() throws Exception {
 		
-		if (flag) log.debug(">>>>> " + toString());
+		if (!flag) log.debug(">>>>> " + toString());
+		
+		if (flag) {
+			log.debug("############################## GlobalVars ##############################");
+			
+			for (Map.Entry<String, String> entry : this.mapVars.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				
+				log.debug(String.format("##### [%s] => [%s]", key, value));
+			}
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
