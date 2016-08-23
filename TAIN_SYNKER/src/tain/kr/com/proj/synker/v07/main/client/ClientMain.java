@@ -215,10 +215,13 @@ public class ClientMain {
 		if (args.length == 0) {
 			args = new String[] { "TEST-2" };
 
-			//GlobalParam.getInstance();   // version
-			GlobalParam.getInstance(1);  // client
+			//GlobalParam.getInstance(1);  // version
 			//GlobalParam.getInstance(2);  // server
-			//GlobalParam.getInstance(3);  // version
+			GlobalParam.getInstance(3);  // client
+			//GlobalParam.getInstance(4);  // trlist
+			//GlobalParam.getInstance(5);  // svclist
+			//GlobalParam.getInstance(6);  // syslist
+			GlobalParam.getInstance();
 		}
 
 		if (flag) test01(args);
