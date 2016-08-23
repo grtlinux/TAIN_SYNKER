@@ -146,7 +146,7 @@ public class TrMap {
 		
 		if (flag) {
 			for (Map.Entry<String, TrBean> entryBean : this.mapTr.entrySet()) {
-				log.debug(">>>>> [" + entryBean.getKey() + "]  " + entryBean.getValue());
+				log.debug(String.format("##### [%s] => [%s]", entryBean.getKey(), entryBean.getValue()));
 			}
 		}
 	}
