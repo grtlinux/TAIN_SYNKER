@@ -61,7 +61,7 @@ public class GlobalParam {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private GlobalParam() {
+	private GlobalParam(int no) {
 		
 		if (flag) {
 			/*
@@ -71,9 +71,9 @@ public class GlobalParam {
 			
 			this.confFolder = prop.getProperty(KEY_CONF_FOLDER, "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER//synker/conf");
 			
-			switch (0) {
-			case 1:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "server"); break;
-			case 2:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "client"); break;
+			switch (no) {
+			case 1:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "client"); break;
+			case 2:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "server"); break;
 			default: this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "version"); break;
 			}
 			
@@ -136,10 +136,14 @@ public class GlobalParam {
 	
 	private static GlobalParam instance = null;
 	
-	public static synchronized GlobalParam getInstance() throws Exception {
+	public static GlobalParam getInstance() throws Exception {
+		return getInstance(0);
+	}
+	
+	public static synchronized GlobalParam getInstance(int no) throws Exception {
 		
 		if (instance == null) {
-			instance = new GlobalParam();
+			instance = new GlobalParam(no);
 			
 			log.debug("############################## GlobalParam ##############################");
 			if (flag) instance.print();
@@ -158,7 +162,10 @@ public class GlobalParam {
 			/*
 			 * do the first
 			 */
-			GlobalParam.getInstance();
+			//GlobalParam.getInstance();
+			//GlobalParam.getInstance(1);
+			GlobalParam.getInstance(2);
+			GlobalParam.getInstance(3);
 		}
 	}
 	

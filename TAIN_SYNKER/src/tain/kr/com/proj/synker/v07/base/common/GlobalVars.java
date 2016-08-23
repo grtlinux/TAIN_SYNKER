@@ -19,10 +19,17 @@
  */
 package tain.kr.com.proj.synker.v07.base.common;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
+import tain.kr.com.proj.synker.v07.base.bean.ServiceBean;
+import tain.kr.com.proj.synker.v07.base.map.ServiceMap;
 
 /**
  * Code Templates > Comments > Types
@@ -55,6 +62,50 @@ public class GlobalVars {
 		this.mapVars = new HashMap<String, String>();
 	}
 	
+	public void setProperties(String serviceName) throws Exception {
+		
+		if (!flag) log.debug(">>>>> serviceName = " + serviceName);
+		
+		if (flag) {
+			/*
+			 * set the GlobalVars
+			 */
+			ServiceBean bean = ServiceMap.getInstance().getBean(serviceName);
+			if (flag) log.debug(String.format("[%s] => %s", serviceName, bean));
+			
+			File file = new File(bean.getPropFile());
+			if (!file.exists()) {
+				String errMsg = "ERROR : couldn't find the properties file [" + bean.getPropFile() + "]";
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
+				
+				System.exit(-1);
+			}
+			
+			Properties prop = new Properties();
+			
+			FileInputStream fis = null;
+			
+			try {
+				fis = new FileInputStream(bean.getPropFile());
+				prop.load(fis);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (fis != null) {
+					try { fis.close(); } catch (Exception e) {}
+				}
+			}
+			
+			for (Entry<Object, Object> entry : prop.entrySet()) {
+				String key = (String) entry.getKey();
+				String value = (String) entry.getValue();
+				
+				this.mapVars.put(key, value);
+			}
+		}
+	}
+	
 	public void put(String key, String value) {
 		this.mapVars.put(key, value);
 	}
@@ -68,13 +119,13 @@ public class GlobalVars {
 	public String toString() {
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("############################## GlobalParam ##############################\n");
+		sb.append("############################## GlobalVars ##############################\n");
 		
 		for (Map.Entry<String, String> entry : this.mapVars.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
 			
-			sb.append(String.format("\t[%s] => [%s]\n", key, value));
+			sb.append(String.format("%s = %s\n", key, value));
 		}
 		
 		sb.append("\n");
@@ -100,6 +151,8 @@ public class GlobalVars {
 		return instance;
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
@@ -137,10 +190,30 @@ public class GlobalVars {
 		}
 	}
 	
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+			/*
+			 * set the GlobalVars from VersionMap.properties
+			 */
+			GlobalVars.getInstance().setProperties("version");
+			GlobalVars.getInstance().setProperties("client");
+			GlobalVars.getInstance().setProperties("server");
+		}
+		
+		if (flag) {
+			/*
+			 * print the list of the GlobalVars
+			 */
+			GlobalVars.getInstance().print();
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (flag) test01(args);
+		if (!flag) test01(args);
+		if (flag) test02(args);
 	}
 }

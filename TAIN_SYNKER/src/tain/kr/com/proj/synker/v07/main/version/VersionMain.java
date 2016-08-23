@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v07.base.bean.ServiceBean;
 import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
+import tain.kr.com.proj.synker.v07.base.common.GlobalVars;
 import tain.kr.com.proj.synker.v07.base.map.ServiceMap;
 import tain.kr.com.proj.synker.v07.base.map.SynkerProperties;
 import tain.kr.com.proj.synker.v07.tools.version.Version;
@@ -84,6 +85,14 @@ public class VersionMain {
 			ServiceBean bean = ServiceMap.getInstance().getBean(GlobalParam.getInstance().getMainService());
 			bean.print();
 		}
+
+		if (flag) {
+			/*
+			 * set the GlobalVars from VersionMain.properties
+			 */
+			GlobalVars.getInstance().setProperties(GlobalParam.getInstance().getMainService());
+			GlobalVars.getInstance().print(); 
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -92,6 +101,11 @@ public class VersionMain {
 		
 		if (args.length == 0) {
 			args = new String[] { "TEST-2" };
+
+			//GlobalParam.getInstance();   // version
+			//GlobalParam.getInstance(1);  // client
+			//GlobalParam.getInstance(2);  // server
+			//GlobalParam.getInstance(3);  // version
 		}
 
 		if (flag) test01(args);

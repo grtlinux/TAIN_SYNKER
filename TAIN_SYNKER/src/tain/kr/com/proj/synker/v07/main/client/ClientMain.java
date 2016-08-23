@@ -22,6 +22,7 @@ package tain.kr.com.proj.synker.v07.main.client;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
+import tain.kr.com.proj.synker.v07.base.common.GlobalVars;
 
 /**
  * Code Templates > Comments > Types
@@ -160,6 +161,14 @@ public class ClientMain {
 			}
 		}
 
+		if (flag) {
+			/*
+			 * set the GlobalVars from VersionMain.properties
+			 */
+			GlobalVars.getInstance().setProperties(GlobalParam.getInstance().getMainService());
+			GlobalVars.getInstance().print(); 
+		}
+
 		if (flag) clientModule();
 	}
 
@@ -172,6 +181,14 @@ public class ClientMain {
 			for (String arg : args) {
 				log.debug("ARG [" + arg + "]");
 			}
+		}
+
+		if (flag) {
+			/*
+			 * set the GlobalVars from VersionMain.properties
+			 */
+			GlobalVars.getInstance().setProperties(GlobalParam.getInstance().getMainService());
+			GlobalVars.getInstance().print(); 
 		}
 
 		if (flag) {
@@ -197,6 +214,11 @@ public class ClientMain {
 		
 		if (args.length == 0) {
 			args = new String[] { "TEST-2" };
+
+			//GlobalParam.getInstance();   // version
+			GlobalParam.getInstance(1);  // client
+			//GlobalParam.getInstance(2);  // server
+			//GlobalParam.getInstance(3);  // version
 		}
 
 		if (flag) test01(args);
