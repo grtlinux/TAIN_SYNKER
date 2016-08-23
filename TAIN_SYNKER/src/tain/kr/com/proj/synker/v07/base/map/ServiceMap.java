@@ -163,7 +163,7 @@ public class ServiceMap {
 		
 		if (flag) {
 			for (Map.Entry<String, ServiceBean> entryBean : this.mapService.entrySet()) {
-				log.debug(">>>>> [" + entryBean.getKey() + "]  " + entryBean.getValue());
+				log.debug(String.format("##### [%s] => [%s]", entryBean.getKey(), entryBean.getValue()));
 			}
 		}
 	}
