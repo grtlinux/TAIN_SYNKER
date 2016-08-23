@@ -22,6 +22,7 @@ package tain.kr.com.proj.synker.v07.main.info;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
+import tain.kr.com.proj.synker.v07.tools.info.ServiceList;
 
 /**
  * Code Templates > Comments > Types
@@ -46,21 +47,14 @@ public class ServiceListMain {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static void clientModule() throws Exception {
+	private static void serviceModule() throws Exception {
 		
 		if (flag) {
 			/*
 			 * test for loop
 			 */
-			String[] trList = GlobalParam.getInstance().getTrList();
-			
-			if (trList != null) {
-				for (String trCode : trList) {
-					log.debug(">>>>> TRCODE = " + trCode);
-				}
-			}
+			ServiceList.getInstance().print();
 		}
-		
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +70,7 @@ public class ServiceListMain {
 			}
 		}
 
-		if (flag) clientModule();
+		if (flag) serviceModule();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -85,6 +79,8 @@ public class ServiceListMain {
 		
 		if (args.length == 0) {
 			args = new String[] { "TEST-2" };
+
+			GlobalParam.getInstance();   // version
 		}
 
 		if (flag) test01(args);

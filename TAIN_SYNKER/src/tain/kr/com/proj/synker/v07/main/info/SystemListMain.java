@@ -22,6 +22,7 @@ package tain.kr.com.proj.synker.v07.main.info;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
+import tain.kr.com.proj.synker.v07.tools.info.SystemList;
 
 /**
  * Code Templates > Comments > Types
@@ -52,15 +53,8 @@ public class SystemListMain {
 			/*
 			 * test for loop
 			 */
-			String[] trList = GlobalParam.getInstance().getTrList();
-			
-			if (trList != null) {
-				for (String trCode : trList) {
-					log.debug(">>>>> TRCODE = " + trCode);
-				}
-			}
+			SystemList.getInstance().print();
 		}
-		
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +79,8 @@ public class SystemListMain {
 		
 		if (args.length == 0) {
 			args = new String[] { "TEST-2" };
+
+			GlobalParam.getInstance();   // version
 		}
 
 		if (flag) test01(args);
