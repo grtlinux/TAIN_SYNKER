@@ -72,8 +72,12 @@ public class GlobalParam {
 			this.confFolder = prop.getProperty(KEY_CONF_FOLDER, "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER//synker/conf");
 			
 			switch (no) {
-			case 1:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "client"); break;
+			case 1:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "version"); break;
 			case 2:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "server"); break;
+			case 3:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "client"); break;
+			case 4:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "trlist"); break;
+			case 5:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "svclist"); break;
+			case 6:  this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "syslist"); break;
 			default: this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "version"); break;
 			}
 			
@@ -162,10 +166,13 @@ public class GlobalParam {
 			/*
 			 * do the first
 			 */
-			//GlobalParam.getInstance();
-			//GlobalParam.getInstance(1);
-			GlobalParam.getInstance(2);
-			GlobalParam.getInstance(3);
+			//GlobalParam.getInstance(1);  // version
+			//GlobalParam.getInstance(2);  // server
+			//GlobalParam.getInstance(3);  // client
+			//GlobalParam.getInstance(4);  // trlist
+			//GlobalParam.getInstance(5);  // svclist
+			//GlobalParam.getInstance(6);  // syslist
+			GlobalParam.getInstance();
 		}
 	}
 	
