@@ -19,10 +19,15 @@
  */
 package tain.kr.com.proj.synker.v07.tools.info;
 
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v07.base.bean.ServiceBean;
 import tain.kr.com.proj.synker.v07.base.map.ServiceMap;
 
 /**
@@ -94,6 +99,38 @@ public class ServiceList {
 			 * 
 			 */
 			ServiceMap.getInstance();
+		}
+		
+		if (flag) {
+			/*
+			 * transfer from HashMap to TreeMap
+			 */
+			Map<String, ServiceBean> map = ServiceMap.getInstance().getMapService();
+			
+			Map<String, ServiceBean> mapTree = new TreeMap<String, ServiceBean>(new Comparator<String>() {
+				@Override
+				public int compare(String o1, String o2) {
+					int ret = o1.compareTo(o2);
+					return ret;
+				}
+			});
+			
+			for (Entry<String, ServiceBean> entry : map.entrySet()) {
+				ServiceBean bean = entry.getValue();
+				String key = bean.getServiceNo();
+				
+				mapTree.put(key, bean);
+			}
+
+			if (flag) {
+				/*
+				 * print
+				 */
+				log.debug("############################## Sorted ServiceMap.Properties ##############################");
+				for (Map.Entry<String, ServiceBean> entryBean : mapTree.entrySet()) {
+					log.debug(String.format("##### [%s] => %s", entryBean.getKey(), entryBean.getValue()));
+				}
+			}
 		}
 	}
 	
