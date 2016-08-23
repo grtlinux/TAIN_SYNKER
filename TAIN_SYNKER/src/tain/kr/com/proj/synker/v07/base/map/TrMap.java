@@ -146,13 +146,17 @@ public class TrMap {
 		
 		if (flag) {
 			for (Map.Entry<String, TrBean> entryBean : this.mapTr.entrySet()) {
-				log.debug(String.format("##### [%s] => [%s]", entryBean.getKey(), entryBean.getValue()));
+				log.debug(String.format("##### [%s] => %s", entryBean.getKey(), entryBean.getValue()));
 			}
 		}
 	}
 	
 	public TrBean getBean(String trName) throws Exception {
 		return this.mapTr.get(trName);
+	}
+	
+	public Map<String, TrBean> getMapTr() {
+		return this.mapTr;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
