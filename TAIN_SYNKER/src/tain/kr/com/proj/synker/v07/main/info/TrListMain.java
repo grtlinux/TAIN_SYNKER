@@ -22,6 +22,7 @@ package tain.kr.com.proj.synker.v07.main.info;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
+import tain.kr.com.proj.synker.v07.base.common.GlobalVars;
 import tain.kr.com.proj.synker.v07.tools.info.TrList;
 
 /**
@@ -54,6 +55,14 @@ public class TrListMain {
 			 * test for loop
 			 */
 			TrList.getInstance().print();
+		}
+
+		if (flag) {
+			/*
+			 * set the GlobalVars from VersionMain.properties
+			 */
+			GlobalVars.getInstance().setProperties(GlobalParam.getInstance().getMainService());
+			GlobalVars.getInstance().print(); 
 		}
 	}
 	
