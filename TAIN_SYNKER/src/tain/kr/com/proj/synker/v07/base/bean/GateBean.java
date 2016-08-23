@@ -46,23 +46,21 @@ public class GateBean {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String gateNo = null;
-	private String gateName = null;
-	private String gateFolder = null;
-	private String gateType = null;
-	private String gateDesc = null;
+	private final String gateNo;
+	private final String gateName;
+	private final String gateFolder;
+	private final String gateType;
+	private final String gateDesc;
 
-	public GateBean() {}
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public GateBean(String gateNo, String gateName, String gateFolder, String gateType, String gateDesc) {
 		
-		if (flag) {
-			this.gateNo = gateNo;
-			this.gateName = gateName;
-			this.gateFolder = gateFolder;
-			this.gateType = gateType;
-			this.gateDesc = gateDesc;
-		}
+		this.gateNo = gateNo;
+		this.gateName = gateName;
+		this.gateFolder = gateFolder;
+		this.gateType = gateType;
+		this.gateDesc = gateDesc;
 	}
 
 	public String getGateNo() {
@@ -85,25 +83,7 @@ public class GateBean {
 		return gateDesc;
 	}
 
-	public void setGateNo(String gateNo) {
-		this.gateNo = gateNo;
-	}
-
-	public void setGateName(String gateName) {
-		this.gateName = gateName;
-	}
-
-	public void setGateFolder(String gateFolder) {
-		this.gateFolder = gateFolder;
-	}
-
-	public void setGateType(String gateType) {
-		this.gateType = gateType;
-	}
-
-	public void setGateDesc(String gateDesc) {
-		this.gateDesc = gateDesc;
-	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public String toString() {
 		return String.format("[NO,NAME,FOLDER,TYPE,DESC]=[%s,%s,%s,%s,%s]"
@@ -121,6 +101,7 @@ public class GateBean {
 		}
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
