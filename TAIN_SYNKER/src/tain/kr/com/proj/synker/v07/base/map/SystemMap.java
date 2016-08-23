@@ -19,12 +19,17 @@
  */
 package tain.kr.com.proj.synker.v07.base.map;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.synker.v06.bean.SystemBean;
+import tain.kr.com.proj.synker.v07.base.bean.GateBean;
+import tain.kr.com.proj.synker.v07.base.bean.SystemBean;
+import tain.kr.com.proj.synker.v07.base.common.GlobalParam;
 
 /**
  * Code Templates > Comments > Types
@@ -48,21 +53,60 @@ public class SystemMap {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private static final String PROP_FILE = "SystemMap.properties";
+
+	private String propFileName = null;
+
 	private static final String KEY_RANGE = "tain.kr.system.range";
-	private static final String KEY_SERVICE = "tain.kr.system";
+	private static final String KEY_SYSTEM = "tain.kr.system";
 	
 	private int rangeBeg = -1;
 	private int rangeEnd = -1;
 	
 	private Map<String, SystemBean> mapSystem = null;
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	private SystemMap() throws Exception {
 		
+		Properties prop = null;
+		
+		if (flag) {
+			/*
+			 * get the properties information
+			 */
+			this.propFileName = GlobalParam.getInstance().getConfFolder() + "/" + PROP_FILE;
+
+			File file = new File(this.propFileName);
+			if (!file.exists()) {
+				String errMsg = "ERROR : couldn't find the properties file [" + this.propFileName + "]";
+				if (flag) log.error(errMsg);
+				if (flag) System.err.println(errMsg);
+				
+				System.exit(-1);
+			}
+			
+			prop = new Properties();
+			
+			FileInputStream fis = null;
+			
+			try {
+				fis = new FileInputStream(this.propFileName);
+				prop.load(fis);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (fis != null) {
+					try { fis.close(); } catch (Exception e) {}
+				}
+			}
+		}
+
 		if (flag) {
 			/*
 			 * to get the values of range
 			 */
-			String values = SynkerProperties.getInstance().get(KEY_RANGE);
+			String values = prop.getProperty(KEY_RANGE, " 01  - 99  ");
 			String[] value = values.split("-");
 			
 			this.rangeBeg = Integer.parseInt(value[0].trim());
@@ -78,16 +122,16 @@ public class SystemMap {
 		
 		if (flag) {
 			/*
-			 * make a map info of service
+			 * make a map info of system -> SystemMap
 			 */
 			
-			mapSystem = new HashMap<String, SystemBean>();
+			this.mapSystem = new HashMap<String, SystemBean>();
 			
 			for (int idx = this.rangeBeg; idx <= this.rangeEnd; idx ++) {
 				String systemNo = String.format("%02d", idx);
-				String systemKey = KEY_SERVICE + "." + systemNo + ".info";
+				String systemKey = KEY_SYSTEM + "." + systemNo + ".info";
 				
-				String systemStr = SynkerProperties.getInstance().get(systemKey);
+				String systemStr = prop.getProperty(systemKey);
 				if (systemStr == null)
 					continue;
 				
@@ -98,7 +142,34 @@ public class SystemMap {
 				String systemName = info[0].trim();
 				String systemDesc = info[1].trim();
 				
-				mapSystem.put(systemName, new SystemBean(systemNo, systemName, systemDesc));
+				SystemBean systemBean = new SystemBean(systemNo, systemName, systemDesc);
+				
+				if (flag) {
+					/*
+					 * make a map list of gate -> GateMap
+					 */
+					for (int subIdx = 1; subIdx <= 10; subIdx ++) {
+						String gateNo = String.format("%02d", subIdx);
+						String gateKey = KEY_SYSTEM + "." + systemNo + ".gate." + gateNo+ ".info";
+						
+						String gateStr = prop.getProperty(gateKey);
+						if (gateStr == null)
+							continue;
+						
+						String[] items = gateStr.split(";");
+						if (items.length != 4)
+							continue;
+						
+						String gateName = items[0].trim();
+						String gateFolder = items[1].trim();
+						String gateType = items[2].trim();
+						String gateDesc = items[3].trim();
+						
+						systemBean.put(gateNo, new GateBean(gateNo, gateName, gateFolder, gateType, gateDesc));
+					}
+				}
+				
+				this.mapSystem.put(systemNo, systemBean);
 			}
 		}
 		
@@ -117,16 +188,17 @@ public class SystemMap {
 		}
 		
 		if (flag) {
+			/*
+			 * print SystemMap
+			 */
 			for (Map.Entry<String, SystemBean> entryBean : this.mapSystem.entrySet()) {
 				
 				String systemKey = entryBean.getKey();
 				SystemBean systemBean = entryBean.getValue();
 
-				log.debug(">>>>> [" + systemKey + "]  " + systemBean);
+				log.debug(String.format("##### [%s] => %s", systemKey, systemBean));
 				
-				if (flag) {
-					systemBean.printGate();
-				}
+				if (flag) systemBean.printGate();
 			}
 		}
 	}
@@ -135,8 +207,9 @@ public class SystemMap {
 		return this.mapSystem.get(systemName);
 	}
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
+	public Map<String, SystemBean> getMapSystem() {
+		return this.mapSystem;
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -146,6 +219,14 @@ public class SystemMap {
 		
 		if (instance == null) {
 			instance = new SystemMap();
+
+			if (flag) {
+				/*
+				 * print for checking
+				 */
+				log.debug("############################## SystemMap.Properties ##############################");
+				instance.print();
+			}
 		}
 		
 		return instance;
@@ -157,17 +238,14 @@ public class SystemMap {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			String str = "  01 - 05  ";
-			String[] items = str.split("\\s*-\\s*");
-			
-			for (String item : items) {
-				log.debug(">>>>> [" + item + "]");
-				log.debug(">>>>> [" + item.trim() + "]");
-			}
+			/*
+			 * instance of system map
+			 */
+			SystemMap.getInstance();
 		}
 		
 		if (flag) {
-			SystemMap.getInstance().print();
+			log.debug(">>> service of 'syslist' : " + ServiceMap.getInstance().getBean("syslist"));
 		}
 		
 		if (!flag) {
