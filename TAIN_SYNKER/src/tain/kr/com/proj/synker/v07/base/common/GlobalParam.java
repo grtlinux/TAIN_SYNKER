@@ -77,7 +77,8 @@ public class GlobalParam {
 			default: this.mainService = prop.getProperty(KEY_MAIN_SERVICE, "version"); break;
 			}
 			
-			String str = prop.getProperty(KEY_TR_LIST, "TT0000,TR0000,,");
+			String str = prop.getProperty(KEY_TR_LIST);
+			//String str = prop.getProperty(KEY_TR_LIST, "TT0000,TR0000,,");
 			if (str == null) {
 				this.trList = null;
 			} else {
@@ -87,7 +88,8 @@ public class GlobalParam {
 		} else {
 			this.confFolder = "N:/WORK/GIT/GIT_DEPLOY1/TAIN_SYNKER/TAIN_SYNKER//synker/conf";
 			this.mainService = "version";
-			this.trList = new String[] { "TT0000", "TR0000" };
+			this.trList = null;
+			//this.trList = new String[] { "TT0000", "TR0000" };
 		}
 	}
 	
@@ -110,7 +112,7 @@ public class GlobalParam {
 		
 		sb.append(String.format("[%s=%s],", KEY_CONF_FOLDER, this.getConfFolder()));
 		sb.append(String.format("[%s=%s],", KEY_MAIN_SERVICE, this.getMainService()));
-		sb.append(String.format("[%s=%s],", KEY_TR_LIST, Arrays.asList(this.getTrList())));
+		if (this.trList != null) sb.append(String.format("[%s=%s],", KEY_TR_LIST, Arrays.asList(this.getTrList())));
 		
 		return sb.toString();
 	}
@@ -124,7 +126,7 @@ public class GlobalParam {
 		if (flag) {
 			log.debug("GlobalParam.getInstance().getConfFolder() = " + this.getConfFolder());
 			log.debug("GlobalParam.getInstance().getMainService() = " + this.getMainService());
-			log.debug("GlobalParam.getInstance().getTrList() = " + Arrays.asList(this.getTrList()));
+			if (this.trList != null) log.debug("GlobalParam.getInstance().getTrList() = " + Arrays.asList(this.getTrList()));
 		}
 	}
 	
