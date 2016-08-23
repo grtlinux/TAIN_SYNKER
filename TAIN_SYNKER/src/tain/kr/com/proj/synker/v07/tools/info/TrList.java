@@ -19,10 +19,15 @@
  */
 package tain.kr.com.proj.synker.v07.tools.info;
 
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v07.base.bean.TrBean;
 import tain.kr.com.proj.synker.v07.base.map.TrMap;
 
 /**
@@ -94,6 +99,38 @@ public class TrList {
 			 * 
 			 */
 			TrMap.getInstance();
+		}
+		
+		if (flag) {
+			/*
+			 * transfer from HashMap to TreeMap
+			 */
+			Map<String, TrBean> map = TrMap.getInstance().getMapTr();
+			
+			Map<String, TrBean> mapTree = new TreeMap<String, TrBean>(new Comparator<String>() {
+				@Override
+				public int compare(String o1, String o2) {
+					int ret = o1.compareTo(o2);
+					return ret;
+				}
+			});
+			
+			for (Entry<String, TrBean> entry : map.entrySet()) {
+				TrBean bean = entry.getValue();
+				String key = bean.getTrName();
+				
+				mapTree.put(key, bean);
+			}
+
+			if (flag) {
+				/*
+				 * print
+				 */
+				log.debug("############################## Sorted TrMap.Properties ##############################");
+				for (Map.Entry<String, TrBean> entryBean : mapTree.entrySet()) {
+					log.debug(String.format("##### [%s] => %s", entryBean.getKey(), entryBean.getValue()));
+				}
+			}
 		}
 	}
 	
