@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v07.base.map.SystemMap;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -91,7 +93,7 @@ public class SystemList {
 			/*
 			 * 
 			 */
-			//ServiceMap.getInstance();
+			SystemMap.getInstance();
 		}
 	}
 	
