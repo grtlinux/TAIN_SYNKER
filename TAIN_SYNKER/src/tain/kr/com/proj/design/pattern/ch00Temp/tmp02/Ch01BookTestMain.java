@@ -62,7 +62,7 @@ public class Ch01BookTestMain {
 			
 			Ch01BookTool tool = content.getTool();
 			while (tool.hasNext()) {
-				log.debug(tool.next());
+				log.debug((Ch01Book)tool.next());
 			}
 		}
 	}
