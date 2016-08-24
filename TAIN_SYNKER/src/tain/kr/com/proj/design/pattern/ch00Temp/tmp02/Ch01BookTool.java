@@ -50,6 +50,7 @@ public class Ch01BookTool {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	// abstract
 	public boolean hasNext() {
 		
 		if (this.index < this.content.getLength()) {
@@ -59,7 +60,8 @@ public class Ch01BookTool {
 		return false;
 	}
 	
-	public Ch01Book next() {
+	// abstract
+	public Object next() {
 		return this.content.get(this.index++);
 	}
 }
