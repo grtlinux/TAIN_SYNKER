@@ -45,13 +45,14 @@ public class FileEntryBean {
 	/*
 	 * main key of mapFileEntry
 	 */
-	private final String mapKey;       // key of map
+	private final String mapKey;       // key of map  = systemName + gateName + childPath + fileName
 	
 	/*
 	 * entry information 1
 	 */
 	private final String systemName;   // System Name
 	private final String gateName;     // Gate Name
+	private final String parentPath;   // Parent Path
 	private final String childPath;    // Child Path or Sub Path
 	private final String fileName;     // File Name
 	
@@ -66,10 +67,11 @@ public class FileEntryBean {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public FileEntryBean(String systemName, String gateName, String childPath, String fileName, long size, long date, long crc, char step) {
+	public FileEntryBean(String systemName, String gateName, String parentPath, String childPath, String fileName, long size, long date, long crc, char step) {
 		
 		this.systemName = systemName;
 		this.gateName = gateName;
+		this.parentPath = parentPath;
 		this.childPath = childPath;
 		this.fileName = fileName;
 		
@@ -94,6 +96,10 @@ public class FileEntryBean {
 
 	public String getChildPath() {
 		return childPath;
+	}
+
+	public String getPatentPath() {
+		return parentPath;
 	}
 
 	public String getFileName() {
@@ -121,10 +127,11 @@ public class FileEntryBean {
 	}
 	
 	public String toString() {
-		return String.format("[KEY,SYS,GATE,PATH,NAME,SIZ,DAT,CRC,STP] = [%s, %s, %s, %s, %s, %d, %d, %d, %c]"
+		return String.format("[KEY,SYS,GATE,PATH1,PATH2,NAME,SIZ,DAT,CRC,STP] = [%s, %s, %s, %s, %s, %s, %d, %d, %d, %c]"
 				, this.mapKey
 				, this.systemName
 				, this.gateName
+				, this.parentPath
 				, this.childPath
 				, this.fileName
 				, this.size
@@ -150,16 +157,34 @@ public class FileEntryBean {
 			}
 		}
 		
-		if (flag) {
+		if (!flag) {
 			// create
 			Map<String, FileEntryBean> mapFileEntry = new HashMap<String, FileEntryBean>();
 			
 			// put beans into map
 			for (int i=0; i < 100; i++) {
-				FileEntryBean bean = new FileEntryBean("SYSTEM", "GATE", "SUBPATH", String.format("FILENAME_%02d", (int)(Math.random() * 50)), 12345, 67890, 0, 'C');
+				FileEntryBean bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", String.format("FILENAME_%02d", (int)(Math.random() * 50)), 12345, 67890, 0, 'C');
 				mapFileEntry.put(bean.getMapKey(), bean);
 			}
 			
+			for (Map.Entry<String, FileEntryBean> entry : mapFileEntry.entrySet()) {
+				System.out.format("%s%n", entry.getValue());
+			}
+			
+			System.out.format("##### mapFileEntry.size() = %d", mapFileEntry.size());
+		}
+
+		if (flag) {
+			// create
+			Map<String, FileEntryBean> mapFileEntry = new HashMap<String, FileEntryBean>();
+			FileEntryBean bean;
+			
+			bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", "FILENAME", 11111, 11111, 0, 'C');
+			mapFileEntry.put(bean.getMapKey(), bean);
+			
+			bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", "FILENAME", 22222, 22222, 0, 'C');
+			mapFileEntry.put(bean.getMapKey(), bean);
+
 			for (Map.Entry<String, FileEntryBean> entry : mapFileEntry.entrySet()) {
 				System.out.format("%s%n", entry.getValue());
 			}
