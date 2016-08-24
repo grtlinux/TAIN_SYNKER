@@ -61,6 +61,15 @@ public class FileEntryMap {
 		
 		if (flag) {
 			/*
+			 * create mapFileEntry
+			 */
+			if (this.mapFileEntry == null) {
+				this.mapFileEntry = new HashMap<String, FileEntryBean>();
+			}
+		}
+		
+		if (flag) {
+			/*
 			 * create mapFileEntry map
 			 */
 			createMapFileEntry();
@@ -100,15 +109,6 @@ public class FileEntryMap {
 	private char type;
 	
 	private void createMapFileEntry() throws Exception {
-		
-		if (flag) {
-			/*
-			 * create mapFileEntry
-			 */
-			if (this.mapFileEntry == null) {
-				this.mapFileEntry = new HashMap<String, FileEntryBean>();
-			}
-		}
 		
 		if (flag) {
 			/*
