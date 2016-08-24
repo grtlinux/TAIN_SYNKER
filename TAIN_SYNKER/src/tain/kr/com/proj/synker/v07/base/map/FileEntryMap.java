@@ -261,6 +261,25 @@ public class FileEntryMap {
 		return this.mapFileEntry;
 	}
 	
+	/*
+	 * TODO 2016.08.25 : add codes of below logic
+	 */
+	public Map<String, FileEntryBean> getMap(int minBefore) throws Exception {
+		return null;
+	}
+	
+	/*
+	 * TODO 2016.08.25 : add codes of below logic
+	 */
+	public void update() throws Exception {
+		
+		if (flag) {
+			/*
+			 * update the map information of mapFileEntry
+			 */
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
