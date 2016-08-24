@@ -35,11 +35,11 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class Ch01BookTestMain {
+public class Ch01TestMain {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(Ch01BookTestMain.class);
+	private static final Logger log = Logger.getLogger(Ch01TestMain.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
