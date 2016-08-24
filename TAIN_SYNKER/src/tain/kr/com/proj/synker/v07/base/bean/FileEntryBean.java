@@ -65,9 +65,11 @@ public class FileEntryBean {
 	
 	private final char step;           // Step : (1)Upload / (2)Download / (3)Check
 	
+	private final char type;           // Entry Type : File Directory
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public FileEntryBean(String systemName, String gateName, String parentPath, String childPath, String fileName, long size, long date, long crc, char step) {
+	public FileEntryBean(String systemName, String gateName, String parentPath, String childPath, String fileName, long size, long date, long crc, char step, char type) {
 		
 		this.systemName = systemName;
 		this.gateName = gateName;
@@ -82,6 +84,8 @@ public class FileEntryBean {
 		this.crc = crc;
 		
 		this.step = step;
+		
+		this.type = type;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,12 +126,16 @@ public class FileEntryBean {
 		return step;
 	}
 	
+	public char getType() {
+		return type;
+	}
+	
 	public String getMapKey() {
 		return this.mapKey;
 	}
 	
 	public String toString() {
-		return String.format("[KEY,SYS,GATE,PATH1,PATH2,NAME,SIZ,DAT,CRC,STP] = [%s, %s, %s, %s, %s, %s, %d, %d, %d, %c]"
+		return String.format("[KEY,SYS,GATE,PATH1,PATH2,NAME,SIZ,DAT,CRC,STP] = [%s, %s, %s, %s, %s, %s, %d, %d, %d, %c, %c]"
 				, this.mapKey
 				, this.systemName
 				, this.gateName
@@ -138,6 +146,7 @@ public class FileEntryBean {
 				, this.date
 				, this.crc
 				, this.step
+				, this.type
 				);
 	}
 	
@@ -163,7 +172,7 @@ public class FileEntryBean {
 			
 			// put beans into map
 			for (int i=0; i < 100; i++) {
-				FileEntryBean bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", String.format("FILENAME_%02d", (int)(Math.random() * 50)), 12345, 67890, 0, 'C');
+				FileEntryBean bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", String.format("FILENAME_%02d", (int)(Math.random() * 50)), 12345, 67890, 0, 'C', 'F');
 				mapFileEntry.put(bean.getMapKey(), bean);
 			}
 			
@@ -179,10 +188,10 @@ public class FileEntryBean {
 			Map<String, FileEntryBean> mapFileEntry = new HashMap<String, FileEntryBean>();
 			FileEntryBean bean;
 			
-			bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", "FILENAME", 11111, 11111, 0, 'C');
+			bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", "FILENAME", 11111, 11111, 0, 'C', 'F');
 			mapFileEntry.put(bean.getMapKey(), bean);
 			
-			bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", "FILENAME", 22222, 22222, 0, 'C');
+			bean = new FileEntryBean("SYSTEM", "GATE", "PATH1", "PATH2", "FILENAME", 22222, 22222, 0, 'C', 'F');
 			mapFileEntry.put(bean.getMapKey(), bean);
 
 			for (Map.Entry<String, FileEntryBean> entry : mapFileEntry.entrySet()) {
