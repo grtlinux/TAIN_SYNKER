@@ -48,9 +48,14 @@ public class Ch02TestMain {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			Ch02Print print = new Ch02PrintBanner("Hello");
-			print.printWeak();
-			print.printStrong();
+			Ch02Banner banner = new Ch02PrintBanner("Hello");
+			((Ch02PrintA) banner).printAWeak();
+			((Ch02PrintA) banner).printAStrong();
+
+			System.out.println();
+			
+			((Ch02PrintB) banner).printBWeak();
+			((Ch02PrintB) banner).printBStrong();
 		}
 	}
 	

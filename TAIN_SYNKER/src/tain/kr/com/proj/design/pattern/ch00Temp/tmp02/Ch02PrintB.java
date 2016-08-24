@@ -24,7 +24,7 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp02;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Ch02PrintBanner.java
+ *   -. FileName   : Ch02PrintB.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch00Temp.tmp02
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -34,39 +34,13 @@ package tain.kr.com.proj.design.pattern.ch00Temp.tmp02;
  * @author taincokr
  *
  */
-public class Ch02PrintBanner extends Ch02Banner implements Ch02PrintA, Ch02PrintB {
+public interface Ch02PrintB {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public Ch02PrintBanner(String string) {
-		super(string);
-	}
-
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public void printAWeak() {
-		showWithParen();
-	}
-
-	@Override
-	public void printAStrong() {
-		showWithAster();
-	}
+	public abstract void printBWeak();
+	public abstract void printBStrong();
 	
-	@Override
-	public void printBWeak() {
-		showWithParen();
-		showWithParen();
-	}
-
-	@Override
-	public void printBStrong() {
-		showWithAster();
-		showWithAster();
-		showWithAster();
-	}
-
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
 }
