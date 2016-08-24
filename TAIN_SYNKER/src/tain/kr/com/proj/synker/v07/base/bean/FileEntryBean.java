@@ -135,7 +135,7 @@ public class FileEntryBean {
 	}
 	
 	public String toString() {
-		return String.format("[KEY,SYS,GATE,PATH1,PATH2,NAME,SIZ,DAT,CRC,STP] = [%s, %s, %s, %s, %s, %s, %d, %d, %d, %c, %c]"
+		return String.format("[KEY,SYS,GATE,PATH1,PATH2,NAME,SIZ,DAT,CRC,STP,TYP] = [%s, %s, %s, %s, %s, %s, %d, %d, %d, %c, %c]"
 				, this.mapKey
 				, this.systemName
 				, this.gateName
