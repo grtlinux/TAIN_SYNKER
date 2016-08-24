@@ -26,6 +26,9 @@ import org.apache.log4j.Logger;
 import tain.kr.com.proj.synker.v07.base.bean.FileEntryBean;
 import tain.kr.com.proj.synker.v07.base.map.FileEntryMap;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -90,9 +93,87 @@ public class FileEntryMapUtil {
 		}
 	}
 	
+	public static String getJsonFromMap() throws Exception {
+		
+		String ret = null;
+		
+		if (flag) {
+			Gson gson = new Gson();
+			
+			ret = gson.toJson(FileEntryMap.getInstance().getMap());
+		}
+		
+		return ret;
+	}
+	
+	public static Map<String, FileEntryBean> getMapFromJson(String strJson) throws Exception {
+		
+		Map<String, FileEntryBean> map = null;
+		
+		if (flag) {
+			Gson gson = new Gson();
+			
+			map = gson.fromJson(strJson, new TypeToken<Map<String, FileEntryBean>>(){}.getType());
+		}
+		
+		return map;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/*
+	 * use json
+	 */
 	private static void test01(String[] args) throws Exception {
+		
+		if (!flag) {
+			/*
+			 * print list of mapFileEntry
+			 */
+			FileEntryMapUtil.printList();
+		}
+		
+		if (flag) {
+			/*
+			 * check gson
+			 */
+			Map<String, FileEntryBean> map1 = FileEntryMap.getInstance().getMap();  // original
+			
+			String strMap = FileEntryMapUtil.getJsonFromMap();
+			
+			Map<String, FileEntryBean> map2 = FileEntryMapUtil.getMapFromJson(strMap);
+			
+			boolean checkOk = true;
+			
+			for (Map.Entry<String, FileEntryBean> entry : map1.entrySet()) {
+				String key = entry.getKey();
+				
+				if (map2.get(key) == null) {
+					
+					checkOk = false;
+					break;
+				}
+			}
+			
+			if (checkOk) {
+				System.out.println("to transfer map info using gson : OK");
+			} else {
+				System.out.println("to transfer map info using gson : FAIL");
+			}
+		}
+		
+		if (!flag) {
+			/*
+			 * string from json
+			 */
+			String strJson = FileEntryMapUtil.getJsonFromMap();
+			System.out.println(strJson);
+		}
+	}
+	
+	private static void test02(String[] args) throws Exception {
 		
 		if (flag) {
 			/*
@@ -107,5 +188,6 @@ public class FileEntryMapUtil {
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
 		if (flag) test01(args);
+		if (!flag) test02(args);
 	}
 }
