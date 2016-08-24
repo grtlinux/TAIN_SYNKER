@@ -19,11 +19,14 @@
  */
 package tain.kr.com.proj.synker.v07.base.map;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.synker.v07.base.bean.FileEntryBean;
 import tain.kr.com.proj.synker.v07.base.bean.GateBean;
 import tain.kr.com.proj.synker.v07.base.bean.SystemBean;
 
@@ -49,7 +52,7 @@ public class FileEntryMap {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private Map<String, FileEntryMap> mapFileEntry = null;
+	private Map<String, FileEntryBean> mapFileEntry = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -57,21 +60,56 @@ public class FileEntryMap {
 		
 		if (flag) {
 			/*
+			 * create mapFileEntry map
+			 */
+			createMapFileEntry();
+		}
+		
+		if (flag) {
+			/*
+			 * print mapFileEntry
+			 */
+			
+			for (Map.Entry<String, FileEntryBean> entry : this.mapFileEntry.entrySet()) {
+				String key = entry.getKey();
+				FileEntryBean bean = entry.getValue();
+				
+				System.out.format("[%s] => %s%n", key, bean);
+			}
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private String systemName;
+	private String gateName;
+	private String parentPath;
+	private int sizParentPath;
+	private String childPath;
+	private String fileName;
+	
+	private long size;
+	private long date;
+	private long crc;
+	
+	private char step;
+	private char type;
+	
+	private void createMapFileEntry() throws Exception {
+		
+		if (flag) {
+			/*
 			 * create mapFileEntry
 			 */
 			if (this.mapFileEntry == null) {
-				this.mapFileEntry = new HashMap<String, FileEntryMap>();
+				this.mapFileEntry = new HashMap<String, FileEntryBean>();
 			}
 		}
 		
 		if (flag) {
-			checkMap();
-		}
-	}
-	
-	private void checkMap() throws Exception {
-		
-		if (flag) {
+			/*
+			 * 
+			 */
 			Map<String, SystemBean> mapSystem = SystemMap.getInstance().getMapSystem();
 			
 			for (Map.Entry<String, SystemBean> entrySystem : mapSystem.entrySet()) {
@@ -88,21 +126,21 @@ public class FileEntryMap {
 					
 					if (!flag) log.debug(String.format(">>>>>>>>>> [%s] = [%s]", keyGate, beanGate));
 					
-					String systemName = beanSystem.getSystemName();
-					String gateName = beanGate.getGateName();
-					String parentPath = beanGate.getGateFolder();
+					this.systemName = beanSystem.getSystemName();
+					this.gateName = beanGate.getGateName();
+					this.parentPath = beanGate.getGateFolder();
+					this.sizParentPath = parentPath.length();
 					
-					if (flag) log.debug(String.format("[%s] [%s] [%s]", systemName, gateName, parentPath));
-					
-					
-					/*
-					 * TODO 2016.08.24
-					 */
+					if (flag) log.debug(String.format("[%s] [%s] [%s](%d)", this.systemName, this.gateName, this.parentPath, this.sizParentPath));
 					
 					
-					
-					
-					
+					if (flag) {
+						/*
+						 * TODO 2016.08.24
+						 */
+
+						fileEntryBean(new File(this.parentPath));
+					}
 					
 					if (flag) return;
 				}
@@ -110,7 +148,97 @@ public class FileEntryMap {
 		}
 	}
 	
+	private void fileEntryBean(File folder) throws Exception {
+		
+		if (flag) {
+			try {
+				folder.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File file) {
+						
+						if (flag) {
+							/*
+							 * logic for checking filters
+							 */
+						}
+						
+						makeFileEntry(file);
+						
+						if (file.isDirectory()) {
+							try {
+								fileEntryBean(file);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						
+						return false;
+					}
+					
+					/*
+					 * make FileEntry
+					 */
+					private void makeFileEntry(File file) {
+						
+						if (flag) {
+							/*
+							 * new FileEntryBean
+							 */
+							String fullName = file.getAbsolutePath().replace('\\', '/');
+							if (!flag) log.debug(">>>>> " + fullName);
+							
+							if (file.isDirectory()) {
+								childPath = fullName.substring(sizParentPath);
+								fileName = "";
+								size = 0;
+								date = file.lastModified();
+								crc = 0;
+								step = 'C';
+								type = 'D';
+							} else {
+								int last = fullName.lastIndexOf('/');
+								
+								childPath = fullName.substring(sizParentPath, last);
+								fileName = fullName.substring(last+1);
+								size = file.length();
+								date = file.lastModified();
+								crc = 0;
+								step = 'C';
+								type = 'F';
+							}
+
+							if (!flag) log.debug(String.format(">>>>>>>>>> [%s] [%s] [%s] [%s] [%s] [%d] [%d] [%d] [%c] [%c]"
+									, systemName
+									, gateName
+									, parentPath
+									, childPath
+									, fileName
+									, size
+									, date
+									, crc
+									, step
+									, type
+									));
+							
+							FileEntryBean bean = new FileEntryBean(systemName, gateName, parentPath, childPath, fileName, size, date, crc, step, type);
+							
+							mapFileEntry.put(bean.getMapKey(), bean);
+						}
+					}
+				});
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+			}
+		}
+	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static FileEntryMap instance = null;
