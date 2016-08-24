@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -70,11 +71,14 @@ public class FileEntryMap {
 			 * print mapFileEntry
 			 */
 			
+			if (!flag) log.debug(String.format("mapFileEntry.size() = %d", this.mapFileEntry.size()));
+			
 			for (Map.Entry<String, FileEntryBean> entry : this.mapFileEntry.entrySet()) {
 				String key = entry.getKey();
 				FileEntryBean bean = entry.getValue();
 				
-				System.out.format("[%s] => %s%n", key, bean);
+				if (!flag) System.out.format("[%s] => %s%n", key, bean);
+				if (!flag) System.out.format("%s%n", bean);
 			}
 		}
 	}
@@ -108,7 +112,7 @@ public class FileEntryMap {
 		
 		if (flag) {
 			/*
-			 * 
+			 * base informations of SystemMap
 			 */
 			Map<String, SystemBean> mapSystem = SystemMap.getInstance().getMapSystem();
 			
@@ -131,18 +135,18 @@ public class FileEntryMap {
 					this.parentPath = beanGate.getGateFolder();
 					this.sizParentPath = parentPath.length();
 					
-					if (flag) log.debug(String.format("[%s] [%s] [%s](%d)", this.systemName, this.gateName, this.parentPath, this.sizParentPath));
+					if (!flag) log.debug(String.format("[%s] [%s] [%s](%d)", this.systemName, this.gateName, this.parentPath, this.sizParentPath));
 					
 					
 					if (flag) {
 						/*
-						 * TODO 2016.08.24
+						 * get FileEnteyBean from above information 
 						 */
 
 						fileEntryBean(new File(this.parentPath));
 					}
 					
-					if (flag) return;
+					if (!flag) return;
 				}
 			}
 		}
@@ -237,6 +241,22 @@ public class FileEntryMap {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	public void put(FileEntryBean bean) throws Exception {
+		this.mapFileEntry.put(bean.getMapKey(), bean);
+	}
+	
+	public void put(String key, FileEntryBean bean) throws Exception {
+		this.mapFileEntry.put(key, bean);
+	}
+	
+	public FileEntryBean get(String key) throws Exception {
+		return this.mapFileEntry.get(key);
+	}
+	
+	public Set<Map.Entry<String, FileEntryBean>> entrySet() throws Exception {
+		return this.mapFileEntry.entrySet();
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
