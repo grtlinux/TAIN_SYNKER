@@ -83,6 +83,10 @@ public class SystemBean {
 		this.mapGate.put(key, bean);
 	}
 	
+	public Map<String, GateBean> getMapGate() {
+		return this.mapGate;
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public String toString() {
