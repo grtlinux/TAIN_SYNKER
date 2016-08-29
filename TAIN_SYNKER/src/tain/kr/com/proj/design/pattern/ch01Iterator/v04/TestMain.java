@@ -60,6 +60,9 @@ public class TestMain {
 			content.add(new Book("Guliver's travels"));;
 			content.add(new Book("Hamlet"));;
 			
+			for (Book book : content.getList()) {
+				System.out.println(book);
+			}
 			
 		}
 	}

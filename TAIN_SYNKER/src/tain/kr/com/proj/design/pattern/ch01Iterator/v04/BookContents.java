@@ -61,4 +61,10 @@ public class BookContents {
 		
 		return null;
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public List<Book> getList() {
+		return this.lstBooks;
+	}
 }
