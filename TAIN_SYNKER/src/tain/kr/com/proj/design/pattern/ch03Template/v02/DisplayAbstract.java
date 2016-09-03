@@ -39,9 +39,9 @@ public abstract class DisplayAbstract {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public abstract void open();
-	public abstract void print();
-	public abstract void close();
+	protected abstract void open();
+	protected abstract void print();
+	protected abstract void close();
 	
 	public void display() {
 		open();
