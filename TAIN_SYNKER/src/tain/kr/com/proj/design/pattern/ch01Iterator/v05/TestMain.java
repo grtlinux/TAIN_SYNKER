@@ -49,7 +49,7 @@ public class TestMain {
 
 	private static void test01(String[] args) throws Exception {
 		
-		if (flag) {
+		if (!flag) {
 			BookContents content = new BookContents();
 			
 			content.add(new Book("Around the world in 80 days"));
@@ -67,6 +67,25 @@ public class TestMain {
 			
 			for (Book book : lstBook) {
 				if (flag) log.debug(">>>>> " + book);
+			}
+		}
+
+		if (flag) {
+			BookContents content = new BookContents();
+			
+			content.add(new Book("Around the world in 80 days"));
+			content.add(new Book("Bible"));
+			content.add(new Book("Cinderella"));
+			content.add(new Book("Daddy-long-legs"));
+			content.add(new Book("East of Eden"));
+			content.add(new Book("Frankestein"));
+			content.add(new Book("Guliver's travels"));
+			content.add(new Book("Hamlet"));
+			
+			BookIterator iter = content.getBookIterator();
+			
+			while (iter.hasNext()) {
+				if (flag) log.debug(">>> " + iter.next());
 			}
 		}
 	}
