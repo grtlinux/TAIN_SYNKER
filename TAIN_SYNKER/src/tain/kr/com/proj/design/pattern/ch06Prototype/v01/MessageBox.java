@@ -24,7 +24,7 @@ package tain.kr.com.proj.design.pattern.ch06Prototype.v01;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Product.java
+ *   -. FileName   : MessageBox.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch06Prototype.v01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -34,14 +34,55 @@ package tain.kr.com.proj.design.pattern.ch06Prototype.v01;
  * @author taincokr
  *
  */
-public interface Product extends Cloneable {
+public class MessageBox implements Product {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final char decoChar;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public abstract void use(String string);
-	public abstract Product createClone();
+	public MessageBox(char decoChar) {
+		this.decoChar = decoChar;
+	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public void use(String string) {
+		
+		int length = string.getBytes().length;
+		
+		for (int i=0; i < length + 4; i++) {
+			System.out.print(this.decoChar);
+		}
+		System.out.println();
+		
+		System.out.println(this.decoChar + " " + string + " " + this.decoChar);
+		
+		for (int i=0; i < length + 4; i++) {
+			System.out.print(this.decoChar);
+		}
+		System.out.println();
+	}
+	
+	@Override
+	public Product createClone() {
+		
+		Product product = null;
+		
+		try {
+			product = (Product) clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return product;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 }
