@@ -19,12 +19,13 @@
  */
 package tain.kr.com.proj.design.pattern.ch06Prototype.v01;
 
+import java.util.Hashtable;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : UnderlinePen.java
+ *   -. FileName   : Manager.java
  *   -. Package    : tain.kr.com.proj.design.pattern.ch06Prototype.v01
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -34,47 +35,27 @@ package tain.kr.com.proj.design.pattern.ch06Prototype.v01;
  * @author taincokr
  *
  */
-public class UnderlinePen implements Product {
+public class Manager {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private final char lineChar;
+	private final Hashtable<String, Product> showCase;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public UnderlinePen(char lineChar) {
-		this.lineChar = lineChar;
+	public Manager() {
+		this.showCase = new Hashtable<String, Product>();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	@Override
-	public void use(String string) {
-		
-		int length = string.getBytes().length;
-		
-		System.out.println("\"" + string + "\"");
-		
-		System.out.print(" ");
-		for (int i=0; i < length; i++) {
-			System.out.print(this.lineChar);
-		}
-		System.out.println();
+	public void register(String name, Product product) {
+		this.showCase.put(name, product);
 	}
 	
-	@Override
-	public Product createClone() {
-		
-		Product product = null;
-		
-		try {
-			product = (Product) clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return product;
+	public Product create(String productName) {
+		Product product = (Product) this.showCase.get(productName);
+		return product.createClone();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
