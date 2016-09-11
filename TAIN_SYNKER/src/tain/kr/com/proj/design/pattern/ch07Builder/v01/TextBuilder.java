@@ -67,7 +67,7 @@ public class TextBuilder extends Builder {
 	public void makeItems(String[] items) {
 		
 		for (String item : items) {
-			this.buffer.append("-" + item + "\n");
+			this.buffer.append("\t-" + item + "\n");
 		}
 		this.buffer.append("\n");
 	}
